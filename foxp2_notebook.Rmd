@@ -4,9 +4,145 @@ output: html_notebook
 ---
 
 
-```{r}
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, eval=TRUE)
 ```
+
+```{r lib, include=FALSE}
+library(tidyverse)
+library(xlsx)
+library(skimr)
 ```
 
+
+##Tactics:
+There are two data sets to tidy and so we will approach each individually. First we will process the IOWA data set. 
+
+##IOWA tidying:
+
+Importing data:
+```{r iowa_imp}
+iowa <- read.xlsx("./data/IOWA_PLOS.xls", 1)
+iowa <- as_tibble(iowa)
+```
+
+Rearranging the columns in the new dataset
+```{r}
+paired <- iowa %>% select(ID, everything())
+```
+ 
+##EXPLAINATION ON WHY WE UNITED ALL THESE POINTS
+
+
+1) Merge rs7791396
+```{r}
+paired <- unite(data = paired, col = rs7791396, rs7791396_a1 , rs7791396_a2 , sep = '/' ) %>% 
+  mutate(rs7791396 = as_factor(rs7791396))
+```
+
+2) Merge rs12155328
+```{r}
+paired <- unite(data = paired, col = rs12155328, rs12155328_a1 , rs12155328_a2 , sep = '/' ) %>% mutate(rs12155328 = as_factor(rs12155328))
+```
+
+3) Merge rs10447760
+```{r}
+paired <- unite(data = paired, col = rs10447760, rs10447760_a1 , rs10447760_a2 , sep = '/' ) %>% mutate(rs10447760 = as_factor(rs10447760))
+```
+
+4) Merge rs10953754
+```{r}
+paired <- unite(data = paired, col = rs10953754, rs10953754_a1 , rs10953754_a2 , sep = '/' ) %>% mutate(rs10953754 = as_factor(rs10953754))
+```
+
+5) Merge rs2244419
+```{r}
+paired <- unite(data = paired, col = rs2244419, rs2244419_a1 , rs2244419_a2 , sep = '/' ) %>% mutate(rs2244419 = as_factor(rs2244419))
+```
+
+5) Merge rs1668335
+```{r}
+paired <- unite(data = paired, col = rs1668335, rs1668335_a1 , rs1668335_a2 , sep = '/' ) %>% mutate(rs1668335 = as_factor(rs1668335))
+```
+
+6) Merge rs2396720
+```{r}
+paired <- unite(data = paired, col = rs2396720, rs2396720_a1 , rs2396720_a2 , sep = '/' ) %>% mutate(rs2396720 = as_factor(rs2396720))
+```
+
+7) Merge rs1916988
+```{r}
+paired <- unite(data = paired, col = rs1916988, rs1916988_a1 , rs1916988_a2 , sep = '/' ) %>% mutate(rs1916988 = as_factor(rs1916988))
+```
+
+8) Merge rs11505922
+```{r}
+paired <- unite(data = paired, col = rs11505922, rs11505922_a1 , rs11505922_a2 , sep = '/' ) %>% mutate(rs11505922 = as_factor(rs11505922))
+```
+
+9) Merge rs7785701
+```{r}
+paired <- unite(data = paired, col = rs7785701, rs7785701_a1 , rs7785701_a2 , sep = '/' ) %>% mutate(rs7785701 = as_factor(rs7785701))
+```
+
+10) Merge rs2106900
+```{r}
+paired <- unite(data = paired, col = rs2106900, rs2106900_a1 , rs2106900_a2 , sep = '/' ) %>% mutate(rs2106900 = as_factor(rs2106900))
+```
+
+11) Merge rs7799652
+```{r}
+paired <- unite(data = paired, col = rs7799652, rs7799652_a1 , rs7799652_a2 , sep = '/' ) %>% mutate(rs7799652 = as_factor(rs7799652))
+```
+
+12) Merge rs1005958
+```{r}
+paired <- unite(data = paired, col = rs1005958, rs1005958_a1 , rs1005958_a2 , sep = '/' ) %>% mutate(rs1005958 = as_factor(rs1005958))
+```
+
+
+Now that I painstakingly united the data lets look at it
+```{r}
+paired %>% glimpse()
+```
+
+#NOTICE THERE ARE ZEROES PRESENT. WE DO NOT THROW THEM OUT SINCE THE OBSERVATION CONTAINS OTHER USEFUL DATA JUST NOT USED IN ANALYSIS.
+
+
+
+#ELVS DATA:
+```{r elvs}
+elvs <- read.xlsx("./data/ELVS_PLOS.xls", 1)
+elvs <- as_tibble(elvs)
+```
+
+
+Rearranging the columns dropping the ID column. 
+```{r}
+tidy_elvs <- elvs %>% select(CELF7SS0, Call)
+```
+
+
+
+Lets investigate if there are any NA's
+```{r}
+tidy_elvs %>% skim()
+```
+
+
+
+There are 20 null values in the data set so I will remove them 
+```{r}
+tidy_elvs <- tidy_elvs %>% filter(!is.na(Call))
+```
+
+
+#RENAME THE CALL COLUMN TO REFLECT SNP
+
+
+
+
+
+
+##Saving the data: 
+#SAVE DATA HERE FOR BOTH.

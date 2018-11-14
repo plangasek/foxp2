@@ -177,13 +177,265 @@ $(document).ready(function () {
 
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-text-begin -->
+<div id="tactics" class="section level2">
+<h2>Tactics:</h2>
+<p>There are two data sets to tidy and so we will approach each individually. First we will process the IOWA data set.</p>
+</div>
+<div id="iowa-tidying" class="section level2">
+<h2>IOWA tidying:</h2>
+<p>Importing data:</p>
+<!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuaW93YSA8LSByZWFkLnhsc3goXCIuL2RhdGEvSU9XQV9QTE9TLnhsc1wiLCAxKVxuaW93YSA8LSBhc190aWJibGUoaW93YSlcbmBgYCJ9 -->
+<pre class="r"><code>iowa &lt;- read.xlsx(&quot;./data/IOWA_PLOS.xls&quot;, 1)
+iowa &lt;- as_tibble(iowa)</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>```</p>
+<p>Rearranging the columns in the new dataset</p>
 <!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGFpcmVkIDwtIGlvd2EgJT4lIHNlbGVjdChJRCwgZXZlcnl0aGluZygpKVxuYGBgIn0= -->
+<pre class="r"><code>paired &lt;- iowa %&gt;% select(ID, everything())</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="explaination-on-why-we-united-all-these-points" class="section level2">
+<h2>EXPLAINATION ON WHY WE UNITED ALL THESE POINTS</h2>
+<ol style="list-style-type: decimal">
+<li>Merge rs7791396</li>
+</ol>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGFpcmVkIDwtIHVuaXRlKGRhdGEgPSBwYWlyZWQsIGNvbCA9IHJzNzc5MTM5NiwgcnM3NzkxMzk2X2ExICwgcnM3NzkxMzk2X2EyICwgc2VwID0gJy8nICkgJT4lIFxuICBtdXRhdGUocnM3NzkxMzk2ID0gYXNfZmFjdG9yKHJzNzc5MTM5NikpXG5gYGAifQ== -->
+<pre class="r"><code>paired &lt;- unite(data = paired, col = rs7791396, rs7791396_a1 , rs7791396_a2 , sep = '/' ) %&gt;% 
+  mutate(rs7791396 = as_factor(rs7791396))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ol start="2" style="list-style-type: decimal">
+<li>Merge rs12155328</li>
+</ol>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGFpcmVkIDwtIHVuaXRlKGRhdGEgPSBwYWlyZWQsIGNvbCA9IHJzMTIxNTUzMjgsIHJzMTIxNTUzMjhfYTEgLCByczEyMTU1MzI4X2EyICwgc2VwID0gJy8nICkgJT4lIG11dGF0ZShyczEyMTU1MzI4ID0gYXNfZmFjdG9yKHJzMTIxNTUzMjgpKVxuYGBgIn0= -->
+<pre class="r"><code>paired &lt;- unite(data = paired, col = rs12155328, rs12155328_a1 , rs12155328_a2 , sep = '/' ) %&gt;% mutate(rs12155328 = as_factor(rs12155328))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ol start="3" style="list-style-type: decimal">
+<li>Merge rs10447760</li>
+</ol>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGFpcmVkIDwtIHVuaXRlKGRhdGEgPSBwYWlyZWQsIGNvbCA9IHJzMTA0NDc3NjAsIHJzMTA0NDc3NjBfYTEgLCByczEwNDQ3NzYwX2EyICwgc2VwID0gJy8nICkgJT4lIG11dGF0ZShyczEwNDQ3NzYwID0gYXNfZmFjdG9yKHJzMTA0NDc3NjApKVxuYGBgIn0= -->
+<pre class="r"><code>paired &lt;- unite(data = paired, col = rs10447760, rs10447760_a1 , rs10447760_a2 , sep = '/' ) %&gt;% mutate(rs10447760 = as_factor(rs10447760))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ol start="4" style="list-style-type: decimal">
+<li>Merge rs10953754</li>
+</ol>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGFpcmVkIDwtIHVuaXRlKGRhdGEgPSBwYWlyZWQsIGNvbCA9IHJzMTA5NTM3NTQsIHJzMTA5NTM3NTRfYTEgLCByczEwOTUzNzU0X2EyICwgc2VwID0gJy8nICkgJT4lIG11dGF0ZShyczEwOTUzNzU0ID0gYXNfZmFjdG9yKHJzMTA5NTM3NTQpKVxuYGBgIn0= -->
+<pre class="r"><code>paired &lt;- unite(data = paired, col = rs10953754, rs10953754_a1 , rs10953754_a2 , sep = '/' ) %&gt;% mutate(rs10953754 = as_factor(rs10953754))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ol start="5" style="list-style-type: decimal">
+<li>Merge rs2244419</li>
+</ol>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGFpcmVkIDwtIHVuaXRlKGRhdGEgPSBwYWlyZWQsIGNvbCA9IHJzMjI0NDQxOSwgcnMyMjQ0NDE5X2ExICwgcnMyMjQ0NDE5X2EyICwgc2VwID0gJy8nICkgJT4lIG11dGF0ZShyczIyNDQ0MTkgPSBhc19mYWN0b3IocnMyMjQ0NDE5KSlcbmBgYCJ9 -->
+<pre class="r"><code>paired &lt;- unite(data = paired, col = rs2244419, rs2244419_a1 , rs2244419_a2 , sep = '/' ) %&gt;% mutate(rs2244419 = as_factor(rs2244419))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ol start="5" style="list-style-type: decimal">
+<li>Merge rs1668335</li>
+</ol>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGFpcmVkIDwtIHVuaXRlKGRhdGEgPSBwYWlyZWQsIGNvbCA9IHJzMTY2ODMzNSwgcnMxNjY4MzM1X2ExICwgcnMxNjY4MzM1X2EyICwgc2VwID0gJy8nICkgJT4lIG11dGF0ZShyczE2NjgzMzUgPSBhc19mYWN0b3IocnMxNjY4MzM1KSlcbmBgYCJ9 -->
+<pre class="r"><code>paired &lt;- unite(data = paired, col = rs1668335, rs1668335_a1 , rs1668335_a2 , sep = '/' ) %&gt;% mutate(rs1668335 = as_factor(rs1668335))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ol start="6" style="list-style-type: decimal">
+<li>Merge rs2396720</li>
+</ol>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGFpcmVkIDwtIHVuaXRlKGRhdGEgPSBwYWlyZWQsIGNvbCA9IHJzMjM5NjcyMCwgcnMyMzk2NzIwX2ExICwgcnMyMzk2NzIwX2EyICwgc2VwID0gJy8nICkgJT4lIG11dGF0ZShyczIzOTY3MjAgPSBhc19mYWN0b3IocnMyMzk2NzIwKSlcbmBgYCJ9 -->
+<pre class="r"><code>paired &lt;- unite(data = paired, col = rs2396720, rs2396720_a1 , rs2396720_a2 , sep = '/' ) %&gt;% mutate(rs2396720 = as_factor(rs2396720))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ol start="7" style="list-style-type: decimal">
+<li>Merge rs1916988</li>
+</ol>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGFpcmVkIDwtIHVuaXRlKGRhdGEgPSBwYWlyZWQsIGNvbCA9IHJzMTkxNjk4OCwgcnMxOTE2OTg4X2ExICwgcnMxOTE2OTg4X2EyICwgc2VwID0gJy8nICkgJT4lIG11dGF0ZShyczE5MTY5ODggPSBhc19mYWN0b3IocnMxOTE2OTg4KSlcbmBgYCJ9 -->
+<pre class="r"><code>paired &lt;- unite(data = paired, col = rs1916988, rs1916988_a1 , rs1916988_a2 , sep = '/' ) %&gt;% mutate(rs1916988 = as_factor(rs1916988))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ol start="8" style="list-style-type: decimal">
+<li>Merge rs11505922</li>
+</ol>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGFpcmVkIDwtIHVuaXRlKGRhdGEgPSBwYWlyZWQsIGNvbCA9IHJzMTE1MDU5MjIsIHJzMTE1MDU5MjJfYTEgLCByczExNTA1OTIyX2EyICwgc2VwID0gJy8nICkgJT4lIG11dGF0ZShyczExNTA1OTIyID0gYXNfZmFjdG9yKHJzMTE1MDU5MjIpKVxuYGBgIn0= -->
+<pre class="r"><code>paired &lt;- unite(data = paired, col = rs11505922, rs11505922_a1 , rs11505922_a2 , sep = '/' ) %&gt;% mutate(rs11505922 = as_factor(rs11505922))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ol start="9" style="list-style-type: decimal">
+<li>Merge rs7785701</li>
+</ol>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGFpcmVkIDwtIHVuaXRlKGRhdGEgPSBwYWlyZWQsIGNvbCA9IHJzNzc4NTcwMSwgcnM3Nzg1NzAxX2ExICwgcnM3Nzg1NzAxX2EyICwgc2VwID0gJy8nICkgJT4lIG11dGF0ZShyczc3ODU3MDEgPSBhc19mYWN0b3IocnM3Nzg1NzAxKSlcbmBgYCJ9 -->
+<pre class="r"><code>paired &lt;- unite(data = paired, col = rs7785701, rs7785701_a1 , rs7785701_a2 , sep = '/' ) %&gt;% mutate(rs7785701 = as_factor(rs7785701))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ol start="10" style="list-style-type: decimal">
+<li>Merge rs2106900</li>
+</ol>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGFpcmVkIDwtIHVuaXRlKGRhdGEgPSBwYWlyZWQsIGNvbCA9IHJzMjEwNjkwMCwgcnMyMTA2OTAwX2ExICwgcnMyMTA2OTAwX2EyICwgc2VwID0gJy8nICkgJT4lIG11dGF0ZShyczIxMDY5MDAgPSBhc19mYWN0b3IocnMyMTA2OTAwKSlcbmBgYCJ9 -->
+<pre class="r"><code>paired &lt;- unite(data = paired, col = rs2106900, rs2106900_a1 , rs2106900_a2 , sep = '/' ) %&gt;% mutate(rs2106900 = as_factor(rs2106900))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ol start="11" style="list-style-type: decimal">
+<li>Merge rs7799652</li>
+</ol>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGFpcmVkIDwtIHVuaXRlKGRhdGEgPSBwYWlyZWQsIGNvbCA9IHJzNzc5OTY1MiwgcnM3Nzk5NjUyX2ExICwgcnM3Nzk5NjUyX2EyICwgc2VwID0gJy8nICkgJT4lIG11dGF0ZShyczc3OTk2NTIgPSBhc19mYWN0b3IocnM3Nzk5NjUyKSlcbmBgYCJ9 -->
+<pre class="r"><code>paired &lt;- unite(data = paired, col = rs7799652, rs7799652_a1 , rs7799652_a2 , sep = '/' ) %&gt;% mutate(rs7799652 = as_factor(rs7799652))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ol start="12" style="list-style-type: decimal">
+<li>Merge rs1005958</li>
+</ol>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGFpcmVkIDwtIHVuaXRlKGRhdGEgPSBwYWlyZWQsIGNvbCA9IHJzMTAwNTk1OCwgcnMxMDA1OTU4X2ExICwgcnMxMDA1OTU4X2EyICwgc2VwID0gJy8nICkgJT4lIG11dGF0ZShyczEwMDU5NTggPSBhc19mYWN0b3IocnMxMDA1OTU4KSlcbmBgYCJ9 -->
+<pre class="r"><code>paired &lt;- unite(data = paired, col = rs1005958, rs1005958_a1 , rs1005958_a2 , sep = '/' ) %&gt;% mutate(rs1005958 = as_factor(rs1005958))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Now that I painstakingly united the data lets look at it</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGFpcmVkICU+JSBnbGltcHNlKClcblxuYGBgIn0= -->
+<pre class="r"><code>paired %&gt;% glimpse()
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiT2JzZXJ2YXRpb25zOiA4MzRcblZhcmlhYmxlczogMTZcbiQgSUQgICAgICAgICA8ZmN0PiAyMzQwOTAwMSwgMjM0MDkwMC4uLlxuJCBMQ09NUCAgICAgIDxmY3Q+IDAuNDczNjI0MDQwNTAzMDIxLi4uXG4kIFNhbXBsZSAgICAgPGZjdD4gU2Nob29sLCBTY2hvb2wsIFMuLi5cbiQgcnM3NzkxMzk2ICA8ZmN0PiBDL0csIEMvRywgQy9DLCBDLy4uLlxuJCByczEyMTU1MzI4IDxmY3Q+IEMvVCwgVC9ULCBDL0MsIEMvLi4uXG4kIHJzMTA0NDc3NjAgPGZjdD4gQy9DLCBDL0MsIDAvMCwgQy8uLi5cbiQgcnMxMDk1Mzc1NCA8ZmN0PiBBL0csIEEvQSwgQS9HLCBBLy4uLlxuJCByczIyNDQ0MTkgIDxmY3Q+IEMvQywgQy9DLCBDL0MsIEMvLi4uXG4kIHJzMTY2ODMzNSAgPGZjdD4gRy9HLCBHL0EsIEcvQSwgRy8uLi5cbiQgcnMyMzk2NzIwICA8ZmN0PiBDL0MsIEMvQywgQy9DLCBDLy4uLlxuJCByczE5MTY5ODggIDxmY3Q+IFQvVCwgVC9DLCBUL0MsIFQvLi4uXG4kIHJzMTE1MDU5MjIgPGZjdD4gQy9ULCBDL0MsIEMvQywgQy8uLi5cbiQgcnM3Nzg1NzAxICA8ZmN0PiBDL0csIEcvRywgQy9HLCBHLy4uLlxuJCByczIxMDY5MDAgIDxmY3Q+IEcvRywgQS9BLCBHL0EsIEEvLi4uXG4kIHJzNzc5OTY1MiAgPGZjdD4gRy9ULCBHL1QsIEcvVCwgRy8uLi5cbiQgcnMxMDA1OTU4ICA8ZmN0PiBUL0MsIEMvQywgQy9DLCAwLy4uLlxuIn0= -->
+<pre><code>Observations: 834
+Variables: 16
+$ ID         &lt;fct&gt; 23409001, 2340900...
+$ LCOMP      &lt;fct&gt; 0.473624040503021...
+$ Sample     &lt;fct&gt; School, School, S...
+$ rs7791396  &lt;fct&gt; C/G, C/G, C/C, C/...
+$ rs12155328 &lt;fct&gt; C/T, T/T, C/C, C/...
+$ rs10447760 &lt;fct&gt; C/C, C/C, 0/0, C/...
+$ rs10953754 &lt;fct&gt; A/G, A/A, A/G, A/...
+$ rs2244419  &lt;fct&gt; C/C, C/C, C/C, C/...
+$ rs1668335  &lt;fct&gt; G/G, G/A, G/A, G/...
+$ rs2396720  &lt;fct&gt; C/C, C/C, C/C, C/...
+$ rs1916988  &lt;fct&gt; T/T, T/C, T/C, T/...
+$ rs11505922 &lt;fct&gt; C/T, C/C, C/C, C/...
+$ rs7785701  &lt;fct&gt; C/G, G/G, C/G, G/...
+$ rs2106900  &lt;fct&gt; G/G, A/A, G/A, A/...
+$ rs7799652  &lt;fct&gt; G/T, G/T, G/T, G/...
+$ rs1005958  &lt;fct&gt; T/C, C/C, C/C, 0/...</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="notice-there-are-zeroes-present.-we-do-not-throw-them-out-since-the-observation-contains-other-useful-data-just-not-used-in-analysis." class="section level1">
+<h1>NOTICE THERE ARE ZEROES PRESENT. WE DO NOT THROW THEM OUT SINCE THE OBSERVATION CONTAINS OTHER USEFUL DATA JUST NOT USED IN ANALYSIS.</h1>
+</div>
+<div id="elvs-data" class="section level1">
+<h1>ELVS DATA:</h1>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZWx2cyA8LSByZWFkLnhsc3goXCIuL2RhdGEvRUxWU19QTE9TLnhsc1wiLCAxKVxuZWx2cyA8LSBhc190aWJibGUoZWx2cylcbmBgYCJ9 -->
+<pre class="r"><code>elvs &lt;- read.xlsx(&quot;./data/ELVS_PLOS.xls&quot;, 1)
+elvs &lt;- as_tibble(elvs)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Rearranging the columns dropping the ID column.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudGlkeV9lbHZzIDwtIGVsdnMgJT4lIHNlbGVjdChDRUxGN1NTMCwgQ2FsbClcbmBgYCJ9 -->
+<pre class="r"><code>tidy_elvs &lt;- elvs %&gt;% select(CELF7SS0, Call)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Lets investigate if there are any NA’s</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudGlkeV9lbHZzICU+JSBza2ltKClcbmBgYCJ9 -->
+<pre class="r"><code>tidy_elvs %&gt;% skim()</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiU2tpbSBzdW1tYXJ5IHN0YXRpc3RpY3NcbiBuIG9iczogMzI4IFxuIG4gdmFyaWFibGVzOiAyIFxuXG4tLSBWYXJpYWJsZSB0eXBlOmZhY3RvciAtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLVxuIHZhcmlhYmxlIG1pc3NpbmcgY29tcGxldGUgICBuIG5fdW5pcXVlXG4gICAgIENhbGwgICAgICAyMCAgICAgIDMwOCAzMjggICAgICAgIDNcbiAgICAgICAgICAgICAgICAgICAgICAgICAgdG9wX2NvdW50c1xuIEMvVDogMTQ0LCBUL1Q6IDEzMywgQy9DOiAzMSwgTkE6IDIwXG4gb3JkZXJlZFxuICAgRkFMU0VcblxuLS0gVmFyaWFibGUgdHlwZTpudW1lcmljIC0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1cbiB2YXJpYWJsZSBtaXNzaW5nIGNvbXBsZXRlICAgbiAgbWVhblxuIENFTEY3U1MwICAgICAgIDAgICAgICAzMjggMzI4IDk4LjcxXG4gICAgc2QgcDAgcDI1IHA1MCBwNzUgcDEwMCAgICAgaGlzdFxuIDEzLjk4IDQ1ICA5MSAxMDAgMTA4ICAxMzQg4paB4paB4paB4paD4paH4paG4paD4paBXG4ifQ== -->
+<pre><code>Skim summary statistics
+ n obs: 328 
+ n variables: 2 
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiRm94cDIgTm90ZWJvb2siCm91dHB1dDogaHRtbF9ub3RlYm9vawotLS0KCgpgYGB7cn0KYGBge3Igc2V0dXAsIGluY2x1ZGU9RkFMU0V9CmtuaXRyOjpvcHRzX2NodW5rJHNldChlY2hvID0gVFJVRSwgZXZhbD1UUlVFKQpgYGAKYGBgCgo=</div>
+-- Variable type:factor --------------------------------------------------------
+ variable missing complete   n n_unique
+     Call      20      308 328        3
+                          top_counts
+ C/T: 144, T/T: 133, C/C: 31, NA: 20
+ ordered
+   FALSE
+
+-- Variable type:numeric -------------------------------------------------------
+ variable missing complete   n  mean
+ CELF7SS0       0      328 328 98.71
+    sd p0 p25 p50 p75 p100     hist
+ 13.98 45  91 100 108  134 &lt;U+2581&gt;&lt;U+2581&gt;&lt;U+2581&gt;&lt;U+2583&gt;&lt;U+2587&gt;&lt;U+2586&gt;&lt;U+2583&gt;&lt;U+2581&gt;</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>There are 20 null values in the data set so I will remove them</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudGlkeV9lbHZzIDwtIHRpZHlfZWx2cyAlPiUgZmlsdGVyKCFpcy5uYShDYWxsKSlcbmBgYCJ9 -->
+<pre class="r"><code>tidy_elvs &lt;- tidy_elvs %&gt;% filter(!is.na(Call))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="rename-the-call-column-to-reflect-snp" class="section level1">
+<h1>RENAME THE CALL COLUMN TO REFLECT SNP</h1>
+<div id="saving-the-data" class="section level2">
+<h2>Saving the data:</h2>
+</div>
+</div>
+<div id="save-data-here-for-both." class="section level1">
+<h1>SAVE DATA HERE FOR BOTH.</h1>
+<!-- rnb-text-end -->
+</div>
+
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIkZveHAyIE5vdGVib29rIg0Kb3V0cHV0OiBodG1sX25vdGVib29rDQotLS0NCg0KDQpgYGB7ciBzZXR1cCwgaW5jbHVkZT1GQUxTRX0NCmtuaXRyOjpvcHRzX2NodW5rJHNldChlY2hvID0gVFJVRSwgZXZhbD1UUlVFKQ0KYGBgDQoNCmBgYHtyIGxpYiwgaW5jbHVkZT1GQUxTRX0NCmxpYnJhcnkodGlkeXZlcnNlKQ0KbGlicmFyeSh4bHN4KQ0KbGlicmFyeShza2ltcikNCmBgYA0KDQoNCiMjVGFjdGljczoNClRoZXJlIGFyZSB0d28gZGF0YSBzZXRzIHRvIHRpZHkgYW5kIHNvIHdlIHdpbGwgYXBwcm9hY2ggZWFjaCBpbmRpdmlkdWFsbHkuIEZpcnN0IHdlIHdpbGwgcHJvY2VzcyB0aGUgSU9XQSBkYXRhIHNldC4gDQoNCiMjSU9XQSB0aWR5aW5nOg0KDQpJbXBvcnRpbmcgZGF0YToNCmBgYHtyIGlvd2FfaW1wfQ0KaW93YSA8LSByZWFkLnhsc3goIi4vZGF0YS9JT1dBX1BMT1MueGxzIiwgMSkNCmlvd2EgPC0gYXNfdGliYmxlKGlvd2EpDQpgYGANCg0KUmVhcnJhbmdpbmcgdGhlIGNvbHVtbnMgaW4gdGhlIG5ldyBkYXRhc2V0DQpgYGB7cn0NCnBhaXJlZCA8LSBpb3dhICU+JSBzZWxlY3QoSUQsIGV2ZXJ5dGhpbmcoKSkNCmBgYA0KIA0KIyNFWFBMQUlOQVRJT04gT04gV0hZIFdFIFVOSVRFRCBBTEwgVEhFU0UgUE9JTlRTDQoNCg0KMSkgTWVyZ2UgcnM3NzkxMzk2DQpgYGB7cn0NCnBhaXJlZCA8LSB1bml0ZShkYXRhID0gcGFpcmVkLCBjb2wgPSByczc3OTEzOTYsIHJzNzc5MTM5Nl9hMSAsIHJzNzc5MTM5Nl9hMiAsIHNlcCA9ICcvJyApICU+JSANCiAgbXV0YXRlKHJzNzc5MTM5NiA9IGFzX2ZhY3Rvcihyczc3OTEzOTYpKQ0KYGBgDQoNCjIpIE1lcmdlIHJzMTIxNTUzMjgNCmBgYHtyfQ0KcGFpcmVkIDwtIHVuaXRlKGRhdGEgPSBwYWlyZWQsIGNvbCA9IHJzMTIxNTUzMjgsIHJzMTIxNTUzMjhfYTEgLCByczEyMTU1MzI4X2EyICwgc2VwID0gJy8nICkgJT4lIG11dGF0ZShyczEyMTU1MzI4ID0gYXNfZmFjdG9yKHJzMTIxNTUzMjgpKQ0KYGBgDQoNCjMpIE1lcmdlIHJzMTA0NDc3NjANCmBgYHtyfQ0KcGFpcmVkIDwtIHVuaXRlKGRhdGEgPSBwYWlyZWQsIGNvbCA9IHJzMTA0NDc3NjAsIHJzMTA0NDc3NjBfYTEgLCByczEwNDQ3NzYwX2EyICwgc2VwID0gJy8nICkgJT4lIG11dGF0ZShyczEwNDQ3NzYwID0gYXNfZmFjdG9yKHJzMTA0NDc3NjApKQ0KYGBgDQoNCjQpIE1lcmdlIHJzMTA5NTM3NTQNCmBgYHtyfQ0KcGFpcmVkIDwtIHVuaXRlKGRhdGEgPSBwYWlyZWQsIGNvbCA9IHJzMTA5NTM3NTQsIHJzMTA5NTM3NTRfYTEgLCByczEwOTUzNzU0X2EyICwgc2VwID0gJy8nICkgJT4lIG11dGF0ZShyczEwOTUzNzU0ID0gYXNfZmFjdG9yKHJzMTA5NTM3NTQpKQ0KYGBgDQoNCjUpIE1lcmdlIHJzMjI0NDQxOQ0KYGBge3J9DQpwYWlyZWQgPC0gdW5pdGUoZGF0YSA9IHBhaXJlZCwgY29sID0gcnMyMjQ0NDE5LCByczIyNDQ0MTlfYTEgLCByczIyNDQ0MTlfYTIgLCBzZXAgPSAnLycgKSAlPiUgbXV0YXRlKHJzMjI0NDQxOSA9IGFzX2ZhY3RvcihyczIyNDQ0MTkpKQ0KYGBgDQoNCjUpIE1lcmdlIHJzMTY2ODMzNQ0KYGBge3J9DQpwYWlyZWQgPC0gdW5pdGUoZGF0YSA9IHBhaXJlZCwgY29sID0gcnMxNjY4MzM1LCByczE2NjgzMzVfYTEgLCByczE2NjgzMzVfYTIgLCBzZXAgPSAnLycgKSAlPiUgbXV0YXRlKHJzMTY2ODMzNSA9IGFzX2ZhY3RvcihyczE2NjgzMzUpKQ0KYGBgDQoNCjYpIE1lcmdlIHJzMjM5NjcyMA0KYGBge3J9DQpwYWlyZWQgPC0gdW5pdGUoZGF0YSA9IHBhaXJlZCwgY29sID0gcnMyMzk2NzIwLCByczIzOTY3MjBfYTEgLCByczIzOTY3MjBfYTIgLCBzZXAgPSAnLycgKSAlPiUgbXV0YXRlKHJzMjM5NjcyMCA9IGFzX2ZhY3RvcihyczIzOTY3MjApKQ0KYGBgDQoNCjcpIE1lcmdlIHJzMTkxNjk4OA0KYGBge3J9DQpwYWlyZWQgPC0gdW5pdGUoZGF0YSA9IHBhaXJlZCwgY29sID0gcnMxOTE2OTg4LCByczE5MTY5ODhfYTEgLCByczE5MTY5ODhfYTIgLCBzZXAgPSAnLycgKSAlPiUgbXV0YXRlKHJzMTkxNjk4OCA9IGFzX2ZhY3RvcihyczE5MTY5ODgpKQ0KYGBgDQoNCjgpIE1lcmdlIHJzMTE1MDU5MjINCmBgYHtyfQ0KcGFpcmVkIDwtIHVuaXRlKGRhdGEgPSBwYWlyZWQsIGNvbCA9IHJzMTE1MDU5MjIsIHJzMTE1MDU5MjJfYTEgLCByczExNTA1OTIyX2EyICwgc2VwID0gJy8nICkgJT4lIG11dGF0ZShyczExNTA1OTIyID0gYXNfZmFjdG9yKHJzMTE1MDU5MjIpKQ0KYGBgDQoNCjkpIE1lcmdlIHJzNzc4NTcwMQ0KYGBge3J9DQpwYWlyZWQgPC0gdW5pdGUoZGF0YSA9IHBhaXJlZCwgY29sID0gcnM3Nzg1NzAxLCByczc3ODU3MDFfYTEgLCByczc3ODU3MDFfYTIgLCBzZXAgPSAnLycgKSAlPiUgbXV0YXRlKHJzNzc4NTcwMSA9IGFzX2ZhY3Rvcihyczc3ODU3MDEpKQ0KYGBgDQoNCjEwKSBNZXJnZSByczIxMDY5MDANCmBgYHtyfQ0KcGFpcmVkIDwtIHVuaXRlKGRhdGEgPSBwYWlyZWQsIGNvbCA9IHJzMjEwNjkwMCwgcnMyMTA2OTAwX2ExICwgcnMyMTA2OTAwX2EyICwgc2VwID0gJy8nICkgJT4lIG11dGF0ZShyczIxMDY5MDAgPSBhc19mYWN0b3IocnMyMTA2OTAwKSkNCmBgYA0KDQoxMSkgTWVyZ2UgcnM3Nzk5NjUyDQpgYGB7cn0NCnBhaXJlZCA8LSB1bml0ZShkYXRhID0gcGFpcmVkLCBjb2wgPSByczc3OTk2NTIsIHJzNzc5OTY1Ml9hMSAsIHJzNzc5OTY1Ml9hMiAsIHNlcCA9ICcvJyApICU+JSBtdXRhdGUocnM3Nzk5NjUyID0gYXNfZmFjdG9yKHJzNzc5OTY1MikpDQpgYGANCg0KMTIpIE1lcmdlIHJzMTAwNTk1OA0KYGBge3J9DQpwYWlyZWQgPC0gdW5pdGUoZGF0YSA9IHBhaXJlZCwgY29sID0gcnMxMDA1OTU4LCByczEwMDU5NThfYTEgLCByczEwMDU5NThfYTIgLCBzZXAgPSAnLycgKSAlPiUgbXV0YXRlKHJzMTAwNTk1OCA9IGFzX2ZhY3RvcihyczEwMDU5NTgpKQ0KYGBgDQoNCg0KTm93IHRoYXQgSSBwYWluc3Rha2luZ2x5IHVuaXRlZCB0aGUgZGF0YSBsZXRzIGxvb2sgYXQgaXQNCmBgYHtyfQ0KcGFpcmVkICU+JSBnbGltcHNlKCkNCmBgYA0KDQojTk9USUNFIFRIRVJFIEFSRSBaRVJPRVMgUFJFU0VOVC4gV0UgRE8gTk9UIFRIUk9XIFRIRU0gT1VUIFNJTkNFIFRIRSBPQlNFUlZBVElPTiBDT05UQUlOUyBPVEhFUiBVU0VGVUwgREFUQSBKVVNUIE5PVCBVU0VEIElOIEFOQUxZU0lTLg0KDQoNCg0KI0VMVlMgREFUQToNCmBgYHtyIGVsdnN9DQplbHZzIDwtIHJlYWQueGxzeCgiLi9kYXRhL0VMVlNfUExPUy54bHMiLCAxKQ0KZWx2cyA8LSBhc190aWJibGUoZWx2cykNCmBgYA0KDQoNClJlYXJyYW5naW5nIHRoZSBjb2x1bW5zIGRyb3BwaW5nIHRoZSBJRCBjb2x1bW4uIA0KYGBge3J9DQp0aWR5X2VsdnMgPC0gZWx2cyAlPiUgc2VsZWN0KENFTEY3U1MwLCBDYWxsKQ0KYGBgDQoNCg0KDQpMZXRzIGludmVzdGlnYXRlIGlmIHRoZXJlIGFyZSBhbnkgTkEncw0KYGBge3J9DQp0aWR5X2VsdnMgJT4lIHNraW0oKQ0KYGBgDQoNCg0KDQpUaGVyZSBhcmUgMjAgbnVsbCB2YWx1ZXMgaW4gdGhlIGRhdGEgc2V0IHNvIEkgd2lsbCByZW1vdmUgdGhlbSANCmBgYHtyfQ0KdGlkeV9lbHZzIDwtIHRpZHlfZWx2cyAlPiUgZmlsdGVyKCFpcy5uYShDYWxsKSkNCmBgYA0KDQoNCiNSRU5BTUUgVEhFIENBTEwgQ09MVU1OIFRPIFJFRkxFQ1QgU05QDQoNCg0KDQoNCg0KDQojI1NhdmluZyB0aGUgZGF0YTogDQojU0FWRSBEQVRBIEhFUkUgRk9SIEJPVEgu</div>
 
 
 
