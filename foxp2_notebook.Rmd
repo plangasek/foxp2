@@ -1,6 +1,8 @@
 ---
 title: "Foxp2 Notebook"
-output: html_notebook
+output:
+  html_document:
+    df_print: paged
 ---
 
 
@@ -20,7 +22,7 @@ There are two data sets to tidy and so we will approach each individually. First
 
 ##IOWA tidying:
 
-Importing data:
+Importing data and formatting it as a tibble for tidyifying:
 ```{r iowa_imp}
 iowa <- read.xlsx("./data/IOWA_PLOS.xls", 1)
 iowa <- as_tibble(iowa)
@@ -31,8 +33,9 @@ Rearranging the columns in the new dataset
 tidy_iowa <- iowa %>% select(ID, everything())
 ```
  
-##EXPLAINATION ON WHY WE UNITED ALL THESE POINTS
+##EXPLANATION ON WHY WE UNITED ALL THESE POINTS
 
+Each allele point had its own column, but all data is calculated based on if the chromosome combination is heterozygous or homozygous. Thus, combining the columns for each gene first of all allows us to visualize (and compare) the elements together, and second of all condenses the dataset.
 
 1) Merge rs7791396
 ```{r}
@@ -112,13 +115,14 @@ Please note that even in this glimpse statemenet there are 0's present in the da
 
 
 #ELVS DATA:
+Importing and tidyifying as before.
 ```{r elvs}
 elvs <- read.xlsx("./data/ELVS_PLOS.xls", 1)
 elvs <- as_tibble(elvs)
 ```
 
 
-Rearranging the columns dropping the ID column. 
+Rearranging the columns dropping the ID column since there is no data in the ID column anyway.
 ```{r}
 tidy_elvs <- elvs %>% select(CELF7SS0, Call)
 ```
@@ -138,12 +142,12 @@ tidy_elvs <- tidy_elvs %>% filter(!is.na(Call))
 ```
 
 
-Renaming the Call column to reflect that SNP __INSERT HERE__
+Renaming the Call column to reflect that SNP rs1916988 is the gene evaluated.
 ```{r clean_name}
 tidy_elvs <- tidy_elvs %>% select(CELF7SS0, "rs1916988" = Call)
 ```
 
-Take a look at those data wow!
+Take a look at those data wow! The data are now comparable to the iowa dataset.
 ```{r}
 tidy_elvs %>% glimpse()
 ```
