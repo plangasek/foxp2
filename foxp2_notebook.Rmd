@@ -28,7 +28,7 @@ iowa <- as_tibble(iowa)
 
 Rearranging the columns in the new dataset
 ```{r}
-paired <- iowa %>% select(ID, everything())
+tidy_iowa <- iowa %>% select(ID, everything())
 ```
  
 ##EXPLAINATION ON WHY WE UNITED ALL THESE POINTS
@@ -36,78 +36,79 @@ paired <- iowa %>% select(ID, everything())
 
 1) Merge rs7791396
 ```{r}
-paired <- unite(data = paired, col = rs7791396, rs7791396_a1 , rs7791396_a2 , sep = '/' ) %>% 
+tidy_iowa <- unite(data = tidy_iowa, col = rs7791396, rs7791396_a1 , rs7791396_a2 , sep = '/' ) %>% 
   mutate(rs7791396 = as_factor(rs7791396))
 ```
 
 2) Merge rs12155328
 ```{r}
-paired <- unite(data = paired, col = rs12155328, rs12155328_a1 , rs12155328_a2 , sep = '/' ) %>% mutate(rs12155328 = as_factor(rs12155328))
+tidy_iowa <- unite(data = tidy_iowa, col = rs12155328, rs12155328_a1 , rs12155328_a2 , sep = '/' ) %>% mutate(rs12155328 = as_factor(rs12155328))
 ```
 
 3) Merge rs10447760
 ```{r}
-paired <- unite(data = paired, col = rs10447760, rs10447760_a1 , rs10447760_a2 , sep = '/' ) %>% mutate(rs10447760 = as_factor(rs10447760))
+tidy_iowa <- unite(data = tidy_iowa, col = rs10447760, rs10447760_a1 , rs10447760_a2 , sep = '/' ) %>% mutate(rs10447760 = as_factor(rs10447760))
 ```
 
 4) Merge rs10953754
 ```{r}
-paired <- unite(data = paired, col = rs10953754, rs10953754_a1 , rs10953754_a2 , sep = '/' ) %>% mutate(rs10953754 = as_factor(rs10953754))
+tidy_iowa <- unite(data = tidy_iowa, col = rs10953754, rs10953754_a1 , rs10953754_a2 , sep = '/' ) %>% mutate(rs10953754 = as_factor(rs10953754))
 ```
 
 5) Merge rs2244419
 ```{r}
-paired <- unite(data = paired, col = rs2244419, rs2244419_a1 , rs2244419_a2 , sep = '/' ) %>% mutate(rs2244419 = as_factor(rs2244419))
+tidy_iowa <- unite(data = tidy_iowa, col = rs2244419, rs2244419_a1 , rs2244419_a2 , sep = '/' ) %>% mutate(rs2244419 = as_factor(rs2244419))
 ```
 
 5) Merge rs1668335
 ```{r}
-paired <- unite(data = paired, col = rs1668335, rs1668335_a1 , rs1668335_a2 , sep = '/' ) %>% mutate(rs1668335 = as_factor(rs1668335))
+tidy_iowa <- unite(data = tidy_iowa, col = rs1668335, rs1668335_a1 , rs1668335_a2 , sep = '/' ) %>% mutate(rs1668335 = as_factor(rs1668335))
 ```
 
 6) Merge rs2396720
 ```{r}
-paired <- unite(data = paired, col = rs2396720, rs2396720_a1 , rs2396720_a2 , sep = '/' ) %>% mutate(rs2396720 = as_factor(rs2396720))
+tidy_iowa <- unite(data = tidy_iowa, col = rs2396720, rs2396720_a1 , rs2396720_a2 , sep = '/' ) %>% mutate(rs2396720 = as_factor(rs2396720))
 ```
 
 7) Merge rs1916988
 ```{r}
-paired <- unite(data = paired, col = rs1916988, rs1916988_a1 , rs1916988_a2 , sep = '/' ) %>% mutate(rs1916988 = as_factor(rs1916988))
+tidy_iowa <- unite(data = tidy_iowa, col = rs1916988, rs1916988_a1 , rs1916988_a2 , sep = '/' ) %>% mutate(rs1916988 = as_factor(rs1916988))
 ```
 
 8) Merge rs11505922
 ```{r}
-paired <- unite(data = paired, col = rs11505922, rs11505922_a1 , rs11505922_a2 , sep = '/' ) %>% mutate(rs11505922 = as_factor(rs11505922))
+tidy_iowa <- unite(data = tidy_iowa, col = rs11505922, rs11505922_a1 , rs11505922_a2 , sep = '/' ) %>% mutate(rs11505922 = as_factor(rs11505922))
 ```
 
 9) Merge rs7785701
 ```{r}
-paired <- unite(data = paired, col = rs7785701, rs7785701_a1 , rs7785701_a2 , sep = '/' ) %>% mutate(rs7785701 = as_factor(rs7785701))
+tidy_iowa <- unite(data = tidy_iowa, col = rs7785701, rs7785701_a1 , rs7785701_a2 , sep = '/' ) %>% mutate(rs7785701 = as_factor(rs7785701))
 ```
 
 10) Merge rs2106900
 ```{r}
-paired <- unite(data = paired, col = rs2106900, rs2106900_a1 , rs2106900_a2 , sep = '/' ) %>% mutate(rs2106900 = as_factor(rs2106900))
+tidy_iowa <- unite(data = tidy_iowa, col = rs2106900, rs2106900_a1 , rs2106900_a2 , sep = '/' ) %>% mutate(rs2106900 = as_factor(rs2106900))
 ```
 
 11) Merge rs7799652
 ```{r}
-paired <- unite(data = paired, col = rs7799652, rs7799652_a1 , rs7799652_a2 , sep = '/' ) %>% mutate(rs7799652 = as_factor(rs7799652))
+tidy_iowa <- unite(data = tidy_iowa, col = rs7799652, rs7799652_a1 , rs7799652_a2 , sep = '/' ) %>% mutate(rs7799652 = as_factor(rs7799652))
 ```
 
 12) Merge rs1005958
 ```{r}
-paired <- unite(data = paired, col = rs1005958, rs1005958_a1 , rs1005958_a2 , sep = '/' ) %>% mutate(rs1005958 = as_factor(rs1005958))
+tidy_iowa <- unite(data = tidy_iowa, col = rs1005958, rs1005958_a1 , rs1005958_a2 , sep = '/' ) %>% mutate(rs1005958 = as_factor(rs1005958))
 ```
+
 
 
 Now that I painstakingly united the data lets look at it
+To replicate this analysis I reccomend you use the **run all blocks above** button to not get errors.
 ```{r}
-paired %>% glimpse()
+tidy_iowa %>% glimpse()
 ```
 
-#NOTICE THERE ARE ZEROES PRESENT. WE DO NOT THROW THEM OUT SINCE THE OBSERVATION CONTAINS OTHER USEFUL DATA JUST NOT USED IN ANALYSIS.
-
+Please note that even in this glimpse statemenet there are 0's present in the data. Although these represent a no call NA, we are retaining this information as although that single genotype call failed we still extract alot of relevant data from these subjects so their NA values will be retained. 
 
 
 #ELVS DATA:
@@ -132,17 +133,39 @@ tidy_elvs %>% skim()
 
 
 There are 20 null values in the data set so I will remove them 
-```{r}
+```{r clean_na}
 tidy_elvs <- tidy_elvs %>% filter(!is.na(Call))
 ```
 
 
-#RENAME THE CALL COLUMN TO REFLECT SNP
+Renaming the Call column to reflect that SNP __INSERT HERE__
+```{r clean_name}
+tidy_elvs <- tidy_elvs %>% select(CELF7SS0, "rs1916988" = Call)
+```
 
-
+Take a look at those data wow!
+```{r}
+tidy_elvs %>% glimpse()
+```
 
 
 
 
 ##Saving the data: 
-#SAVE DATA HERE FOR BOTH.
+
+Saving the IOWA data to a csv file to be easily imported. 
+```{r save_IOWA}
+write.csv(tidy_iowa, file = "./data/tidy_iowa.csv")
+```
+
+
+Saving the ELVS data to a csv file to be easily imported. 
+```{r save_ELVS}
+write.csv(tidy_elvs, file = "./data/tidy_elvs.csv")
+```
+
+All data should be placed in the data folder to be readily used. 
+
+<br\>
+
+
