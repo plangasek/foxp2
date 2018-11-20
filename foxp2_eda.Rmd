@@ -1,0 +1,86 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r libraries, include = FALSE}
+library(tidyverse)
+library(skimr)
+```
+
+Reading in the data.
+```{r read_in, include = FALSE}
+elvs <- read_csv(here::here("data", "tidy_elvs.csv"))
+iowa <- read_csv(here::here("data", "tidy_iowa.csv"))
+```
+
+
+# JACOB PUSH THE PROJECT FILE, NOTEBOOK FILE, AND HTML FILE TO THE GITHUB
+
+#Begining with ELVS dataset:
+## Look at raw data.
+```{r}
+elvs %>% glimpse()
+```
+FACTOR THE DATA AND CREATE LEVELS TALK TO THE GROUP ABOUT THAT 
+
+
+## Compute Summary stats:
+```{r}
+elvs %>% skim()
+```
+
+
+
+#Visualizations:
+
+
+Lets see the distribution of the celf scores...
+```{r celf}
+elvs %>% ggplot(aes(CELF7SS0)) + geom_density() + geom_vline(xintercept = 100)
+```
+Here we can see that the sample mean of the  CELF score is centered around 100. We can notice that there is there is a significant left skew to the distribution indicating we have a larger proportion of low scores present in this data set, which is completely reasonable since we our hypothesis is that there a mutation in foxp2 will lower langauge ability. 
+
+
+
+CREATE PLOT SHOWING THE LEVELS AND THEIR RElATIONSHIP WITH CELF 
+```{r}
+elvs %>% ggplot(aes(rs1916988)) + geom_bar() 
+```
+
+Here we can see that there is a higher count of C/T in the dataset than any other variant. Additionally there is a very small proportion of C/C which I assume is the rare variant causing some damage.  
+
+
+#GUYS WE CARE ABOUT A 0 VALUE IN THESE DATASET SINCE IF THE GENE IS HECKIN KNOCKED OUT WE SHOULD SEE A DECREASE IN LANGUAGE SCORES HECKIN HECK MAN
+
+
+#IOWA DATA: 
+
+##Look at raw values
+```{r}
+iowa %>% glimpse()
+```
+
+
+## Turn relevant rows into factors. 
+
+## Compute summary stats ALTER SKIM STATEMENT TO ONLY MEASURES THINGS WE CARE ABOUT
+```{r}
+iowa %>% skim()
+```
+Here we can see that the LCOMP mean is -0.35. This initial finding follows our hypothesis that a mutation in foxp2 is associated with a decrease in language ability. Unfortunatly when we take into account the standard deviation we see that it overlaps with 0 giving us a quick and dirty metric that something is afoot. 
+
+
+
+##Visualizations
+```{r}
+iowa %>% ggplot(aes(rs1916988)) + geom_bar() 
+```
+When comparing the same mutation in both data sets we can see that there is a similar distribution of genotypes bewtween both samples. This indicates that at least both studies were designed similarly and sampled from similar populations. 
+
+
+
+
+
+
+
