@@ -1,6 +1,8 @@
 ---
 title: "R Notebook"
-output: html_notebook
+output:
+  html_document:
+    df_print: paged
 ---
 
 ```{r libraries, include = FALSE}
@@ -53,7 +55,7 @@ Here we can see that there is a higher count of C/T in the dataset than any othe
 
 
 #GUYS WE CARE ABOUT A 0 VALUE IN THESE DATASET SINCE IF THE GENE IS HECKIN KNOCKED OUT WE SHOULD SEE A DECREASE IN LANGUAGE SCORES HECKIN HECK MAN
-
+![heckin doggo ko](heckindoggoko.jpg)
 
 #IOWA DATA: 
 
