@@ -15,7 +15,6 @@ iowa <- read_csv(here::here("data", "tidy_iowa.csv"))
 ```
 
 
-# JACOB PUSH THE PROJECT FILE, NOTEBOOK FILE, AND HTML FILE TO THE GITHUB
 
 #Begining with ELVS dataset:
 ## Look at raw data.
@@ -65,6 +64,7 @@ iowa %>% glimpse()
 ## Turn relevant rows into factors. 
 
 ## Compute summary stats ALTER SKIM STATEMENT TO ONLY MEASURES THINGS WE CARE ABOUT
+## THEY FOUND AN N OF 812!!!! 
 ```{r}
 iowa %>% skim()
 ```
@@ -80,6 +80,10 @@ When comparing the same mutation in both data sets we can see that there is a si
 
 
 
+```{r SNPs}
+SNP <- iowa %>% gather(key = "SNP", value = "Geno", starts_with("rs"))
+SNP %>% ggplot(aes(x = Geno, color = Geno)) + geom_bar() + facet_wrap(~SNP)
+```
 
 
 
