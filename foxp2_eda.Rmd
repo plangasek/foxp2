@@ -44,18 +44,23 @@ elvs %>% ggplot(aes(x=CELF7SS0, fill = "red")) + geom_density() + geom_vline(xin
 ```
 Here we can see that the sample mean of the  CELF score is centered around 100. We can notice that there is there is a significant left skew to the distribution indicating we have a larger proportion of low scores present in this data set, which is completely reasonable since we our hypothesis is that there a mutation in foxp2 will lower langauge ability. 
 
-
-
-CREATE PLOT SHOWING THE LEVELS AND THEIR RElATIONSHIP WITH CELF 
+## CREATE PLOT SHOWING THE LEVELS AND THEIR RElATIONSHIP WITH CELF 
 ```{r}
 elvs %>% ggplot(aes(x=rs1916988,fill=rs1916988)) + geom_bar() 
 ```
 
-Here we can see that there is a higher count of C/T in the dataset than any other variant. Additionally there is a very small proportion of C/C which I assume is the rare variant causing some damage.  
+Here we can see that there is a higher count of C/T in the dataset than any other variant. Additionally there is a very small proportion of C/C which could be the rare variant causing some damage.  
+
+Looking at the CELF scores based on genotype variation...
+```{r}
+elvs %>% ggplot(aes(x=CELF7SS0, fill = rs1916988, alpha = 0.7)) + 
+  geom_density() + 
+  labs(title = "Language Scores from ELVS dataset, colored by Genotype variant for rs1916988")
+```
 
 
-#GUYS WE CARE ABOUT A 0 VALUE IN THESE DATASET SINCE IF THE GENE IS HECKIN KNOCKED OUT WE SHOULD SEE A DECREASE IN LANGUAGE SCORES HECKIN HECK MAN
-![heckin doggo ko](heckindoggoko.jpg)
+## GUYS WE CARE ABOUT A 0 VALUE IN THESE DATASET SINCE IF THE GENE IS HECKIN KNOCKED OUT WE SHOULD SEE A DECREASE IN LANGUAGE SCORES HECKIN HECK MAN
+![heckin doggo knocc owt](heckindoggoko.jpg)
 
 #IOWA DATA: 
 
@@ -76,10 +81,11 @@ Here we can see that the LCOMP mean is -0.35. This initial finding follows our h
 
 
 
-##Visualizations
+# Visualizations
 Lanuage Scores:
 ```{r}
-iowa %>% ggplot(aes(x=LCOMP,fill=Sample,alpha=.9)) + geom_density()
+iowa %>% ggplot(aes(x=LCOMP,fill=Sample,alpha=.9)) + 
+  geom_density()
 ```
 
 
@@ -87,18 +93,33 @@ iowa %>% ggplot(aes(x=LCOMP,fill=Sample,alpha=.9)) + geom_density()
 
 
 ```{r}
-iowa %>% ggplot(aes(x="rs1916988",fill = rs1916988, alpha = .9)) + geom_bar() 
+iowa %>% ggplot(aes(x=rs1916988,fill = rs1916988, alpha = .9)) + 
+  geom_bar(position = "stack") 
 ```
 When comparing the same mutation in both data sets we can see that there is a similar distribution of genotypes bewtween both samples. This indicates that at least both studies were designed similarly and sampled from similar populations. 
 
-
+ 
 
 ```{r SNPs}
 SNP <- iowa %>% gather(key = "SNP", value = "Geno", starts_with("rs")) %>% group_by(SNP)
-SNP %>% ggplot(aes(x = Geno, color = Geno)) + geom_bar() + facet_wrap(~SNP)
+SNP %>% ggplot(aes(x = Geno, color = Geno)) + 
+  geom_bar() + 
+  facet_wrap(~SNP) + 
+  labs(title = "Genotype Variations per Gene") + 
+  xlab("Genotype") + 
+  theme(axis.text.x = element_text(size = 6, angle = 45))
 ```
 
 
+```{r}
+# 
+SNP <- iowa %>% gather(key = "SNP", value = "Geno", starts_with("rs")) %>% group_by(SNP)
+SNP %>% ggplot(aes(x = LCOMP, fill = Geno, color = Geno, alpha = 0.2)) + 
+  geom_density() + 
+  facet_wrap(~SNP) + 
+  labs(title = "Density graphs of LCOMP z-scores based on Genotype and Faceted by Gene") + 
+  xlab("LCOMP z-scores")
+```
 
 
 
@@ -117,15 +138,15 @@ n <-length(new_tab)
 print(n)
 SNP_var <- iowa
 
-p = ggplot()
-for (i in 1:n)
-  {
-  data <- new_tab %>% pull(i)
-   p + qplot(data, data = new_tab, geom = "bar")
-  
-}
-
-print(p)
+# p = ggplot()
+# for (i in 1:n)
+#   {
+#   data <- new_tab %>% pull(i)
+#    p + qplot(data, data = new_tab, geom = "bar")
+#   
+# }
+# 
+# print(p)
 
 ```
 
