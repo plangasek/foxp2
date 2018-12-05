@@ -1,16 +1,20 @@
 ---
-title: "R Notebook"
+title: "FOXP2_EDA"
 output:
   html_document:
     df_print: paged
 ---
+
+Jacob Gutierrez  
+Patty Langasek  
+Jennifer Sullivan
 
 ```{r libraries, include = FALSE}
 library(tidyverse)
 library(skimr)
 ```
 
-Reading in the data.
+
 ```{r read_in, include = FALSE}
 elvs <- read_csv(here::here("data", "tidy_elvs.csv"))
 elvs <- elvs %>% mutate(rs1916988 = as_factor(rs1916988))
@@ -20,85 +24,115 @@ iowa <- iowa %>% mutate_at(vars(starts_with("rs")), funs( as_factor(.)))
 
 
 
-#Begining with ELVS dataset:
-## Look at raw data.
+# ELVS DATA SET:
+
+## Look at the raw data.
 ```{r}
 elvs %>% glimpse()
 ```
-FACTOR THE DATA AND CREATE LEVELS TALK TO THE GROUP ABOUT THAT 
+
+number of variables: 3 (including the index we created (X1))  
+number of observations: 308  
+numerical variable: CELF7SS0 (the language score)  
+categorical variable: rs1916988 (the SNP in the FOXP2 gene)
+
+Each observation represents a research participant (a child around seven years of age).
 
 
-## Compute Summary stats:
+## Compute summary statistics.
 ```{r}
 elvs %>% skim()
 ```
 
+A few things to note:  
+1.  There are 308 observations, with no missing values.  (Originally there were 328 observations, but we removed 20 observations that had no genotype information.)  
+2.  The three genotypes for the rs1916988 SNP are C/T, T/T, and C/C, with C/T being the most common (47%), closely followed by T/T (43%), and C/C being the least common (10%).  
+3.  According to the paper, the language scores were standardized to have a mean of 100 and a standard deviation of 15.  The true mean and standard deviation calculated from this data are close to the stated values: 99.04 and 14.08, respectively.  
+4.  The language scores range from 45 to 134.
 
 
-#Visualizations:
+## Visualize the data.
 
 
-Lets see the distribution of the celf scores...
+#### The distribution of the CELF7SS0 language scores
+
 ```{r celf}
 elvs %>% ggplot(aes(x=CELF7SS0, fill = "red")) + geom_density() + geom_vline(xintercept = 100)
 ```
-Here we can see that the sample mean of the  CELF score is centered around 100. We can notice that there is there is a significant left skew to the distribution indicating we have a larger proportion of low scores present in this data set, which is completely reasonable since we our hypothesis is that there a mutation in foxp2 will lower langauge ability. 
 
-## CREATE PLOT SHOWING THE LEVELS AND THEIR RElATIONSHIP WITH CELF 
+Here we can see that the distribution of the CELF7SS0 language score is centered at approximately 100. We also notice that it is left-skewed, indicating that we have a larger proportion of low scores present in this data set.  Therefore, it appears that children with weaker language skills were oversampled in this data set.  This study was conducted to find correlations between genotype and normal differences in language ability seen in the general population.  However, this higher prevalence of low scores suggests that this sample may not be entirely representative of the general population.
+
+#### The frequency of each genotype for the rs1916988 SNP
+
 ```{r}
 elvs %>% ggplot(aes(x=rs1916988,fill=rs1916988)) + geom_bar() 
 ```
 
-Here we can see that there is a higher count of C/T in the dataset than any other variant. Additionally there is a very small proportion of C/C which could be the rare variant causing some damage.  
+Here we can see that the C/T genotype was the most common variant in the data set, with a frequency just a bit higher than the T/T genotype. Additionally there was a very small proportion of participants with the C/C genotype (just 10% of participants had this variant).
 
-Looking at the CELF scores based on genotype variation...
+
+#### The distribution of the CELF7SS0 language scores, colored by genotype for rs1916988
+
 ```{r}
 elvs %>% ggplot(aes(x=CELF7SS0, fill = rs1916988, alpha = 0.7)) + 
   geom_density() + 
   labs(title = "Language Scores from ELVS dataset, colored by Genotype variant for rs1916988")
 ```
 
+This plot shows that the lower language scores are associated with the presence of the C allele.  This is consistent with what is reported in the article, though the authors state that the differences in the mean language scores for the three genotypes were not significant.  We can see that much of the data for all three variants does fall within a similar range of scores.
 
-## GUYS WE CARE ABOUT A 0 VALUE IN THESE DATASET SINCE IF THE GENE IS HECKIN KNOCKED OUT WE SHOULD SEE A DECREASE IN LANGUAGE SCORES HECKIN HECK MAN
-![heckin doggo knocc owt](heckindoggoko.jpg)
 
-#IOWA DATA: 
+# IOWA DATA SET: 
 
-##Look at raw values
+## Look at the raw data.
+
 ```{r}
 iowa %>% glimpse()
 ```
 
+number of variables: 17 (including the index we created (X1) and the ID that was assigned to each research participant)  
+number of observations: 834
+numerical variable: LCOMP (the language score)
+categorical variables: Sample (the study from which the subject was sampled), each of 13 SNPs in the FOXP2 gene
+
+Each observation represents a research participant (a kindergarten-age child from the Longitudinal study or an elementary school-age (first- through fourth-grade) child from the School study).
 
 
+## Compute summary statistics.
 
-
-## Summary Statistics:
 ```{r}
 iowa %>% skim()
 ```
-Here we can see that the LCOMP mean is -0.35. This initial finding follows our hypothesis that a mutation in foxp2 is associated with a decrease in language ability. Unfortunatly when we take into account the standard deviation we see that it overlaps with 0 giving us a quick and dirty metric that something is afoot. 
+
+A few things to note:  
+1.  There are 834 observations, with no missing values.  However, all of the SNPs contain a significant proportion of entries labeled as "0/0."  It is presently unclear if these represent missing data or a homozygous deletion.  
+2.  The three genotypes for the rs1916988 SNP (examined in the ELVS data set) are T/C, T/T, and C/C, with T/C being the most common (44%), followed by T/T (42%) and C/C being the least common (9%).  Possible deletion accounted for just 4%.
+3.  The data was taken as a subset of data from two larger studies (Longitudinal and School).  The original samples of language scores were normalized to have a mean of 0 and a standard deviation of 1.  However, the mean for the selected subset of participants is -0.35, indicating that children with lower language ability were oversampled.  The standard deviation is slightly higher than that for the original data sets at 1.09.  
+4.  The language scores range from -3.45 to 2.59.
 
 
+## Visualize the data.
 
-# Visualizations
-Lanuage Scores:
+#### The distribution of the LCOMP language scores, colored by the sample origin
+
 ```{r}
 iowa %>% ggplot(aes(x=LCOMP,fill=Sample,alpha=.9)) + 
   geom_density()
 ```
 
+The School sample is fairly symmetrical and centered approximately at 0, suggesting it is likely a good representation of the general population.  However, we can see that the Longitudinal sample is bimodal, with the taller peak (and therefore the majority of the language scores) below 0.  This is a clear illustration that the Longitudinal sample has an overabundance of children with lower-than-average language abilities (in spite of the authors' effort to correct for this bias when selecting their sample).  Thus, the Longitudinal sample does not appear to represent the general population.
 
-
-
+#### The frequency of each genotype for the rs1916988 SNP
 
 ```{r}
 iowa %>% ggplot(aes(x=rs1916988,fill = rs1916988, alpha = .9)) + 
   geom_bar(position = "stack") 
 ```
-When comparing the same mutation in both data sets we can see that there is a similar distribution of genotypes bewtween both samples. This indicates that at least both studies were designed similarly and sampled from similar populations. 
 
- 
+When comparing the same SNP in both the IOWA data set and the ELVS data set, we can see that there is a similar distribution of genotypes bewtween both samples. This indicates that at least both studies were designed similarly and sampled from similar populations. 
+
+
+#### The frequency of each genotype for all SNPs in the FOXP2 gene
 
 ```{r SNPs}
 SNP <- iowa %>% gather(key = "SNP", value = "Geno", starts_with("rs")) %>% group_by(SNP)
@@ -110,6 +144,10 @@ SNP %>% ggplot(aes(x = Geno, color = Geno)) +
   theme(axis.text.x = element_text(size = 6, angle = 45))
 ```
 
+Interestingly, some SNPs have a very high frequency of a certain genotype, with very little expression of other variants (e.g. rs2396720).  The low frequency of certain genotypes in this sample may have prevented the authors from seeing their true effect on language ability as they may have been underpowered to detect any resulting differences.
+
+
+#### The distribution of the LCOMP language scores, colored by genotype, for all SNPs in the FOXP2 gene
 
 ```{r}
 # 
@@ -117,38 +155,8 @@ SNP <- iowa %>% gather(key = "SNP", value = "Geno", starts_with("rs")) %>% group
 SNP %>% ggplot(aes(x = LCOMP, fill = Geno, color = Geno, alpha = 0.2)) + 
   geom_density() + 
   facet_wrap(~SNP) + 
-  labs(title = "Density graphs of LCOMP z-scores based on Genotype and Faceted by Gene") + 
+  labs(title = "Density graphs of LCOMP z-scores based on Genotype and Faceted by SNP") + 
   xlab("LCOMP z-scores")
 ```
 
-
-
-
-```{r}
-LONG <-  SNP %>% group_by(SNP) %>% distinct(Geno) %>% ungroup(SNP)
-SPREAD <- LONG %>% group_by_at(vars(-Geno)) %>% mutate(id = 1:n()) %>% ungroup() %>% spread(SNP,Geno)
-```
-
-```{r}
-#Select SNPS
-variables <- colnames(iowa)[startsWith(colnames(iowa),"rs")]
-new_tab <- iowa %>% select(starts_with("rs")) 
-
-n <-length(new_tab)
-print(n)
-SNP_var <- iowa
-
-# p = ggplot()
-# for (i in 1:n)
-#   {
-#   data <- new_tab %>% pull(i)
-#    p + qplot(data, data = new_tab, geom = "bar")
-#   
-# }
-# 
-# print(p)
-
-```
-
-
-
+From this set of graphs we can see that while there are a few genotypes for certain SNPs that display a certain degree of skewness, the distributions of language scores for all of the genotypes still seem to be centered fairly close to 0.  There don't appear to be any genotypes that are clearly associated with a very high or very low language score.  This would suggest that there is not a significant difference in language ability for children with differing genotypes in any of the SNPs examined for the FOXP2 gene.  Indeed, this is in agreement with the authors' findings.
