@@ -57,7 +57,7 @@ A few things to note:
 #### The distribution of the CELF7SS0 language scores
 
 ```{r celf}
-elvs %>% ggplot(aes(x=CELF7SS0, fill = "red")) + geom_density() + geom_vline(xintercept = 100)
+elvs %>% ggplot(aes(x=CELF7SS0, fill = "red")) + geom_density() + geom_vline(xintercept = 100) + ggtitle('CELF7SS0 Language Scores')
 ggsave('images/CELF7SS0_dist.png')
 ```
 
@@ -66,7 +66,7 @@ Here we can see that the distribution of the CELF7SS0 language score is centered
 #### The frequency of each genotype for the rs1916988 SNP
 
 ```{r}
-elvs %>% ggplot(aes(x=rs1916988,fill=rs1916988)) + geom_bar() 
+elvs %>% ggplot(aes(x=rs1916988,fill=rs1916988)) + geom_bar() + ggtitle('Genotype Freqeuncy for rs1916988 in ELVS')
 ggsave('images/rs1916988_elvs_count_bar.png')
 ```
 
@@ -79,7 +79,7 @@ Here we can see that the C/T genotype was the most common variant in the data se
 elvs %>% ggplot(aes(x=CELF7SS0, fill = rs1916988, alpha = 0.7)) + 
   geom_density() + 
   labs(title = "Language Scores from ELVS dataset, colored by Genotype variant for rs1916988")
-ggsave('CELF7SS0_scores_dist.png')
+ggsave('images/CELF7SS0_scores_dist.png')
 ```
 
 This plot shows that the lower language scores are associated with the presence of the C allele.  This is consistent with what is reported in the article, though the authors state that the differences in the mean language scores for the three genotypes were not significant.  We can see that much of the data for all three variants does fall within a similar range of scores.
@@ -130,8 +130,9 @@ The School sample is fairly symmetrical and centered approximately at 0, suggest
 #### The frequency of each genotype for the rs1916988 SNP
 
 ```{r}
-iowa %>% ggplot(aes(x=rs1916988,fill = rs1916988, alpha = .9)) + 
-  geom_bar(position = "stack") 
+iowa %>% ggplot(aes(x=rs1916988,fill = rs1916988)) + 
+  geom_bar(position = "stack") +
+  ggtitle('Iowa Genotype Variation Counts')
 
 ggsave('images/rs1916988_count_bar_variants.png')
 ```
@@ -176,7 +177,8 @@ From this set of graphs we can see that while there are a few genotypes for cert
 ```{r common_SNP}
 common_SNP <- iowa %>% select(LCOMP, Sample, rs1916988)
 
-common_SNP %>% ggplot(aes(x = LCOMP, color = rs1916988, alpha = 0.01)) + geom_density() + facet_wrap(~Sample)
+common_SNP %>% 
+  ggplot(aes(x = LCOMP, color = rs1916988, alpha = 0.01)) + geom_density() + facet_wrap(~Sample) + ggtitle('Iowa Score for rs1916988 by sample')
 
 ggsave('images/iowa_score_rs1916988_density_by_sample.png')
 ```
