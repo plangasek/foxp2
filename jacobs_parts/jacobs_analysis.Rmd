@@ -1,0 +1,42 @@
+---
+title: "Presentation Anslysis"
+output: html_notebook
+---
+
+```{r libraries, include = FALSE}
+library(tidyverse)
+library(skimr)
+```
+
+
+```{r read_in, include = FALSE}
+elvs <- read_csv(here::here("data", "tidy_elvs.csv"))
+elvs <- elvs %>% mutate(rs1916988 = as_factor(rs1916988))
+iowa <- read_csv(here::here("data", "tidy_iowa.csv"))
+iowa <- iowa %>% mutate_at(vars(starts_with("rs")), funs( as_factor(.)))
+```
+
+
+
+# 13 One way Anova:
+```{r}
+test <- iowa %>% select(LCOMP,rs7791396) 
+#%>% drop_na(rs7791396)
+
+test %>% group_by(rs7791396) %>% skim()
+
+test <- iowa %>% select(LCOMP,rs7791396) %>% filter( rs7791396 != '0/0')
+
+test %>% group_by(rs7791396) %>% skim()
+anova(lm(LCOMP~ rs7791396, data=iowa))
+
+#TEST ANOVA BETTER 
+# Clears the na's 
+anova(lm(LCOMP~ rs7791396, data=test))
+
+#Find power score! 
+```
+
+POWER SCORE!!!!!!!!
+
+
