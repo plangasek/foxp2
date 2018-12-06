@@ -16,9 +16,9 @@ library(skimr)
 
 
 ```{r read_in, include = FALSE}
-elvs <- read_csv(here::here("data", "tidy_elvs.csv"))
+elvs <- read_csv('data/tidy_elvs.csv')
 elvs <- elvs %>% mutate(rs1916988 = as_factor(rs1916988))
-iowa <- read_csv(here::here("data", "tidy_iowa.csv"))
+iowa <- read_csv('data/tidy_iowa.csv')
 iowa <- iowa %>% mutate_at(vars(starts_with("rs")), funs( as_factor(.)))
 ```
 
@@ -57,7 +57,8 @@ A few things to note:
 #### The distribution of the CELF7SS0 language scores
 
 ```{r celf}
-elvs %>% ggplot(aes(x=CELF7SS0, fill = "red")) + geom_density() + geom_vline(xintercept = 100)
+elvs %>% ggplot(aes(x=CELF7SS0, fill = "red")) + geom_density() + geom_vline(xintercept = 100) + ggtitle('CELF7SS0 Language Scores')
+ggsave('images/CELF7SS0_dist.png')
 ```
 
 Here we can see that the distribution of the CELF7SS0 language score is centered at approximately 100. We also notice that it is left-skewed, indicating that we have a larger proportion of low scores present in this data set.  Therefore, it appears that children with weaker language skills were oversampled in this data set.  This study was conducted to find correlations between genotype and normal differences in language ability seen in the general population.  However, this higher prevalence of low scores suggests that this sample may not be entirely representative of the general population.
@@ -65,7 +66,8 @@ Here we can see that the distribution of the CELF7SS0 language score is centered
 #### The frequency of each genotype for the rs1916988 SNP
 
 ```{r}
-elvs %>% ggplot(aes(x=rs1916988,fill=rs1916988)) + geom_bar() 
+elvs %>% ggplot(aes(x=rs1916988,fill=rs1916988)) + geom_bar() + ggtitle('Genotype Freqeuncy for rs1916988 in ELVS')
+ggsave('images/rs1916988_elvs_count_bar.png')
 ```
 
 Here we can see that the C/T genotype was the most common variant in the data set, with a frequency just a bit higher than the T/T genotype. Additionally there was a very small proportion of participants with the C/C genotype (just 10% of participants had this variant).
@@ -77,6 +79,7 @@ Here we can see that the C/T genotype was the most common variant in the data se
 elvs %>% ggplot(aes(x=CELF7SS0, fill = rs1916988, alpha = 0.7)) + 
   geom_density() + 
   labs(title = "Language Scores from ELVS dataset, colored by Genotype variant for rs1916988")
+ggsave('images/CELF7SS0_scores_dist.png')
 ```
 
 This plot shows that the lower language scores are associated with the presence of the C allele.  This is consistent with what is reported in the article, though the authors state that the differences in the mean language scores for the three genotypes were not significant.  We can see that much of the data for all three variants does fall within a similar range of scores.
@@ -118,6 +121,8 @@ A few things to note:
 ```{r}
 iowa %>% ggplot(aes(x=LCOMP,fill=Sample,alpha=.9)) + 
   geom_density()
+
+ggsave('images/iowa_scores_density.png')
 ```
 
 The School sample is fairly symmetrical and centered approximately at 0, suggesting it is likely a good representation of the general population.  However, we can see that the Longitudinal sample is bimodal, with the taller peak (and therefore the majority of the language scores) below 0.  This is a clear illustration that the Longitudinal sample has an overabundance of children with lower-than-average language abilities (in spite of the authors' effort to correct for this bias when selecting their sample).  Thus, the Longitudinal sample does not appear to represent the general population.
@@ -125,8 +130,11 @@ The School sample is fairly symmetrical and centered approximately at 0, suggest
 #### The frequency of each genotype for the rs1916988 SNP
 
 ```{r}
-iowa %>% ggplot(aes(x=rs1916988,fill = rs1916988, alpha = .9)) + 
-  geom_bar(position = "stack") 
+iowa %>% ggplot(aes(x=rs1916988,fill = rs1916988)) + 
+  geom_bar(position = "stack") +
+  ggtitle('Iowa Genotype Variation Counts')
+
+ggsave('images/rs1916988_count_bar_variants.png')
 ```
 
 When comparing the same SNP in both the IOWA data set and the ELVS data set, we can see that there is a similar distribution of genotypes bewtween both samples. This indicates that at least both studies were designed similarly and sampled from similar populations. 
@@ -142,6 +150,8 @@ SNP %>% ggplot(aes(x = Geno, color = Geno)) +
   labs(title = "Genotype Variations per Gene") + 
   xlab("Genotype") + 
   theme(axis.text.x = element_text(size = 6, angle = 45))
+
+ggsave('images/genotype_var_per_gene.png')
 ```
 
 Interestingly, some SNPs have a very high frequency of a certain genotype, with very little expression of other variants (e.g. rs2396720).  The low frequency of certain genotypes in this sample may have prevented the authors from seeing their true effect on language ability as they may have been underpowered to detect any resulting differences.
@@ -157,6 +167,8 @@ SNP %>% ggplot(aes(x = LCOMP, fill = Geno, color = Geno, alpha = 0.2)) +
   facet_wrap(~SNP) + 
   labs(title = "Density graphs of LCOMP z-scores based on Genotype and Faceted by SNP") + 
   xlab("LCOMP z-scores")
+
+ggsave('images/iowa_zscore_density_by_SNP.png')
 ```
 
 From this set of graphs we can see that while there are a few genotypes for certain SNPs that display a certain degree of skewness, the distributions of language scores for all of the genotypes still seem to be centered fairly close to 0.  There don't appear to be any genotypes that are clearly associated with a very high or very low language score.  This would suggest that there is not a significant difference in language ability for children with differing genotypes in any of the SNPs examined for the FOXP2 gene.  Indeed, this is in agreement with the authors' findings.
@@ -165,7 +177,10 @@ From this set of graphs we can see that while there are a few genotypes for cert
 ```{r common_SNP}
 common_SNP <- iowa %>% select(LCOMP, Sample, rs1916988)
 
-common_SNP %>% ggplot(aes(x = LCOMP, color = rs1916988, alpha = 0.01)) + geom_density() + facet_wrap(~Sample)
+common_SNP %>% 
+  ggplot(aes(x = LCOMP, color = rs1916988, alpha = 0.01)) + geom_density() + facet_wrap(~Sample) + ggtitle('Iowa Score for rs1916988 by sample')
+
+ggsave('images/iowa_score_rs1916988_density_by_sample.png')
 ```
 
 The reason the authors decided to look at the rs1916988 SNP in particular is because they got opposing results for this SNP when they looked at the Longitudinal and School samples separately.  The authors state that in the School sample, the T/T genotype was associated with significantly lower language scores than the T/C genotype.  In the Longitudinal sample, they got the opposite result, with the T/T genotype associated with higher language scores than either the T/C or C/C genotype, though this result was not significant.  From these plots, it is not apparent that these differences between genotypes would exist, as the distributions for either cohort seem to be quite similar for all genotypes.
