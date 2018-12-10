@@ -1,0 +1,394 @@
+---
+title: "Table 4"
+output: html_notebook
+---
+
+```{r libraries, include = FALSE}
+library(tidyverse)
+library(skimr)
+library(knitr)
+```
+
+
+```{r read_in, include = FALSE}
+elvs <- read_csv(here::here("data", "tidy_elvs.csv"))
+elvs <- elvs %>% mutate(rs1916988 = as_factor(rs1916988))
+iowa <- read_csv(here::here("data", "tidy_iowa.csv"))
+iowa <- iowa %>% mutate_at(vars(starts_with("rs")), funs( as_factor(.)))
+```
+
+# RECODE STATEMENTS:
+
+
+```{r shorthand}
+# C start
+CC <- 'C/C'
+CG <- 'C/G'
+CT <- 'C/T'
+
+#G start
+GG <- 'G/G'
+GA <- 'G/A'
+GT <- 'G/T'
+
+#T start
+TT <-  'T/T'
+TC <- 'T/C'
+
+
+#A start
+AA <- 'A/A'
+AC <- 'A/C'
+AG <- 'A/G'
+
+
+```
+##rs7791396 recode
+```{r rs779}
+SNP_fact <-  iowa %>% mutate(rs7791396 = factor(rs7791396, levels = c(CC,CG,GG)))
+SNP_fact %>% pull(rs7791396) %>% glimpse()
+```
+
+##rs12155328
+```{r rs121}
+SNP_fact <-  SNP_fact %>% mutate(rs12155328 = factor(rs12155328, levels = c(CC,CT,TT)))
+SNP_fact %>% pull(rs12155328) %>% glimpse()
+```
+
+##rs10447760
+```{r rs104}
+SNP_fact <-  SNP_fact %>% mutate(rs10447760 = factor(rs10447760, levels = c(CC,CT,TT)))
+SNP_fact %>% pull(rs10447760) %>% glimpse()
+```
+
+
+##rs10953754
+```{r rs109}
+SNP_fact <-  SNP_fact %>% mutate(rs10953754 = factor(rs10953754, levels = c(AA,AG,GG)))
+SNP_fact %>% pull(rs10953754) %>% glimpse()
+```
+
+
+##rs2244419
+```{r rs224}
+SNP_fact <-  SNP_fact %>% mutate(rs2244419 = factor(rs2244419, levels = c(CC,CT,TT)))
+SNP_fact %>% pull(rs2244419) %>% glimpse()
+```
+
+
+
+##rs1668335
+```{r rs166}
+SNP_fact <-  SNP_fact %>% mutate(rs1668335 = factor(rs1668335, levels = c(AA,GA,GG)))
+SNP_fact %>% pull(rs1668335) %>% glimpse()
+```
+
+
+##rs2396720
+```{r rs239}
+SNP_fact <-  SNP_fact %>% mutate(rs2396720 = factor(rs2396720, levels = c(AA,AC,CC)))
+SNP_fact %>% pull(rs2396720) %>% glimpse()
+```
+
+
+##rs1916988
+```{r rs191}
+SNP_fact <-  SNP_fact %>% mutate(rs1916988 = factor(rs1916988, levels = c(CC,TC,TT)))
+SNP_fact %>% pull(rs1916988) %>% glimpse()
+```
+
+##rs11505922
+```{r rs115}
+SNP_fact %>% count(rs11505922) %>% glimpse() #used to formulate levels
+SNP_fact <-  SNP_fact %>% mutate(rs11505922 = factor(rs11505922, levels = c(CC,CT,TT)))
+SNP_fact %>% pull(rs11505922) %>% glimpse()
+```
+
+
+##rs7785701
+```{r rs778}
+SNP_fact %>% count(rs7785701) %>% glimpse() #used to formulate levels
+SNP_fact <-  SNP_fact %>% mutate(rs7785701 = factor(rs7785701, levels = c(CC,CG,GG)))
+SNP_fact %>% pull(rs7785701) %>% glimpse()
+```
+
+##rs2106900
+```{r rs210}
+SNP_fact %>% count(rs2106900) %>% glimpse() #used to formulate levels
+SNP_fact <-  SNP_fact %>% mutate(rs2106900 = factor(rs2106900, levels = c(AA,GA,GG)))
+SNP_fact %>% pull(rs2106900) %>% glimpse()
+```
+
+##rs7799652
+```{r rs7799}
+SNP_fact %>% count(rs7799652) %>% glimpse() #used to formulate levels
+SNP_fact <-  SNP_fact %>% mutate(rs7799652 = factor(rs7799652, levels = c(GG,GT,TT)))
+SNP_fact %>% pull(rs7799652) %>% glimpse()
+```
+
+
+##rs1005958
+```{r rs100}
+SNP_fact %>% count(rs1005958) %>% glimpse() #used to formulate levels
+SNP_fact <-  SNP_fact %>% mutate(rs1005958 = factor(rs1005958, levels = c(CC,TC,TT)))
+SNP_fact %>% pull(rs1005958) %>% glimpse()
+```
+
+
+
+
+Show the final product
+```{r}
+SNP_fact %>% glimpse()
+```
+
+
+
+
+
+
+
+#REPEAT TABLE 4!!!!
+
+replicate call rates for iowa dataset 
+
+
+
+Subsetting the data can making variables to be called.
+```{r}
+tot <- SNP_fact %>% count() %>% pull(n)
+
+#subset long
+long <- SNP_fact %>% filter(Sample == 'Longitudinal')
+l_tot <- long %>% count() %>% pull(n)
+
+#Subset school
+sch <- SNP_fact %>% filter(Sample == 'School')
+s_tot <- sch %>% count() %>% pull(n)
+
+```
+
+
+##rs7791396
+```{r}
+
+t_call <- SNP_fact %>% filter(!is.na(rs7791396)) %>% count()
+t_call <- signif(t_call/tot, 3)
+l_call <- long %>% filter(!is.na(rs7791396)) %>% count()
+l_call <- signif(l_call/l_tot,3)
+s_call <- sch %>% filter(!is.na(rs7791396)) %>% count()
+s_call <- signif(s_call/s_tot,3)
+
+calls <- tibble('long' = c(l_call), 'school' =c(s_call),'comb'= c(t_call))
+
+calls %>% glimpse()
+```
+
+Matches Previous Findings! :)
+
+##rs12155328
+```{r}
+
+t_call <- SNP_fact %>% filter(!is.na(rs12155328)) %>% count()
+t_call <- signif(t_call/tot, 3)
+l_call <- long %>% filter(!is.na(rs12155328)) %>% count()
+l_call <- signif(l_call/l_tot,3)
+s_call <- sch %>% filter(!is.na(rs12155328)) %>% count()
+s_call <- signif(s_call/s_tot,3)
+
+calls <- tibble('long' = c(l_call), 'school' =c(s_call),'comb'= c(t_call))
+
+calls %>% glimpse()
+```
+
+Matches Previous Findings
+
+##rs10447760
+```{r}
+
+t_call <- SNP_fact %>% filter(!is.na(rs10447760)) %>% count()
+t_call <- signif(t_call/tot, 3)
+l_call <- long %>% filter(!is.na(rs10447760)) %>% count()
+l_call <- signif(l_call/l_tot,3)
+s_call <- sch %>% filter(!is.na(rs10447760)) %>% count()
+s_call <- signif(s_call/s_tot,3)
+
+calls <- tibble('long' = c(l_call), 'school' =c(s_call),'comb'= c(t_call))
+
+calls %>% glimpse()
+```
+
+Matches Previous Findings
+
+##rs10953754
+```{r}
+
+t_call <- SNP_fact %>% filter(!is.na(rs10953754)) %>% count()
+t_call <- signif(t_call/tot, 3)
+l_call <- long %>% filter(!is.na(rs10953754)) %>% count()
+l_call <- signif(l_call/l_tot,3)
+s_call <- sch %>% filter(!is.na(rs10953754)) %>% count()
+s_call <- signif(s_call/s_tot,3)
+
+calls <- tibble('long' = c(l_call), 'school' =c(s_call),'comb'= c(t_call))
+
+calls %>% glimpse()
+```
+
+Matches Previous Findings
+
+
+##rs2244419
+```{r}
+
+t_call <- SNP_fact %>% filter(!is.na(rs2244419)) %>% count()
+t_call <- signif(t_call/tot, 3)
+l_call <- long %>% filter(!is.na(rs2244419)) %>% count()
+l_call <- signif(l_call/l_tot,3)
+s_call <- sch %>% filter(!is.na(rs2244419)) %>% count()
+s_call <- signif(s_call/s_tot,3)
+
+calls <- tibble('long' = c(l_call), 'school' =c(s_call),'comb'= c(t_call))
+
+calls %>% glimpse()
+```
+
+Matches Previous Findings
+
+
+##rs1668335
+```{r}
+
+t_call <- SNP_fact %>% filter(!is.na(rs1668335)) %>% count()
+t_call <- signif(t_call/tot, 3)
+l_call <- long %>% filter(!is.na(rs1668335)) %>% count()
+l_call <- signif(l_call/l_tot,3)
+s_call <- sch %>% filter(!is.na(rs1668335)) %>% count()
+s_call <- signif(s_call/s_tot,3)
+
+calls <- tibble('long' = c(l_call), 'school' =c(s_call),'comb'= c(t_call))
+
+calls %>% glimpse()
+```
+
+Matches Previous Findings
+
+##rs2396720
+```{r}
+
+t_call <- SNP_fact %>% filter(!is.na(rs2396720)) %>% count()
+t_call <- signif(t_call/tot, 3)
+l_call <- long %>% filter(!is.na(rs2396720)) %>% count()
+l_call <- signif(l_call/l_tot,3)
+s_call <- sch %>% filter(!is.na(rs2396720)) %>% count()
+s_call <- signif(s_call/s_tot,3)
+
+calls <- tibble('long' = c(l_call), 'school' =c(s_call),'comb'= c(t_call))
+
+calls %>% glimpse()
+```
+
+Matches Previous Findings
+
+##rs1916988
+```{r}
+
+t_call <- SNP_fact %>% filter(!is.na(rs1916988)) %>% count()
+t_call <- signif(t_call/tot, 3)
+l_call <- long %>% filter(!is.na(rs1916988)) %>% count()
+l_call <- signif(l_call/l_tot,3)
+s_call <- sch %>% filter(!is.na(rs1916988)) %>% count()
+s_call <- signif(s_call/s_tot,3)
+
+calls <- tibble('long' = c(l_call), 'school' =c(s_call),'comb'= c(t_call))
+
+calls %>% glimpse()
+```
+
+Matches Previous Findings
+
+##rs11505922
+```{r}
+
+t_call <- SNP_fact %>% filter(!is.na(rs11505922)) %>% count()
+t_call <- signif(t_call/tot, 3)
+l_call <- long %>% filter(!is.na(rs11505922)) %>% count()
+l_call <- signif(l_call/l_tot,3)
+s_call <- sch %>% filter(!is.na(rs11505922)) %>% count()
+s_call <- signif(s_call/s_tot,3)
+
+calls <- tibble('long' = c(l_call), 'school' =c(s_call),'comb'= c(t_call))
+
+calls %>% glimpse()
+```
+
+Matches Previous Findings
+
+##rs7785701
+```{r}
+
+t_call <- SNP_fact %>% filter(!is.na(rs7785701)) %>% count()
+t_call <- signif(t_call/tot, 3)
+l_call <- long %>% filter(!is.na(rs7785701)) %>% count()
+l_call <- signif(l_call/l_tot,3)
+s_call <- sch %>% filter(!is.na(rs7785701)) %>% count()
+s_call <- signif(s_call/s_tot,3)
+
+calls <- tibble('long' = c(l_call), 'school' =c(s_call),'comb'= c(t_call))
+
+calls %>% glimpse()
+```
+
+Longitudinal is off by .01
+
+
+##rs2106900
+```{r}
+
+t_call <- SNP_fact %>% filter(!is.na(rs2106900)) %>% count()
+t_call <- signif(t_call/tot, 3)
+l_call <- long %>% filter(!is.na(rs2106900)) %>% count()
+l_call <- signif(l_call/l_tot,3)
+s_call <- sch %>% filter(!is.na(rs2106900)) %>% count()
+s_call <- signif(s_call/s_tot,3)
+
+calls <- tibble('long' = c(l_call), 'school' =c(s_call),'comb'= c(t_call))
+
+calls %>% glimpse()
+```
+
+Matches Previous Findings
+
+##rs7799652
+```{r}
+
+t_call <- SNP_fact %>% filter(!is.na(rs7799652)) %>% count()
+t_call <- signif(t_call/tot, 3)
+l_call <- long %>% filter(!is.na(rs7799652)) %>% count()
+l_call <- signif(l_call/l_tot,3)
+s_call <- sch %>% filter(!is.na(rs7799652)) %>% count()
+s_call <- signif(s_call/s_tot,3)
+
+calls <- tibble('long' = c(l_call), 'school' =c(s_call),'comb'= c(t_call))
+
+calls %>% glimpse()
+```
+
+Matches Previous Findings
+
+##rs1005958
+```{r}
+
+t_call <- SNP_fact %>% filter(!is.na(rs1005958)) %>% count()
+t_call <- signif(t_call/tot, 3)
+l_call <- long %>% filter(!is.na(rs1005958)) %>% count()
+l_call <- signif(l_call/l_tot,3)
+s_call <- sch %>% filter(!is.na(rs1005958)) %>% count()
+s_call <- signif(s_call/s_tot,3)
+
+calls <- tibble('long' = c(l_call), 'school' =c(s_call),'comb'= c(t_call))
+
+calls %>% glimpse()
+```
+
+Matches Previous Findings
