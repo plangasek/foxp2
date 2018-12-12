@@ -176,9 +176,66 @@ $(document).ready(function () {
 
 
 <!-- rnb-text-begin -->
+<div id="presentation-summary" class="section level1">
+<h1>Presentation Summary:</h1>
+<div id="authors" class="section level2">
+<h2>Authors</h2>
+<p><em>Patty Langasek </em>Jennifer Sullivan *Jacob Gutierrez</p>
+</div>
+<div id="talking-points-by-slide" class="section level2">
+<h2>Talking Points by Slide:</h2>
+<p>Here the outline will be each slide title and items we can say for each slide. I will fill out my revelvant parts just so we all know what the findings were. (And help me interpret it’s very confusing)</p>
+<p>Time: 20min</p>
+<div id="paper-summary" class="section level3">
+<h3>Paper Summary</h3>
+</div>
+<div id="data-quality-issues" class="section level3">
+<h3>Data Quality Issues</h3>
+</div>
+<div id="eda-datacounts-and-distributions-iowa" class="section level3">
+<h3>EDA datacounts and distributions IOWA</h3>
+</div>
+<div id="eda-datacounts-and-distributions-elvs" class="section level3">
+<h3>EDA datacounts and distributions ELVS</h3>
+</div>
+<div id="eda-variant-comparisons" class="section level3">
+<h3>EDA variant Comparisons</h3>
+</div>
+<div id="eda-lcomp" class="section level3">
+<h3>EDA LCOMP</h3>
+</div>
+<div id="table-1-highlights-rs121" class="section level3">
+<h3>Table 1 highlights rs121:</h3>
+</div>
+<div id="table-1-highlights-rs191" class="section level3">
+<h3>Table 1 highlights rs191:</h3>
+</div>
+<div id="table-2-replication" class="section level3">
+<h3>Table 2 Replication:</h3>
+</div>
+<div id="mancova" class="section level3">
+<h3>MANCOVA</h3>
+<p>Here we are looking to see if there are interactions between SNPS. As it may be possible that this SNPS have a combitorial effect on the LCOMP score. This is relevant because it is possible for a single nucleotide change to not have a large phenotypic impact until certain combinations are formed.</p>
+<p>Using an MANCOVA to find cross SNP interactions only one of &gt; .05 significance was found.</p>
+<p>rs10447760 v rs11505922 was found to contain significant interaction.</p>
+<p>Using a interaction effects test looking across each genotype it is appears that C/C with T/T genotype is signficantly causing decrease in LCOMP scores????</p>
+<p>No other significant combinations were found.</p>
+<p>This hints at if all variant genotype <strong>constillations</strong> were taken into account the model would be interpreted differently… Which the current study did with a random forest algorithm.</p>
+</div>
+<div id="takeaways" class="section level3">
+<h3>Takeaways</h3>
+<p>What we want audience to remeber:</p>
+<ul>
+<li>Previous study showed significance, This study and replication does not.</li>
+<li>No Single SNP shows evidence of lowering language ability in general population</li>
+<li>People should explain how they analyized data with visualizations.</li>
+</ul>
 <!-- rnb-text-end -->
+</div>
+</div>
+</div>
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIlByZXNlbnRhdGlvbiBTdW1tYXJ5Ig0Kb3V0cHV0OiBodG1sX25vdGVib29rDQotLS0NCg==</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIlByZXNlbnRhdGlvbiBTdW1tYXJ5Ig0Kb3V0cHV0OiBodG1sX25vdGVib29rDQotLS0NCg0KDQojUHJlc2VudGF0aW9uIFN1bW1hcnk6DQoNCiMjQXV0aG9ycyANCg0KICAqUGF0dHkgTGFuZ2FzZWsNCiAgKkplbm5pZmVyIFN1bGxpdmFuDQogICpKYWNvYiBHdXRpZXJyZXoNCiAgDQogIA0KIyMgVGFsa2luZyBQb2ludHMgYnkgU2xpZGU6DQoNCg0KICBIZXJlIHRoZSBvdXRsaW5lIHdpbGwgYmUgZWFjaCBzbGlkZSB0aXRsZSBhbmQgaXRlbXMgd2UgY2FuIHNheSBmb3IgZWFjaCBzbGlkZS4NCiAgSSB3aWxsIGZpbGwgb3V0IG15IHJldmVsdmFudCBwYXJ0cyBqdXN0IHNvIHdlIGFsbCBrbm93IHdoYXQgdGhlIGZpbmRpbmdzIHdlcmUuDQogIChBbmQgaGVscCBtZSBpbnRlcnByZXQgaXQncyB2ZXJ5IGNvbmZ1c2luZykNCiAgDQogIFRpbWU6IDIwbWluDQogIA0KICANCiAgDQojIyMgUGFwZXIgU3VtbWFyeQ0KDQoNCiMjIyBEYXRhIFF1YWxpdHkgSXNzdWVzDQoNCg0KIyMjIEVEQSBkYXRhY291bnRzIGFuZCBkaXN0cmlidXRpb25zIElPV0ENCg0KIyMjIEVEQSBkYXRhY291bnRzIGFuZCBkaXN0cmlidXRpb25zIEVMVlMNCg0KIyMjIEVEQSB2YXJpYW50IENvbXBhcmlzb25zDQoNCiMjIyBFREEgTENPTVANCg0KIyMjIFRhYmxlIDEgaGlnaGxpZ2h0cyByczEyMToNCg0KIyMjIFRhYmxlIDEgaGlnaGxpZ2h0cyByczE5MToNCg0KIyMjIFRhYmxlIDIgUmVwbGljYXRpb246DQoNCiMjIyBNQU5DT1ZBIA0KDQogIEhlcmUgd2UgYXJlIGxvb2tpbmcgdG8gc2VlIGlmIHRoZXJlIGFyZSBpbnRlcmFjdGlvbnMgYmV0d2VlbiBTTlBTLiBBcyBpdCBtYXkgYmUgcG9zc2libGUgdGhhdCB0aGlzIFNOUFMgaGF2ZSBhIGNvbWJpdG9yaWFsIGVmZmVjdCBvbiB0aGUgTENPTVAgc2NvcmUuIA0KICBUaGlzIGlzIHJlbGV2YW50IGJlY2F1c2UgaXQgaXMgcG9zc2libGUgZm9yIGEgc2luZ2xlIG51Y2xlb3RpZGUgY2hhbmdlIHRvIG5vdCBoYXZlIGEgbGFyZ2UgcGhlbm90eXBpYyBpbXBhY3QgdW50aWwgY2VydGFpbiBjb21iaW5hdGlvbnMgYXJlIGZvcm1lZC4gDQogIA0KICBVc2luZyBhbiBNQU5DT1ZBIHRvIGZpbmQgY3Jvc3MgU05QIGludGVyYWN0aW9ucyBvbmx5IG9uZSBvZiA+IC4wNSBzaWduaWZpY2FuY2Ugd2FzIGZvdW5kLiANCiAgDQogIHJzMTA0NDc3NjAgdiByczExNTA1OTIyIHdhcyBmb3VuZCB0byBjb250YWluIHNpZ25pZmljYW50IGludGVyYWN0aW9uLiANCiAgDQogIFVzaW5nIGEgaW50ZXJhY3Rpb24gZWZmZWN0cyB0ZXN0IGxvb2tpbmcgYWNyb3NzIGVhY2ggZ2Vub3R5cGUgaXQgaXMgYXBwZWFycyB0aGF0IEMvQyB3aXRoIFQvVCBnZW5vdHlwZSBpcyBzaWduZmljYW50bHkgY2F1c2luZyBkZWNyZWFzZSBpbiBMQ09NUCBzY29yZXM/Pz8/DQogIA0KICBObyBvdGhlciBzaWduaWZpY2FudCBjb21iaW5hdGlvbnMgd2VyZSBmb3VuZC4gDQogIA0KICBUaGlzIGhpbnRzIGF0IGlmIGFsbCB2YXJpYW50IGdlbm90eXBlIF9fY29uc3RpbGxhdGlvbnNfXyB3ZXJlIHRha2VuIGludG8gYWNjb3VudCB0aGUgbW9kZWwgd291bGQgYmUgaW50ZXJwcmV0ZWQgZGlmZmVyZW50bHkuLi4NCiAgV2hpY2ggdGhlIGN1cnJlbnQgc3R1ZHkgZGlkIHdpdGggYSByYW5kb20gZm9yZXN0IGFsZ29yaXRobS4NCg0KIyMjIFRha2Vhd2F5cw0KDQogIFdoYXQgd2Ugd2FudCBhdWRpZW5jZSB0byByZW1lYmVyOg0KICANCiAgKiBQcmV2aW91cyBzdHVkeSBzaG93ZWQgc2lnbmlmaWNhbmNlLCBUaGlzIHN0dWR5IGFuZCByZXBsaWNhdGlvbiBkb2VzIG5vdC4gDQogICogTm8gU2luZ2xlIFNOUCBzaG93cyBldmlkZW5jZSBvZiBsb3dlcmluZyBsYW5ndWFnZSBhYmlsaXR5IGluIGdlbmVyYWwgcG9wdWxhdGlvbg0KICAqIFBlb3BsZSBzaG91bGQgZXhwbGFpbiBob3cgdGhleSBhbmFseWl6ZWQgZGF0YSB3aXRoIHZpc3VhbGl6YXRpb25zLiANCg0KDQo=</div>
 
 
 

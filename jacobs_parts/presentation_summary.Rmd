@@ -2,3 +2,70 @@
 title: "Presentation Summary"
 output: html_notebook
 ---
+
+
+#Presentation Summary:
+
+##Authors 
+
+  *Patty Langasek
+  *Jennifer Sullivan
+  *Jacob Gutierrez
+  
+  
+## Talking Points by Slide:
+
+
+  Here the outline will be each slide title and items we can say for each slide.
+  I will fill out my revelvant parts just so we all know what the findings were.
+  (And help me interpret it's very confusing)
+  
+  Time: 20min
+  
+  
+  
+### Paper Summary
+
+
+### Data Quality Issues
+
+
+### EDA datacounts and distributions IOWA
+
+### EDA datacounts and distributions ELVS
+
+### EDA variant Comparisons
+
+### EDA LCOMP
+
+### Table 1 highlights rs121:
+
+### Table 1 highlights rs191:
+
+### Table 2 Replication:
+
+### MANCOVA 
+
+  Here we are looking to see if there are interactions between SNPS. As it may be possible that this SNPS have a combitorial effect on the LCOMP score. 
+  This is relevant because it is possible for a single nucleotide change to not have a large phenotypic impact until certain combinations are formed. 
+  
+  Using an MANCOVA to find cross SNP interactions only one of > .05 significance was found. 
+  
+  rs10447760 v rs11505922 was found to contain significant interaction. 
+  
+  Using a interaction effects test looking across each genotype it is appears that C/C with T/T genotype is signficantly causing decrease in LCOMP scores????
+  
+  No other significant combinations were found. 
+  
+  This hints at if all variant genotype __constillations__ were taken into account the model would be interpreted differently...
+  Which the current study did with a random forest algorithm.
+
+### Takeaways
+
+  What we want audience to remeber:
+  
+  * Previous study showed significance, This study and replication does not. 
+  * No Single SNP shows evidence of lowering language ability in general population
+  * People should explain how they analyized data with visualizations. 
+
+
