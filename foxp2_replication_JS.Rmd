@@ -1,0 +1,96 @@
+---
+title: "FOXP2 Replication"
+author: "Jennifer Sullivan"
+date: "December 5, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r library}
+library(tidyverse)
+library(psycho)
+```
+
+```{r data}
+elvs <- read_csv(here::here("data", "tidy_elvs.csv"))
+iowa <- read_csv(here::here("data", "tidy_iowa.csv"))
+```
+
+```{r view}
+head(elvs)
+head(iowa)
+```
+
+```{r anova_elvs}
+elvs_normalized <- elvs %>% standardize()
+head(elvs_normalized)
+elvs_lm <- lm(CELF7SS0 ~ rs1916988, elvs_normalized)
+anova(elvs_lm)
+summary(elvs_lm)$r.squared
+```
+
+```{r anova_iowa_1}
+iowa_longitudinal <- iowa %>% filter(Sample == "Longitudinal")
+iowa_longitudinal_lm <- lm(LCOMP ~ rs1916988, iowa_longitudinal)
+anova(iowa_longitudinal_lm)
+summary(iowa_longitudinal_lm)$r.squared
+
+iowa_school <- iowa %>% filter(Sample == "School")
+iowa_school_lm <- lm(LCOMP ~ rs1916988, iowa_school)
+anova(iowa_school_lm)
+summary(iowa_school_lm)$r.squared
+```
+
+```{r anova_iowa_2}
+iowa_longitudinal <- iowa %>% filter(Sample == "Longitudinal", LCOMP != 0)
+iowa_longitudinal_lm <- lm(LCOMP ~ rs1916988, iowa_longitudinal)
+anova(iowa_longitudinal_lm)
+summary(iowa_longitudinal_lm)$r.squared
+
+iowa_school <- iowa %>% filter(Sample == "School", LCOMP != 0)
+iowa_school_lm <- lm(LCOMP ~ rs1916988, iowa_school)
+anova(iowa_school_lm)
+summary(iowa_school_lm)$r.squared
+```
+
+```{r anova_iowa_3}
+iowa_longitudinal <- iowa %>% filter(Sample == "Longitudinal", rs1916988 != "0/0")
+iowa_longitudinal_lm <- lm(LCOMP ~ rs1916988, iowa_longitudinal)
+anova(iowa_longitudinal_lm)
+summary(iowa_longitudinal_lm)$r.squared
+
+iowa_school <- iowa %>% filter(Sample == "School", rs1916988 != "0/0")
+iowa_school_lm <- lm(LCOMP ~ rs1916988, iowa_school)
+anova(iowa_school_lm)
+summary(iowa_school_lm)$r.squared
+```
+
+Screenshot!!!!
+
+```{r anova_iowa_4}
+iowa_longitudinal <- iowa %>% filter(Sample == "Longitudinal",
+                                     LCOMP != 0, rs1916988 != "0/0")
+iowa_longitudinal_lm <- lm(LCOMP ~ rs1916988, iowa_longitudinal)
+anova(iowa_longitudinal_lm)
+summary(iowa_longitudinal_lm)$r.squared
+
+iowa_school <- iowa %>% filter(Sample == "School",
+                               LCOMP != 0, rs1916988 != "0/0")
+iowa_school_lm <- lm(LCOMP ~ rs1916988, iowa_school)
+anova(iowa_school_lm)
+summary(iowa_school_lm)$r.squared
+```
+
+```{r stats_elvs}
+elvs_normalized %>% group_by(rs1916988) %>% summarise(mean = mean(CELF7SS0), sd = sd(CELF7SS0), n = n())
+```
+
+```{r stats_iowa}
+iowa_longitudinal %>% group_by(rs1916988) %>% summarise(mean = mean(LCOMP), sd = sd(LCOMP), n = n())
+
+iowa_school %>% group_by(rs1916988) %>% summarise(mean = mean(LCOMP), sd = sd(LCOMP), n = n())
+```
+
