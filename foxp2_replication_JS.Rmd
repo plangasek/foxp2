@@ -9,74 +9,109 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r library}
+```{r library, include=FALSE}
 library(tidyverse)
+library(moderndive)
 library(psycho)
+library(BBmisc)
 ```
 
-```{r data}
+```{r data, include=FALSE}
 elvs <- read_csv(here::here("data", "tidy_elvs.csv"))
 iowa <- read_csv(here::here("data", "tidy_iowa.csv"))
 ```
 
-```{r view}
+```{r view, include=FALSE}
 head(elvs)
 head(iowa)
 ```
 
-```{r anova_elvs}
-elvs_normalized <- elvs %>% standardize()
-head(elvs_normalized)
-elvs_lm <- lm(CELF7SS0 ~ rs1916988, elvs_normalized)
-anova(elvs_lm)
-summary(elvs_lm)$r.squared
+To examine rs1916988 more closely, the authors calculated the same statistics separately for the individual datasets in the IOWA sample (the Longitudinal and School samples in the table below).
+
+![Table 2](Table2.png)
+
+
+Below, we attempted to replicate their results.
+
+##### IOWA Datasets
+
+Our sample sizes for each genotype matched those reported for the Longitudinal dataset, with the exception that we had one additional participant for the C/C genotype.  All of our means matched as well.  Two of our standard deviations matched, but the third (for T/T) did not.
+
+```{r stats_long}
+# Longitudinal Sample
+iowa_longitudinal <- iowa %>% filter(Sample == "Longitudinal")
+iowa_longitudinal %>% group_by(rs1916988) %>% summarise(mean = mean(LCOMP), sd = sd(LCOMP), n = n())
 ```
 
+For the School sample, our data included 21 additional observations that the authors did not include in their analysis, so our sample sizes were not matching up.  As we would expect, our mean and standard deviation values were getting thrown off as well.
+
+```{r stats_school_1}
+# School Sample
+iowa_school <- iowa %>% filter(Sample == "School")
+iowa_school %>% group_by(rs1916988) %>% summarise(mean = mean(LCOMP), sd = sd(LCOMP), n = n())
+```
+
+However, we noticed that there were exactly 21 observations in our data whose ID matched another ID, but with some additional numbers attached.  When we excluded these observations from our analysis, we were able to get the same sample sizes, means, and standard deviations that were reported in the paper.
+
+```{r stats_school_2}
+# School Sample
+iowa_school <- iowa %>% filter(Sample == "School", !grepl("-", ID))
+iowa_school %>% group_by(rs1916988) %>% summarise(mean = mean(LCOMP), sd = sd(LCOMP), n = n())
+```
+
+
+For the one-way ANOVAs, we first tried running them with the entire datasets.  However, this did not give us the R-squared values, F-statistics, and p-values reported in the paper.
+
 ```{r anova_iowa_1}
+# Longitudinal Sample
 iowa_longitudinal <- iowa %>% filter(Sample == "Longitudinal")
 iowa_longitudinal_lm <- lm(LCOMP ~ rs1916988, iowa_longitudinal)
 anova(iowa_longitudinal_lm)
 summary(iowa_longitudinal_lm)$r.squared
 
+# School Sample
 iowa_school <- iowa %>% filter(Sample == "School")
 iowa_school_lm <- lm(LCOMP ~ rs1916988, iowa_school)
 anova(iowa_school_lm)
 summary(iowa_school_lm)$r.squared
 ```
 
+We suspected that LCOMP values of 0 were not legitimate values, so we decided to remove them.  While this didn't change anything for the Longitudinal dataset, this actually brought our values for the School sample farther from what the authors reported.
+
 ```{r anova_iowa_2}
+# Longitudinal Sample
 iowa_longitudinal <- iowa %>% filter(Sample == "Longitudinal", LCOMP != 0)
 iowa_longitudinal_lm <- lm(LCOMP ~ rs1916988, iowa_longitudinal)
 anova(iowa_longitudinal_lm)
 summary(iowa_longitudinal_lm)$r.squared
 
+# School Sample
 iowa_school <- iowa %>% filter(Sample == "School", LCOMP != 0)
 iowa_school_lm <- lm(LCOMP ~ rs1916988, iowa_school)
 anova(iowa_school_lm)
 summary(iowa_school_lm)$r.squared
 ```
 
+We then tried removing just the genotypes labeled "0/0".  Originally, we thought that there was a chance that these might be homozygous deletions, but it really was not clear whether these were legitimate values.  Removing observations with the "0/0" genotype got us a lot closer to the reported values for both datasets.  For the Longitudinal dataset, we essentially matched the reported values, with an R-squared value within 0.0002 of the reported value, a perfectly matched F-statistic, and a p-value within 0.01.
+
 ```{r anova_iowa_3}
+# Longitudinal Sample
 iowa_longitudinal <- iowa %>% filter(Sample == "Longitudinal", rs1916988 != "0/0")
 iowa_longitudinal_lm <- lm(LCOMP ~ rs1916988, iowa_longitudinal)
 anova(iowa_longitudinal_lm)
 summary(iowa_longitudinal_lm)$r.squared
 
+# School Sample
 iowa_school <- iowa %>% filter(Sample == "School", rs1916988 != "0/0")
 iowa_school_lm <- lm(LCOMP ~ rs1916988, iowa_school)
 anova(iowa_school_lm)
 summary(iowa_school_lm)$r.squared
 ```
 
-Screenshot!!!!
+While the School values were a lot closer, they still were not matching the values the authors reported.  The F-statistic was just a bit too high, and the p-value was just a little too low.  When we had removed the language scores with "0" values, the F-statistic had moved slightly down, and the p-value moved slightly up.  Therefore, we tried eliminating any entries that had either a "0/0" genotype or a language score of "0".  These filters resulted in a matching R-squared and p-value, and an F-statistic that was within 0.01 of the reported value.
 
 ```{r anova_iowa_4}
-iowa_longitudinal <- iowa %>% filter(Sample == "Longitudinal",
-                                     LCOMP != 0, rs1916988 != "0/0")
-iowa_longitudinal_lm <- lm(LCOMP ~ rs1916988, iowa_longitudinal)
-anova(iowa_longitudinal_lm)
-summary(iowa_longitudinal_lm)$r.squared
-
+# School Sample
 iowa_school <- iowa %>% filter(Sample == "School",
                                LCOMP != 0, rs1916988 != "0/0")
 iowa_school_lm <- lm(LCOMP ~ rs1916988, iowa_school)
@@ -84,13 +119,91 @@ anova(iowa_school_lm)
 summary(iowa_school_lm)$r.squared
 ```
 
-```{r stats_elvs}
+When we realized that the authors had eliminated 21 observations with duplicate IDs from the School dataset, we noticed that many (though not all) of these observations had LCOMP scores of 0.  We decided to test whether we could still get the reported values by filtering to remove these observations in lieu of all 0-value LCOMP scores.  What we discovered was that we not only kept our matching R-squared and p-values, but we also got our F-statistic to match perfectly as well.  Therefore, we suspect that this is how the authors filtered the School dataset.
+
+```{r anova_iowa_5}
+# School Sample
+iowa_school <- iowa %>% filter(Sample == "School",
+                               !grepl("-", ID), rs1916988 != "0/0")
+iowa_school_lm <- lm(LCOMP ~ rs1916988, iowa_school)
+anova(iowa_school_lm)
+summary(iowa_school_lm)$r.squared
+```
+
+The following tables summarize our results for the Longitudinal and School samples.
+
+**Longitudinal Sample**
+
+```{r table_long}
+iowa_longitudinal %>% group_by(rs1916988) %>% summarise(mean = mean(LCOMP), sd = sd(LCOMP), n = n())
+
+longitudinal_table <- data.frame("R-squared" = 0.0080, "F-statistic" = 1.89, "p-value" = 0.15)
+longitudinal_table
+```
+
+**School Sample**
+
+```{r table_school}
+iowa_school %>% group_by(rs1916988) %>% summarise(mean = mean(LCOMP), sd = sd(LCOMP), n = n())
+
+school_table <- data.frame("R-squared" = 0.03, "F-statistic" = 4.24, "p-value" = 0.015)
+school_table
+```
+
+In agreement with the authors' findings, we see that in the Longitudinal sample, the C allele is associated with a lower language score than the T allele, but in the School sample, the reverse is true.  Only the result from the School sample is nominally statistically significant, although the p-value should really be adjusted to account for the fact that this study involved multiple comparisons.
+
+
+##### ELVS Dataset
+
+Based on their contradictory findings for rs1916988, the authors performed the same statistical analysis for the SNP in the ELVS sample.  To try to match the mean and standard deviation of the ELVS data that were reported in the paper, we had to normalize the data.
+
+```{r normalize_elvs_1}
+elvs_normalized <- elvs %>% standardize()
+head(elvs_normalized)
+```
+
+We had previously removed 20 observations that had no genotype information, and we performed our statistical analysis on the remaining data.  Our sample sizes for each genotype match those in the paper, so we didn't feel that we needed to add or remove any data.  However, our mean and standard deviation values do not match those in the paper.
+
+```{r stats_elvs_1}
 elvs_normalized %>% group_by(rs1916988) %>% summarise(mean = mean(CELF7SS0), sd = sd(CELF7SS0), n = n())
 ```
 
-```{r stats_iowa}
-iowa_longitudinal %>% group_by(rs1916988) %>% summarise(mean = mean(LCOMP), sd = sd(LCOMP), n = n())
+We tested the data to be sure they had been normalized to have a mean of 0 and a standard deviation of 1.
 
-iowa_school %>% group_by(rs1916988) %>% summarise(mean = mean(LCOMP), sd = sd(LCOMP), n = n())
+```{r normalize_check}
+elvs_normalized %>% summarise(mean = mean(CELF7SS0), sd = sd(CELF7SS0), n = n())
 ```
 
+
+We see that the mean is virtually 0, and the standard deviation is 1.  Just to be sure the normalization method was not causing some sort of issue, we decided to try another normalization method.
+
+```{r normalize_elvs_2}
+elvs_normalized <- normalize(elvs, method = "standardize")
+head(elvs_normalized)
+```
+
+However, even with a different normalization nethod, we still got the same results.
+
+```{r anova_elvs_2}
+elvs_normalized %>% group_by(rs1916988) %>% summarise(mean = mean(CELF7SS0), sd = sd(CELF7SS0), n = n())
+```
+
+
+When we checked whether our R-squared, F-statistic, and p-value matched the authors' data, our R-squared value was only 0.0002 away from the reported value, and our F-statistic and p-value matched perfectly.
+
+```{r anova_elvs}
+elvs_lm <- lm(CELF7SS0 ~ rs1916988, elvs_normalized)
+anova(elvs_lm)
+summary(elvs_lm)$r.squared
+```
+
+The following tables summarize our results for the ELVS sample.
+
+```{r elvs_table}
+elvs_normalized %>% group_by(rs1916988) %>% summarise(mean = mean(CELF7SS0), sd = sd(CELF7SS0), n = n())
+
+elvs_table <- data.frame("R-squared" = 0.0082, "F-statistic" = 1.23, "p-value" = 0.29)
+elvs_table
+```
+
+Similar to what we saw in the Longitudinal sample, the C allele appears to be associated with lower language scores than the T allele.  However, this result is still not significant.  Therefore, the ELVS sample does not suggest any significant effect of variation at this SNP on language ability.  This is, indeed, what the authors had concluded.
