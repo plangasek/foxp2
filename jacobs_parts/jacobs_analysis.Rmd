@@ -1,0 +1,755 @@
+---
+title: "Presentation Anslysis"
+output: html_notebook
+---
+
+```{r libraries, include = FALSE}
+library(tidyverse)
+library(skimr)
+```
+
+
+```{r read_in, include = FALSE}
+elvs <- read_csv(here::here("data", "tidy_elvs.csv"))
+elvs <- elvs %>% mutate(rs1916988 = as_factor(rs1916988))
+iowa <- read_csv(here::here("data", "tidy_iowa.csv"))
+iowa <- iowa %>% mutate_at(vars(starts_with("rs")), funs( as_factor(.)))
+```
+
+
+
+# 13 One way Anova:
+
+Look at Multile R-Squared, F and P values
+```{r rs779}
+
+test <- iowa %>% select(LCOMP,rs7791396) %>% filter( rs7791396 != '0/0', LCOMP != 0)
+
+sumar <- test %>% group_by(rs7791396) %>% summarize(
+  mean(LCOMP),
+  sd(LCOMP),
+  n() 
+  ) 
+#test %>% group_by(rs7791396) %>% skim()
+mean <- sumar %>% pull('mean(LCOMP)')
+sd <- sumar %>% pull('sd(LCOMP)')
+n <- sumar %>% pull('n()')
+
+(paste('Mean: ', mean, ' SD: ', sd, ' n: ', n))
+
+test_mod <- lm(LCOMP~ rs7791396 , data=test)
+# str(summary(test_mod)) #Look in here to find parse
+rsq <- summary(test_mod)$r.squared[1]
+
+(paste('R Squared: ' , rsq ))
+
+#summary(str(anova(test_mod)))
+
+F_stat <- anova(test_mod)$'F value'[1]
+
+(paste('F statistic: ' , F_stat))
+
+p_val <- anova(test_mod)$'Pr(>F)'[1]
+
+(paste('P value: ' , p_val))
+  
+fun_mean <-  function(x){
+  return(data.frame(y=mean(x),label=paste( 'Mean: ',formatC(mean(x,na.rm=T), digits =3, format='f'))))
+}
+
+fun_sd <-  function(x){
+  return(data.frame(y=sd(x),label=paste( 'SD: ',formatC(sd(x,na.rm=T), digits =3, format='f'))))
+}
+
+fun_n <-  function(x){
+  return(data.frame(y=mean(x),label=paste( 'Mean: ',formatC(mean(x), digits =3, format='f'))))
+}
+
+
+test %>% ggplot(aes(x=rs7791396,y= LCOMP)) + 
+  geom_boxplot(aes(fill=rs7791396))  +
+  stat_summary(fun.data = fun_mean, geom='text',vjust=-1.5) +
+  stat_summary(fun.data = fun_sd, geom='text',hjust=-.25) +
+  theme_classic()
+  
+ggsave('rs7791396.png')
+
+```
+
+
+
+
+
+
+```{r rs121}
+
+test <- iowa %>% select(LCOMP,rs12155328) %>% filter( rs12155328 != '0/0', LCOMP != 0)
+
+sumar <- test %>% group_by(rs12155328) %>% summarize(
+  mean(LCOMP),
+  sd(LCOMP),
+  n() 
+  ) 
+#test %>% group_by(rs7791396) %>% skim()
+mean <- sumar %>% pull('mean(LCOMP)')
+sd <- sumar %>% pull('sd(LCOMP)')
+n <- sumar %>% pull('n()')
+(paste('Mean: ', mean, ' SD: ', sd, ' n: ', n))
+
+
+test_mod <- lm(LCOMP~ rs12155328 , data=test)
+# str(summary(test_mod)) #Look in here to find parse
+rsq <- summary(test_mod)$r.squared[1]
+
+(paste('R Squared: ' , rsq ))
+
+#summary(str(anova(test_mod)))
+
+F_stat <- anova(test_mod)$'F value'[1]
+
+(paste('F statistic: ' , F_stat))
+
+p_val <- anova(test_mod)$'Pr(>F)'[1]
+
+(paste('P value: ' , p_val))
+  
+fun_mean <-  function(x){
+  return(data.frame(y=mean(x),label=paste( 'Mean: ',formatC(mean(x,na.rm=T), digits =3, format='f'))))
+}
+
+fun_sd <-  function(x){
+  return(data.frame(y=sd(x),label=paste( 'SD: ',formatC(sd(x,na.rm=T), digits =3, format='f'))))
+}
+
+fun_n <-  function(x){
+  return(data.frame(y=mean(x),label=paste( 'Mean: ',formatC(mean(x), digits =3, format='f'))))
+}
+
+
+test %>% ggplot(aes(x=rs12155328,y= LCOMP)) + 
+  geom_boxplot(aes(fill=rs12155328))  +
+  stat_summary(fun.data = fun_mean, geom='text',vjust=-1.5) +
+  stat_summary(fun.data = fun_sd, geom='text',hjust=-.25) +
+  theme_classic()
+  
+ggsave('rs12155328.png')
+
+```
+
+
+```{r rs104}
+
+test <- iowa %>% select(LCOMP,rs10447760) %>% filter( rs10447760 != '0/0',, LCOMP != 0)
+
+sumar <- test %>% group_by(rs10447760) %>% summarize(
+  mean(LCOMP),
+  sd(LCOMP),
+  n() 
+  ) 
+#test %>% group_by(rs7791396) %>% skim()
+mean <- sumar %>% pull('mean(LCOMP)')
+sd <- sumar %>% pull('sd(LCOMP)')
+n <- sumar %>% pull('n()')
+(paste('Mean: ', mean, ' SD: ', sd, ' n: ', n))
+
+
+test_mod <- lm(LCOMP~ rs10447760 , data=test)
+# str(summary(test_mod)) #Look in here to find parse
+rsq <- summary(test_mod)$r.squared[1]
+
+(paste('R Squared: ' , rsq ))
+
+#summary(str(anova(test_mod)))
+
+F_stat <- anova(test_mod)$'F value'[1]
+
+(paste('F statistic: ' , F_stat))
+
+p_val <- anova(test_mod)$'Pr(>F)'[1]
+
+(paste('P value: ' , p_val))
+  
+fun_mean <-  function(x){
+  return(data.frame(y=mean(x),label=paste( 'Mean: ',formatC(mean(x,na.rm=T), digits =3, format='f'))))
+}
+
+fun_sd <-  function(x){
+  return(data.frame(y=sd(x),label=paste( 'SD: ',formatC(sd(x,na.rm=T), digits =3, format='f'))))
+}
+
+fun_n <-  function(x){
+  return(data.frame(y=mean(x),label=paste( 'Mean: ',formatC(mean(x), digits =3, format='f'))))
+}
+
+
+test %>% ggplot(aes(x=rs10447760,y= LCOMP)) + 
+  geom_boxplot(aes(fill=rs10447760))  +
+  stat_summary(fun.data = fun_mean, geom='text',vjust=-1.5) +
+  stat_summary(fun.data = fun_sd, geom='text',hjust=-.25) +
+  theme_classic()
+  
+ggsave('rs10447760.png')
+
+```
+
+
+
+
+
+```{r rs109}
+
+test <- iowa %>% select(LCOMP,rs10953754) %>% filter( rs10953754 != '0/0',, LCOMP != 0)
+
+sumar <- test %>% group_by(rs10953754) %>% summarize(
+  mean(LCOMP),
+  sd(LCOMP),
+  n() 
+  ) 
+#test %>% group_by(rs7791396) %>% skim()
+mean <- sumar %>% pull('mean(LCOMP)')
+sd <- sumar %>% pull('sd(LCOMP)')
+n <- sumar %>% pull('n()')
+(paste('Mean: ', mean, ' SD: ', sd, ' n: ', n))
+
+
+test_mod <- lm(LCOMP~ rs10953754 , data=test)
+# str(summary(test_mod)) #Look in here to find parse
+rsq <- summary(test_mod)$r.squared[1]
+
+(paste('R Squared: ' , rsq ))
+
+#summary(str(anova(test_mod)))
+
+F_stat <- anova(test_mod)$'F value'[1]
+
+(paste('F statistic: ' , F_stat))
+
+p_val <- anova(test_mod)$'Pr(>F)'[1]
+
+(paste('P value: ' , p_val))
+  
+fun_mean <-  function(x){
+  return(data.frame(y=mean(x),label=paste( 'Mean: ',formatC(mean(x,na.rm=T), digits =3, format='f'))))
+}
+
+fun_sd <-  function(x){
+  return(data.frame(y=sd(x),label=paste( 'SD: ',formatC(sd(x,na.rm=T), digits =3, format='f'))))
+}
+
+fun_n <-  function(x){
+  return(data.frame(y=mean(x),label=paste( 'Mean: ',formatC(mean(x), digits =3, format='f'))))
+}
+
+
+test %>% ggplot(aes(x=rs10953754,y= LCOMP)) + 
+  geom_boxplot(aes(fill=rs10953754))  +
+  stat_summary(fun.data = fun_mean, geom='text',vjust=-1.5) +
+  stat_summary(fun.data = fun_sd, geom='text',hjust=-.25) +
+  theme_classic()
+  
+ggsave('rs10953754.png')
+
+```
+
+
+```{r rs224}
+
+test <- iowa %>% select(LCOMP,rs2244419) %>% filter( rs2244419 != '0/0', LCOMP != 0)
+
+sumar <- test %>% group_by(rs2244419) %>% summarize(
+  mean(LCOMP),
+  sd(LCOMP),
+  n() 
+  ) 
+#test %>% group_by(rs7791396) %>% skim()
+mean <- sumar %>% pull('mean(LCOMP)')
+sd <- sumar %>% pull('sd(LCOMP)')
+n <- sumar %>% pull('n()')
+(paste('Mean: ', mean, ' SD: ', sd, ' n: ', n))
+
+
+test_mod <- lm(LCOMP~ rs2244419 , data=test)
+# str(summary(test_mod)) #Look in here to find parse
+rsq <- summary(test_mod)$r.squared[1]
+
+(paste('R Squared: ' , rsq ))
+
+#summary(str(anova(test_mod)))
+
+F_stat <- anova(test_mod)$'F value'[1]
+
+(paste('F statistic: ' , F_stat))
+
+p_val <- anova(test_mod)$'Pr(>F)'[1]
+
+(paste('P value: ' , p_val))
+  
+fun_mean <-  function(x){
+  return(data.frame(y=mean(x),label=paste( 'Mean: ',formatC(mean(x,na.rm=T), digits =3, format='f'))))
+}
+
+fun_sd <-  function(x){
+  return(data.frame(y=sd(x),label=paste( 'SD: ',formatC(sd(x,na.rm=T), digits =3, format='f'))))
+}
+
+fun_n <-  function(x){
+  return(data.frame(y=mean(x),label=paste( 'Mean: ',formatC(mean(x), digits =3, format='f'))))
+}
+
+
+test %>% ggplot(aes(x=rs2244419,y= LCOMP)) + 
+  geom_boxplot(aes(fill=rs2244419))  +
+  stat_summary(fun.data = fun_mean, geom='text',vjust=-1.5) +
+  stat_summary(fun.data = fun_sd, geom='text',hjust=-.25) +
+  theme_classic()
+  
+ggsave('rs2244419.png')
+
+```
+
+
+```{r rs166}
+
+test <- iowa %>% select(LCOMP,rs1668335) %>% filter( rs1668335 != '0/0',, LCOMP != 0)
+
+sumar <- test %>% group_by(rs1668335) %>% summarize(
+  mean(LCOMP),
+  sd(LCOMP),
+  n() 
+  ) 
+#test %>% group_by(rs7791396) %>% skim()
+mean <- sumar %>% pull('mean(LCOMP)')
+sd <- sumar %>% pull('sd(LCOMP)')
+n <- sumar %>% pull('n()')
+(paste('Mean: ', mean, ' SD: ', sd, ' n: ', n))
+
+
+test_mod <- lm(LCOMP~ rs1668335 , data=test)
+# str(summary(test_mod)) #Look in here to find parse
+rsq <- summary(test_mod)$r.squared[1]
+
+(paste('R Squared: ' , rsq ))
+
+#summary(str(anova(test_mod)))
+
+F_stat <- anova(test_mod)$'F value'[1]
+
+(paste('F statistic: ' , F_stat))
+
+p_val <- anova(test_mod)$'Pr(>F)'[1]
+
+(paste('P value: ' , p_val))
+  
+fun_mean <-  function(x){
+  return(data.frame(y=mean(x),label=paste( 'Mean: ',formatC(mean(x,na.rm=T), digits =3, format='f'))))
+}
+
+fun_sd <-  function(x){
+  return(data.frame(y=sd(x),label=paste( 'SD: ',formatC(sd(x,na.rm=T), digits =3, format='f'))))
+}
+
+fun_n <-  function(x){
+  return(data.frame(y=mean(x),label=paste( 'Mean: ',formatC(mean(x), digits =3, format='f'))))
+}
+
+
+test %>% ggplot(aes(x=rs1668335,y= LCOMP)) + 
+  geom_boxplot(aes(fill=rs1668335))  +
+  stat_summary(fun.data = fun_mean, geom='text',vjust=-1.5) +
+  stat_summary(fun.data = fun_sd, geom='text',hjust=-.25) +
+  theme_classic()
+  
+ggsave('rs1668335.png')
+
+```
+
+
+```{r rs239}
+
+test <- iowa %>% select(LCOMP,rs2396720) %>% filter( rs2396720 != '0/0', LCOMP != 0)
+
+sumar <- test %>% group_by(rs2396720) %>% summarize(
+  mean(LCOMP),
+  sd(LCOMP),
+  n() 
+  ) 
+#test %>% group_by(rs7791396) %>% skim()
+mean <- sumar %>% pull('mean(LCOMP)')
+sd <- sumar %>% pull('sd(LCOMP)')
+n <- sumar %>% pull('n()')
+(paste('Mean: ', mean, ' SD: ', sd, ' n: ', n))
+
+
+test_mod <- lm(LCOMP~ rs2396720 , data=test)
+# str(summary(test_mod)) #Look in here to find parse
+rsq <- summary(test_mod)$r.squared[1]
+
+(paste('R Squared: ' , rsq ))
+
+#summary(str(anova(test_mod)))
+
+F_stat <- anova(test_mod)$'F value'[1]
+
+(paste('F statistic: ' , F_stat))
+
+p_val <- anova(test_mod)$'Pr(>F)'[1]
+
+(paste('P value: ' , p_val))
+  
+fun_mean <-  function(x){
+  return(data.frame(y=mean(x),label=paste( 'Mean: ',formatC(mean(x,na.rm=T), digits =3, format='f'))))
+}
+
+fun_sd <-  function(x){
+  return(data.frame(y=sd(x),label=paste( 'SD: ',formatC(sd(x,na.rm=T), digits =3, format='f'))))
+}
+
+fun_n <-  function(x){
+  return(data.frame(y=mean(x),label=paste( 'Mean: ',formatC(mean(x), digits =3, format='f'))))
+}
+
+
+test %>% ggplot(aes(x=rs2396720,y= LCOMP)) + 
+  geom_boxplot(aes(fill=rs2396720))  +
+  stat_summary(fun.data = fun_mean, geom='text',vjust=-1.5) +
+  stat_summary(fun.data = fun_sd, geom='text',hjust=-.25) +
+  theme_classic()
+  
+ggsave('rs2396720.png')
+
+```
+
+
+
+
+```{r rs191}
+
+test <- iowa %>% select(LCOMP,rs1916988) %>% filter( rs1916988 != '0/0', LCOMP != 0)
+
+sumar <- test %>% group_by(rs1916988) %>% summarize(
+  mean(LCOMP),
+  sd(LCOMP),
+  n() 
+  ) 
+#test %>% group_by(rs7791396) %>% skim()
+mean <- sumar %>% pull('mean(LCOMP)')
+sd <- sumar %>% pull('sd(LCOMP)')
+n <- sumar %>% pull('n()')
+(paste('Mean: ', mean, ' SD: ', sd, ' n: ', n))
+
+
+test_mod <- lm(LCOMP~ rs1916988 , data=test)
+# str(summary(test_mod)) #Look in here to find parse
+rsq <- summary(test_mod)$r.squared[1]
+
+(paste('R Squared: ' , rsq ))
+
+#summary(str(anova(test_mod)))
+
+F_stat <- anova(test_mod)$'F value'[1]
+
+(paste('F statistic: ' , F_stat))
+
+p_val <- anova(test_mod)$'Pr(>F)'[1]
+
+(paste('P value: ' , p_val))
+  
+fun_mean <-  function(x){
+  return(data.frame(y=mean(x),label=paste( 'Mean: ',formatC(mean(x,na.rm=T), digits =3, format='f'))))
+}
+
+fun_sd <-  function(x){
+  return(data.frame(y=sd(x),label=paste( 'SD: ',formatC(sd(x,na.rm=T), digits =3, format='f'))))
+}
+
+fun_n <-  function(x){
+  return(data.frame(y=mean(x),label=paste( 'Mean: ',formatC(mean(x), digits =3, format='f'))))
+}
+
+
+test %>% ggplot(aes(x=rs1916988,y= LCOMP)) + 
+  geom_boxplot(aes(fill=rs1916988))  +
+  stat_summary(fun.data = fun_mean, geom='text',vjust=-1.5) +
+  stat_summary(fun.data = fun_sd, geom='text',hjust=-.25) +
+  theme_classic()
+  
+ggsave('rs1916988.png')
+
+```
+
+```{r rs115}
+
+test <- iowa %>% select(LCOMP,rs11505922) %>% filter( rs11505922 != '0/0', LCOMP != 0)
+
+sumar <- test %>% group_by(rs11505922) %>% summarize(
+  mean(LCOMP),
+  sd(LCOMP),
+  n() 
+  ) 
+#test %>% group_by(rs7791396) %>% skim()
+mean <- sumar %>% pull('mean(LCOMP)')
+sd <- sumar %>% pull('sd(LCOMP)')
+n <- sumar %>% pull('n()')
+(paste('Mean: ', mean, ' SD: ', sd, ' n: ', n))
+
+
+test_mod <- lm(LCOMP~ rs11505922 , data=test)
+# str(summary(test_mod)) #Look in here to find parse
+rsq <- summary(test_mod)$r.squared[1]
+
+(paste('R Squared: ' , rsq ))
+
+#summary(str(anova(test_mod)))
+
+F_stat <- anova(test_mod)$'F value'[1]
+
+(paste('F statistic: ' , F_stat))
+
+p_val <- anova(test_mod)$'Pr(>F)'[1]
+
+(paste('P value: ' , p_val))
+  
+fun_mean <-  function(x){
+  return(data.frame(y=mean(x),label=paste( 'Mean: ',formatC(mean(x,na.rm=T), digits =3, format='f'))))
+}
+
+fun_sd <-  function(x){
+  return(data.frame(y=sd(x),label=paste( 'SD: ',formatC(sd(x,na.rm=T), digits =3, format='f'))))
+}
+
+fun_n <-  function(x){
+  return(data.frame(y=mean(x),label=paste( 'Mean: ',formatC(mean(x), digits =3, format='f'))))
+}
+
+
+test %>% ggplot(aes(x=rs11505922,y= LCOMP)) + 
+  geom_boxplot(aes(fill=rs11505922))  +
+  stat_summary(fun.data = fun_mean, geom='text',vjust=-1.5) +
+  stat_summary(fun.data = fun_sd, geom='text',hjust=-.25) +
+  theme_classic()
+  
+ggsave('rs11505922.png')
+
+```
+
+```{r rs778}
+
+test <- iowa %>% select(LCOMP,rs7785701) %>% filter( rs7785701 != '0/0', LCOMP != 0)
+
+sumar <- test %>% group_by(rs7785701) %>% summarize(
+  mean(LCOMP),
+  sd(LCOMP),
+  n() 
+  ) 
+#test %>% group_by(rs7791396) %>% skim()
+mean <- sumar %>% pull('mean(LCOMP)')
+sd <- sumar %>% pull('sd(LCOMP)')
+n <- sumar %>% pull('n()')
+(paste('Mean: ', mean, ' SD: ', sd, ' n: ', n))
+
+
+test_mod <- lm(LCOMP~ rs7785701 , data=test)
+# str(summary(test_mod)) #Look in here to find parse
+rsq <- summary(test_mod)$r.squared[1]
+
+(paste('R Squared: ' , rsq ))
+
+#summary(str(anova(test_mod)))
+
+F_stat <- anova(test_mod)$'F value'[1]
+
+(paste('F statistic: ' , F_stat))
+
+p_val <- anova(test_mod)$'Pr(>F)'[1]
+
+(paste('P value: ' , p_val))
+  
+fun_mean <-  function(x){
+  return(data.frame(y=mean(x),label=paste( 'Mean: ',formatC(mean(x,na.rm=T), digits =3, format='f'))))
+}
+
+fun_sd <-  function(x){
+  return(data.frame(y=sd(x),label=paste( 'SD: ',formatC(sd(x,na.rm=T), digits =3, format='f'))))
+}
+
+fun_n <-  function(x){
+  return(data.frame(y=mean(x),label=paste( 'Mean: ',formatC(mean(x), digits =3, format='f'))))
+}
+
+
+test %>% ggplot(aes(x=rs7785701,y= LCOMP)) + 
+  geom_boxplot(aes(fill=rs7785701))  +
+  stat_summary(fun.data = fun_mean, geom='text',vjust=-1.5) +
+  stat_summary(fun.data = fun_sd, geom='text',hjust=-.25) +
+  theme_classic()
+  
+ggsave('rs7785701.png')
+
+```
+
+
+```{r rs210}
+
+test <- iowa %>% select(LCOMP,rs2106900) %>% filter( rs2106900 != '0/0', LCOMP != 0)
+
+sumar <- test %>% group_by(rs2106900) %>% summarize(
+  mean(LCOMP),
+  sd(LCOMP),
+  n() 
+  ) 
+#test %>% group_by(rs7791396) %>% skim()
+mean <- sumar %>% pull('mean(LCOMP)')
+sd <- sumar %>% pull('sd(LCOMP)')
+n <- sumar %>% pull('n()')
+(paste('Mean: ', mean, ' SD: ', sd, ' n: ', n))
+
+
+test_mod <- lm(LCOMP~ rs2106900 , data=test)
+# str(summary(test_mod)) #Look in here to find parse
+rsq <- summary(test_mod)$r.squared[1]
+
+(paste('R Squared: ' , rsq ))
+
+#summary(str(anova(test_mod)))
+
+F_stat <- anova(test_mod)$'F value'[1]
+
+(paste('F statistic: ' , F_stat))
+
+p_val <- anova(test_mod)$'Pr(>F)'[1]
+
+(paste('P value: ' , p_val))
+  
+fun_mean <-  function(x){
+  return(data.frame(y=mean(x),label=paste( 'Mean: ',formatC(mean(x,na.rm=T), digits =3, format='f'))))
+}
+
+fun_sd <-  function(x){
+  return(data.frame(y=sd(x),label=paste( 'SD: ',formatC(sd(x,na.rm=T), digits =3, format='f'))))
+}
+
+fun_n <-  function(x){
+  return(data.frame(y=mean(x),label=paste( 'Mean: ',formatC(mean(x), digits =3, format='f'))))
+}
+
+
+test %>% ggplot(aes(x=rs2106900,y= LCOMP)) + 
+  geom_boxplot(aes(fill=rs2106900))  +
+  stat_summary(fun.data = fun_mean, geom='text',vjust=-1.5) +
+  stat_summary(fun.data = fun_sd, geom='text',hjust=-.25) +
+  theme_classic()
+  
+ggsave('rs2106900.png')
+
+```
+
+```{r rs7799}
+
+test <- iowa %>% select(LCOMP,rs7799652) %>% filter( rs7799652 != '0/0', LCOMP != 0)
+
+sumar <- test %>% group_by(rs7799652) %>% summarize(
+  mean(LCOMP),
+  sd(LCOMP),
+  n() 
+  ) 
+#test %>% group_by(rs7791396) %>% skim()
+mean <- sumar %>% pull('mean(LCOMP)')
+sd <- sumar %>% pull('sd(LCOMP)')
+n <- sumar %>% pull('n()')
+(paste('Mean: ', mean, ' SD: ', sd, ' n: ', n))
+
+
+test_mod <- lm(LCOMP~ rs7799652 , data=test)
+# str(summary(test_mod)) #Look in here to find parse
+rsq <- summary(test_mod)$r.squared[1]
+
+(paste('R Squared: ' , rsq ))
+
+#summary(str(anova(test_mod)))
+
+F_stat <- anova(test_mod)$'F value'[1]
+
+(paste('F statistic: ' , F_stat))
+
+p_val <- anova(test_mod)$'Pr(>F)'[1]
+
+(paste('P value: ' , p_val))
+  
+fun_mean <-  function(x){
+  return(data.frame(y=mean(x),label=paste( 'Mean: ',formatC(mean(x,na.rm=T), digits =3, format='f'))))
+}
+
+fun_sd <-  function(x){
+  return(data.frame(y=sd(x),label=paste( 'SD: ',formatC(sd(x,na.rm=T), digits =3, format='f'))))
+}
+
+fun_n <-  function(x){
+  return(data.frame(y=mean(x),label=paste( 'Mean: ',formatC(mean(x), digits =3, format='f'))))
+}
+
+
+test %>% ggplot(aes(x=rs7799652,y= LCOMP)) + 
+  geom_boxplot(aes(fill=rs7799652))  +
+  stat_summary(fun.data = fun_mean, geom='text',vjust=-1.5) +
+  stat_summary(fun.data = fun_sd, geom='text',hjust=-.25) +
+  theme_classic()
+  
+ggsave('rs7799652.png')
+
+```
+
+```{r rs10}
+
+test <- iowa %>% select(LCOMP,rs1005958) %>% filter( rs1005958 != '0/0', LCOMP != 0)
+
+sumar <- test %>% group_by(rs1005958) %>% summarize(
+  mean(LCOMP),
+  sd(LCOMP),
+  n() 
+  ) 
+#test %>% group_by(rs7791396) %>% skim()
+mean <- sumar %>% pull('mean(LCOMP)')
+sd <- sumar %>% pull('sd(LCOMP)')
+n <- sumar %>% pull('n()')
+(paste('Mean: ', mean, ' SD: ', sd, ' n: ', n))
+
+
+test_mod <- lm(LCOMP~ rs1005958 , data=test)
+# str(summary(test_mod)) #Look in here to find parse
+rsq <- summary(test_mod)$r.squared[1]
+
+(paste('R Squared: ' , rsq ))
+
+#summary(str(anova(test_mod)))
+
+F_stat <- anova(test_mod)$'F value'[1]
+
+(paste('F statistic: ' , F_stat))
+
+p_val <- anova(test_mod)$'Pr(>F)'[1]
+
+(paste('P value: ' , p_val))
+  
+fun_mean <-  function(x){
+  return(data.frame(y=mean(x),label=paste( 'Mean: ',formatC(mean(x,na.rm=T), digits =3, format='f'))))
+}
+
+fun_sd <-  function(x){
+  return(data.frame(y=sd(x),label=paste( 'SD: ',formatC(sd(x,na.rm=T), digits =3, format='f'))))
+}
+
+fun_n <-  function(x){
+  return(data.frame(y=mean(x),label=paste( 'Mean: ',formatC(mean(x), digits =3, format='f'))))
+}
+
+
+test %>% ggplot(aes(x=rs1005958,y= LCOMP)) + 
+  geom_boxplot(aes(fill=rs1005958))  +
+  stat_summary(fun.data = fun_mean, geom='text',vjust=-1.5) +
+  stat_summary(fun.data = fun_sd, geom='text',hjust=-.25) +
+  theme_classic()
+  
+ggsave('rs1005958.png')
+
+```
+
