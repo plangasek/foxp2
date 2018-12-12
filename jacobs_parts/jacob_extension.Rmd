@@ -155,7 +155,7 @@ SNP_fact %>% pull(rs1005958) %>% glimpse()
 
 
 
-# MANCOVA:
+# ANCOVA:
 
 
 With levels set now we can start to conduct a ANCOVA looking for snps that interact through brute force checking each combination of SNPS to see what is interacting. I will also only conduct one non significant analysis and then copy and paste each. 
@@ -181,7 +181,7 @@ No interactions present
 
 
 
-##rs7791396 V rs1005958: Weakly Significant
+##rs7791396 V rs1005958: Significant
 
 ```{r rs779_v_rs100}
 mod <- lm(LCOMP~rs7791396*rs1005958, data= SNP_fact, contrasts = list(rs7791396 = contr.sum, rs1005958 = contr.sum))
@@ -191,9 +191,9 @@ Anova(mod, type=2, singular.ok = T)
 ```
 
 
-Weak Significance found between rs7791396 and rs1005958!! Very surprsing indeed.
+Significance found between rs7791396 and rs1005958!! Very surprsing indeed.
 Unable to conduct ANCOVA between rs7791396 and rs1005958. 
-ANCOVA assumes no interactions. Can do spotlight analysis to see which Genotypes give the most change. 
+ANCOVA assumes no interactions. Can do interaction effect analysis to see which Genotypes give the most change. 
 
 
 ##rs12155328 V rs10953754: Not Signfiant enough
@@ -223,7 +223,7 @@ Additonally happens marginal signficance  (> .1) happens at:
   
 
 
-##rs10447760 V rs11505922: Signfiant 
+##rs10447760 V rs11505922: Signifiant 
 ```{r rs104_v_rs115}
 mod <- lm(LCOMP~rs10447760*rs11505922, data= SNP_fact, contrasts = list(rs10447760 = contr.sum, rs11505922 = contr.sum))
 
@@ -236,7 +236,7 @@ Unable to conduct ANCOVA between rs10447760 and rs11505922
 ANCOVA assumes no interactions. Can do spotlight analysis to see which Genotypes give the most change. 
 
 
-##rs10447760 V rs7785701: Weakly Signfiant 
+##rs10447760 V rs7785701: Weakly Significant 
 ```{r rs104_v_rs778}
 mod <- lm(LCOMP~rs10447760*rs7785701, data= SNP_fact, contrasts = list(rs10447760 = contr.sum, rs7785701 = contr.sum))
 
@@ -261,26 +261,26 @@ Unable to conduct ANCOVA between rs10447760 and rs2106900
 ANCOVA assumes no interactions. Can do spotlight analysis to see which Genotypes give the most change. 
 
 
-##rs2244419 V rs1668335: Weakly Signfiant 
+##rs2244419 V rs1668335: Signfiant 
 ```{r rs224_v_rs166}
 mod <- lm(LCOMP~rs2244419*rs1668335, data= SNP_fact, contrasts = list(rs2244419 = contr.sum, rs1668335 = contr.sum))
 
 Anova(mod, type=2, singular.ok = T)
 
 ```
-Weakly Signficant Interaction found
-Unable to conduct ANCOVA between rs10447760 and rs2106900 
+Signficant Interaction found
+Unable to conduct ANCOVA between rs2244419 and rs1668335 
 ANCOVA assumes no interactions. Can do spotlight analysis to see which Genotypes give the most change.
 
-##rs2244419 V rs1916988: Weakly Signfiant 
+##rs2244419 V rs1916988: Signfiant 
 ```{r rs224_v_rs191}
 mod <- lm(LCOMP~rs2244419*rs1916988, data= SNP_fact, contrasts = list(rs2244419 = contr.sum, rs1916988 = contr.sum))
 
 Anova(mod, type=2, singular.ok = T)
 
 ```
-Weakly Signficant Interaction found
-Unable to conduct ANCOVA between rs10447760 and rs2106900 
+Signficant Interaction found
+Unable to conduct ANCOVA between rs2244419 and rs1916988 
 ANCOVA assumes no interactions. Can do spotlight analysis to see which Genotypes give the most change.
 
 
@@ -306,7 +306,7 @@ Weakly Signficant Interaction found
 Unable to conduct ANCOVA between rs10447760 and rs2106900 
 ANCOVA assumes no interactions. Can do spotlight analysis to see which Genotypes give the most change.
 
-##rs1916988 V rs11505922: Weakly Signfiant 
+##rs1916988 V rs11505922: Signfiant 
 ```{r rs191_v_rs115}
 mod <- lm(LCOMP~rs1916988*rs11505922, data= SNP_fact, contrasts = list(rs1916988 = contr.sum, rs11505922 = contr.sum))
 
@@ -318,13 +318,6 @@ Unable to conduct ANCOVA between rs10447760 and rs11505922
 ANCOVA assumes no interactions. Can do spotlight analysis to see which Genotypes give the most change. 
 
 
-##rs7799652 V rs1005958:Not Signficant
-```{r rs779_v_rs1005}
-mod <- lm(LCOMP~rs7799652*rs1005958, data= SNP_fact, contrasts = list(rs7799652 = contr.sum, rs1005958 = contr.sum))
-
-Anova(mod, type=2, singular.ok = T)
-
-```
 
 
 End of Interaction Analysis. 
@@ -334,8 +327,17 @@ End of Interaction Analysis.
 Significant Interactions Found: 
 
   Will conduct spotlight analysis on most signficant interaction.
+  
+  * rs7791396 V rs1005958 p-value = 0.03221
 
   * rs10447760 v rs11505922 p-value = 0.004627
+  
+  * rs2244419 V rs1668335 p-value = 0.01351
+  
+  * rs2244419 V rs1916988 p-value = 0.02436
+  
+  * rs1916988 V rs11505922 p-value = 0.03526
+  
   
   This is the only variant to reach < .05 level of significance and as such I will only conduct the spotlight analysis on this variant. 
   
@@ -352,12 +354,14 @@ Now conducting spotlight analysis on rs10447760 against rs11505922
 
 For categorical variables an interaction effects test is the same as spotlight analysis!! 
 
-```{r}
+```{r ancov104}
 #Subsetting data
 sig_mod <- lm(LCOMP~rs10447760*rs11505922, data= SNP_fact, contrasts = list(rs10447760 = contr.sum, rs11505922 = contr.sum))
 
-Anova(sig_mod, type=2, singular.ok = T)
+#ANOVA output for verification
+#Anova(sig_mod, type=2, singular.ok = T)
 
+#Reverse each to see
 testInteractions(sig_mod,fixed='rs10447760',across='rs11505922', adjustment= 'bonferroni')
 
 testInteractions(sig_mod,fixed='rs11505922',across='rs10447760', adjustment= 'bonferroni')
@@ -365,4 +369,73 @@ testInteractions(sig_mod,fixed='rs11505922',across='rs10447760', adjustment= 'bo
 
 
 
-Significant interaction between Genotype 'C/C' in 
+Significant interaction between Genotype 'C/C' in rs11505922 and T/T in rs10447760
+
+
+
+
+```{r ancov779}
+#Subsetting data
+sig_mod <- lm(LCOMP~rs7791396*rs1005958, data= SNP_fact, contrasts = list(rs7791396 = contr.sum, rs1005958 = contr.sum))
+
+#ANOVA output for verification
+#Anova(sig_mod, type=2, singular.ok = T)
+
+#Reverse each to see
+testInteractions(sig_mod,fixed='rs7791396',across='rs1005958', adjustment= 'bonferroni')
+
+testInteractions(sig_mod,fixed='rs1005958',across='rs7791396', adjustment= 'bonferroni')
+```
+
+Here it is rs7791396 correlates G/G with rs1005958 T/C
+
+
+```{r ancov224}
+#Subsetting data
+sig_mod <- lm(LCOMP~rs2244419*rs1668335, data= SNP_fact, contrasts = list(rs2244419 = contr.sum, rs1668335 = contr.sum))
+
+#ANOVA output for verification
+#Anova(sig_mod, type=2, singular.ok = T)
+
+#Reverse each to see
+testInteractions(sig_mod,fixed='rs2244419',across='rs1668335', adjustment= 'bonferroni')
+
+testInteractions(sig_mod,fixed='rs1668335',across='rs2244419', adjustment= 'bonferroni')
+```
+
+This Analysis wont work because they use the same genotype indexs :(
+
+
+
+```{r ancov224_166 }
+#Subsetting data
+sig_mod <- lm(LCOMP~rs2244419*rs1668335, data= SNP_fact, contrasts = list(rs2244419 = contr.sum, rs1668335 = contr.sum))
+
+#ANOVA output for verification
+#Anova(sig_mod, type=2, singular.ok = T)
+
+#Reverse each to see
+testInteractions(sig_mod,fixed='rs2244419',across='rs1668335', adjustment= 'bonferroni')
+
+testInteractions(sig_mod,fixed='rs1668335',across='rs2244419', adjustment= 'bonferroni')
+```
+
+This Analysis wont work because they use the same genotype indexs :(
+
+
+```{r ancov191}
+#Subsetting data
+sig_mod <- lm(LCOMP~rs1916988*rs11505922, data= SNP_fact, contrasts = list(rs1916988 = contr.sum, rs11505922 = contr.sum))
+
+#ANOVA output for verification
+Anova(sig_mod, type=2, singular.ok = T)
+
+#Reverse each to see
+testInteractions(sig_mod,fixed='rs1916988',across='rs11505922', adjustment= 'bonferroni')
+
+testInteractions(sig_mod,fixed='rs11505922',across='rs1916988', adjustment= 'bonferroni')
+```
+
+No Significance found at this position
+
+
