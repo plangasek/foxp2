@@ -443,7 +443,7 @@ Similar to what we saw in the Longitudinal sample, the C allele appears to be as
 
 ## Question:
 
- explaination about SNP effects interacte in combination!
+ explanation about SNP effects interacte in combination!
  
 ## Plot:
 
