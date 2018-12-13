@@ -1,3 +1,0 @@
-"0","elvs %>% ggplot(aes(x=CELF7SS0, fill = rs1916988, alpha = 0.7)) + "
-"0","  geom_density() + "
-"0","  labs(title = ""Language Scores from ELVS dataset, colored by Genotype variant for rs1916988"")"
