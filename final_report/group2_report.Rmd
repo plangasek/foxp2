@@ -258,7 +258,7 @@ The reason the authors decided to look at the rs1916988 SNP in particular is bec
 
 ## Question:
 
- explaination about SNP effects interacte in combination!
+ explanation about SNP effects interacte in combination!
  
 ## Plot:
 
