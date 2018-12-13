@@ -1,0 +1,66 @@
+---
+title: "Final Report: Group 2"
+author: "Jacob Gutierrez, Patty Langsek, Jennifer Sullivan"
+date: 12/13/18
+output: html_notebook
+---
+
+## Paper:
+
+
+## Paper Summary:
+
+
+
+
+
+# Exploratory Data Analysis Report
+
+## Discussion: data quality issues
+
+
+
+## Stats and plots
+  Start data import here!!!
+
+  ALL THE COPY PASTA FROM THE LAST REPORT
+
+## Comments
+
+
+
+# Replication Report:
+
+## Table1:
+
+
+## Table2:
+
+## Table3:
+
+
+## Table4:
+
+
+
+# Extension Report:
+
+## Question:
+
+ explaination about SNP effects interacte in combination!
+ 
+## Plot:
+
+
+
+
+## ANCOVA:
+
+
+
+# Summary:
+
+
+ 
+
+
