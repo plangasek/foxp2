@@ -23,18 +23,39 @@ library(knitr)
 
 
 ## Paper:
+### Common Genetic Variants in _FOXP2_ Are Not Associated with Individual Differences in Language Development
+Authors: Katheryn L. Mueller, Jeffrey C. Murray, Jacob J. Michaelson, Morten H. Christiansen, Sheena Reilly, J. Bruce Tomblin
 
+Published open access through PLOS One on April 11, 2016.
+
+[Paper can be found here](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0152576)
+[All Data can be found here](https://zenodo.org/record/44640#.XBLLqMtKiV4)
 
 ## Paper Summary:
+Mueller et. al., asked the question: Can individual differences in language ability normally seen in the general population be partially explained by any of the 13 common SNPs in the _FOXP2_ gene? Histocial context implicates the _FOXP2_ gene as having an effect on language development. Previous studies have evaluated single nucleotide polymorphism (SNP) differences in small family-based comparisons with siblings displaying variance in language abilities, but prior to Mueller et. al, no studies had evaluated language differences and _FOXP2_ SNP variances that can be genearlized to the population.
 
+As part of their analysis, the authors used data collected from, ultimately, 3 previous studies that evaluated language scores (at minimum) and collected DNA samples from the study participants:
 
+The “longitudinal” study assessed the prevalence of language disorders in 7,218 kindergarten-age children, and the subsequent outcomes for those with language impairment and without.  This initial study intentionally oversampled for children with language impairment.  Thus, in order to select a sample that is more representative of the general population, the current study assigned a weight value to each subject equal to the reciprocal of the probability of selecting that subject.  A subset of 500 subjects was then sampled, with higher-weighted subjects more likely to be selected than lower-weighted subjects.  All subjects spoke English and had normal hearing and no reported neurodevelopmental disabilities.  Only Caucasian subjects were selected.
 
+Language ability was indicated by a composite score based on five subtests of the Test of Language Development-2:P.  The tests were chosen to evaluate the subjects’ abilities in the following hildren with more normal scores.  All subjects had normal hearing and no reported neareas: vocabulary, grammar, narration, comprehension, and expression.  The Block Design and Picture Completion tests of the Wechsler Preschool and Primary Scale of Intelligence were used to identify and remove any subject with a nonverbal IQ under 70 in order to prevent confounding by anyone with intellectual disability.
 
+The “school” study assessed language abilities in first- through fourth-grade children.  318 subjects were recruited from this study based on their performance on the verbal subscales of the Iowa Tests of Basic Skills.  Children with low language scores were selected, along with a random sample of curodevelopmental disabilities.  Only Caucasian subjects were selected.
+
+Language ability was indicated by a composite score based on a series of tests similar to that administered to the “longitudinal” cohort, but adjusted to better reflect the skill levels of the different age groups in the “school” cohort.  The Block Design and Picture Completion tests of the Wechsler Preschool and Primary Scale of Intelligence were used to identify and remove any subject with a nonverbal IQ under 70 in order to prevent confounding by anyone with intellectual disability.
+
+The ELVS (Early Language in Victoria) dataset was consulted to control for an association between poor language abilities and overall language ability due to concerns of the variance between the longitudinal and school studies. It was a longitudinal birth cohort study from Australia that, using a portion of the same assessments as the Iowa longitudinal and school samples (sentence structure, concepts & direction, recalling sentences, and word structure), studied language ability of a sample of the population. Each subject is on its own line, however, only one SNP (rs1916988) is considered for each subject. The dataset is the language score, not the standardized z-score from the Iowa-based studies.
+
+Mueller et. al. found no significant indication that the common _FOXP2_ SNPs found in the general population are associated with population-level language ability differences.
 
 # Exploratory Data Analysis Report
 
 ## Discussion: data quality issues
+Though the data was freely and readily available, there was no explanation of what the data was or what it meant. An accompanyhing codebook would have helped navigate the ambiguity of raw scores vs. z-scores between the two datasets, as well as their notation for missing allele (0).
 
+Presenation of the data in a more visual format instead of tables of text would have also helped better appreciate what the raw data was and what was being evaluated.
+
+The authors also didn't discuss how exactly they curated the data for analysis. As we moved forward with replication, our counts did not match theirs, and we never did find the discrepancy.
 
 
 ## Stats and plots
