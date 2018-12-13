@@ -1,0 +1,6 @@
+"0","elvs <- read_csv(here::here(""data"", ""tidy_elvs.csv""))"
+"2","Missing column names filled in: 'X1' [1]"
+"0","elvs <- elvs %>% mutate(rs1916988 = as_factor(rs1916988))"
+"0","iowa <- read_csv(here::here(""data"", ""tidy_iowa.csv""))"
+"2","Missing column names filled in: 'X1' [1]"
+"0","iowa <- iowa %>% mutate_at(vars(starts_with(""rs"")), funs( as_factor(.)))"
