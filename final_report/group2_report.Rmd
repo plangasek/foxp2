@@ -1,6 +1,6 @@
 ---
 title: "Final Report: Group 2"
-author: "Jacob Gutierrez, Patty Langsek, Jennifer Sullivan"
+author: "Jacob Gutierrez, Patty Langasek, Jennifer Sullivan"
 date: 12/13/18
 output: 
  html_document:
