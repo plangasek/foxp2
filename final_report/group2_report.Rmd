@@ -1691,7 +1691,7 @@ testInteractions(sig_mod,fixed='rs11505922',across='rs1916988', adjustment= 'bon
 No Significance found at this position.
 
 
-## Anova Sumnmary:
+## Anova Summary:
 
 Based on this analysis there were some SNP combinations that showed some signfiance revealing small interactions between certain genotypes. This makes sense as only certain genotype combinations start to affect gene function. But please note, for this analysis there were 73 total comparisons, so if these values were p-value adjusted none of these findings would be significant. 
 

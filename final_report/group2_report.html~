@@ -1782,7 +1782,7 @@ testInteractions(sig_mod,fixed='rs1916988',across='rs11505922', adjustment= 'bon
 </div>
 <p>No Significance found at this position.</p>
 <div id="anova-sumnmary" class="section level2">
-<h2>Anova Summary:</h2>
+<h2>Anova Sumnmary:</h2>
 <p>Based on this analysis there were some SNP combinations that showed some signfiance revealing small interactions between certain genotypes. This makes sense as only certain genotype combinations start to affect gene function. But please note, for this analysis there were 73 total comparisons, so if these values were p-value adjusted none of these findings would be significant.</p>
 <p>The interaction of these SNPs were also investigated by the study using a random forest machine learning algorithm revealing that there are no signficiant SNPs or interactions that directly affect LCOMP score.</p>
 </div>
