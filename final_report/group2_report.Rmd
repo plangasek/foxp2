@@ -22,6 +22,8 @@ library(knitr)
 library(moderndive)
 library(psycho)
 library(BBmisc)
+library(car)
+library(phia)
 ```
 
 
@@ -1155,10 +1157,254 @@ elvs_table
 
 Similar to what we saw in the Longitudinal sample, the C allele appears to be associated with lower language scores than the T allele.  However, this result is still not significant.  Therefore, the ELVS sample does not suggest any significant effect of variation at this SNP on language ability.  This is, indeed, what the authors had concluded.
 
-## Table3:
-
 
 ## Table4:
+"SNP location, minor allele frequency and call rates for markers in FOXP2"
+Here the study table shows extreneous information such as SNP location and minor allele frequency.
+
+For the following analysis only the SNP call rate is computed to prove there is an acceptable call rate as quality control for accurate genotype calls.
+replicate call rates for iowa dataset 
+
+
+
+Subsetting the data can making variables to be called.
+```{r}
+tot <- iowa %>% count() %>% pull(n)
+
+#subset long
+long <- iowa %>% filter(Sample == 'Longitudinal')
+l_tot <- long %>% count() %>% pull(n)
+
+#Subset school
+sch <- iowa %>% filter(Sample == 'School')
+s_tot <- sch %>% count() %>% pull(n)
+
+```
+
+
+##rs7791396
+```{r}
+
+t_call <- iowa %>% filter(!is.na(rs7791396)) %>% count()
+t_call <- signif(t_call/tot, 3)
+l_call <- long %>% filter(!is.na(rs7791396)) %>% count()
+l_call <- signif(l_call/l_tot,3)
+s_call <- sch %>% filter(!is.na(rs7791396)) %>% count()
+s_call <- signif(s_call/s_tot,3)
+
+calls <- tibble('long' = c(l_call), 'school' =c(s_call),'comb'= c(t_call))
+
+calls %>% glimpse()
+```
+
+Matches Previous Findings! :)
+
+##rs12155328
+```{r}
+
+t_call <- iowa %>% filter(!is.na(rs12155328)) %>% count()
+t_call <- signif(t_call/tot, 3)
+l_call <- long %>% filter(!is.na(rs12155328)) %>% count()
+l_call <- signif(l_call/l_tot,3)
+s_call <- sch %>% filter(!is.na(rs12155328)) %>% count()
+s_call <- signif(s_call/s_tot,3)
+
+calls <- tibble('long' = c(l_call), 'school' =c(s_call),'comb'= c(t_call))
+
+calls %>% glimpse()
+```
+
+Matches Previous Findings
+
+##rs10447760
+```{r}
+
+t_call <- iowa %>% filter(!is.na(rs10447760)) %>% count()
+t_call <- signif(t_call/tot, 3)
+l_call <- long %>% filter(!is.na(rs10447760)) %>% count()
+l_call <- signif(l_call/l_tot,3)
+s_call <- sch %>% filter(!is.na(rs10447760)) %>% count()
+s_call <- signif(s_call/s_tot,3)
+
+calls <- tibble('long' = c(l_call), 'school' =c(s_call),'comb'= c(t_call))
+
+calls %>% glimpse()
+```
+
+Matches Previous Findings
+
+##rs10953754
+```{r}
+
+t_call <- iowa %>% filter(!is.na(rs10953754)) %>% count()
+t_call <- signif(t_call/tot, 3)
+l_call <- long %>% filter(!is.na(rs10953754)) %>% count()
+l_call <- signif(l_call/l_tot,3)
+s_call <- sch %>% filter(!is.na(rs10953754)) %>% count()
+s_call <- signif(s_call/s_tot,3)
+
+calls <- tibble('long' = c(l_call), 'school' =c(s_call),'comb'= c(t_call))
+
+calls %>% glimpse()
+```
+
+Matches Previous Findings
+
+
+##rs2244419
+```{r}
+
+t_call <- iowa %>% filter(!is.na(rs2244419)) %>% count()
+t_call <- signif(t_call/tot, 3)
+l_call <- long %>% filter(!is.na(rs2244419)) %>% count()
+l_call <- signif(l_call/l_tot,3)
+s_call <- sch %>% filter(!is.na(rs2244419)) %>% count()
+s_call <- signif(s_call/s_tot,3)
+
+calls <- tibble('long' = c(l_call), 'school' =c(s_call),'comb'= c(t_call))
+
+calls %>% glimpse()
+```
+
+Matches Previous Findings
+
+
+##rs1668335
+```{r}
+
+t_call <- iowa %>% filter(!is.na(rs1668335)) %>% count()
+t_call <- signif(t_call/tot, 3)
+l_call <- long %>% filter(!is.na(rs1668335)) %>% count()
+l_call <- signif(l_call/l_tot,3)
+s_call <- sch %>% filter(!is.na(rs1668335)) %>% count()
+s_call <- signif(s_call/s_tot,3)
+
+calls <- tibble('long' = c(l_call), 'school' =c(s_call),'comb'= c(t_call))
+
+calls %>% glimpse()
+```
+
+Matches Previous Findings
+
+##rs2396720
+```{r}
+
+t_call <- iowa %>% filter(!is.na(rs2396720)) %>% count()
+t_call <- signif(t_call/tot, 3)
+l_call <- long %>% filter(!is.na(rs2396720)) %>% count()
+l_call <- signif(l_call/l_tot,3)
+s_call <- sch %>% filter(!is.na(rs2396720)) %>% count()
+s_call <- signif(s_call/s_tot,3)
+
+calls <- tibble('long' = c(l_call), 'school' =c(s_call),'comb'= c(t_call))
+
+calls %>% glimpse()
+```
+
+Matches Previous Findings
+
+##rs1916988
+```{r}
+
+t_call <- iowa %>% filter(!is.na(rs1916988)) %>% count()
+t_call <- signif(t_call/tot, 3)
+l_call <- long %>% filter(!is.na(rs1916988)) %>% count()
+l_call <- signif(l_call/l_tot,3)
+s_call <- sch %>% filter(!is.na(rs1916988)) %>% count()
+s_call <- signif(s_call/s_tot,3)
+
+calls <- tibble('long' = c(l_call), 'school' =c(s_call),'comb'= c(t_call))
+
+calls %>% glimpse()
+```
+
+Matches Previous Findings
+
+##rs11505922
+```{r}
+
+t_call <- iowa %>% filter(!is.na(rs11505922)) %>% count()
+t_call <- signif(t_call/tot, 3)
+l_call <- long %>% filter(!is.na(rs11505922)) %>% count()
+l_call <- signif(l_call/l_tot,3)
+s_call <- sch %>% filter(!is.na(rs11505922)) %>% count()
+s_call <- signif(s_call/s_tot,3)
+
+calls <- tibble('long' = c(l_call), 'school' =c(s_call),'comb'= c(t_call))
+
+calls %>% glimpse()
+```
+
+Matches Previous Findings
+
+##rs7785701
+```{r}
+
+t_call <- iowa %>% filter(!is.na(rs7785701)) %>% count()
+t_call <- signif(t_call/tot, 3)
+l_call <- long %>% filter(!is.na(rs7785701)) %>% count()
+l_call <- signif(l_call/l_tot,3)
+s_call <- sch %>% filter(!is.na(rs7785701)) %>% count()
+s_call <- signif(s_call/s_tot,3)
+
+calls <- tibble('long' = c(l_call), 'school' =c(s_call),'comb'= c(t_call))
+
+calls %>% glimpse()
+```
+
+Longitudinal is off by .01
+
+
+##rs2106900
+```{r}
+
+t_call <- iowa %>% filter(!is.na(rs2106900)) %>% count()
+t_call <- signif(t_call/tot, 3)
+l_call <- long %>% filter(!is.na(rs2106900)) %>% count()
+l_call <- signif(l_call/l_tot,3)
+s_call <- sch %>% filter(!is.na(rs2106900)) %>% count()
+s_call <- signif(s_call/s_tot,3)
+
+calls <- tibble('long' = c(l_call), 'school' =c(s_call),'comb'= c(t_call))
+
+calls %>% glimpse()
+```
+
+Matches Previous Findings
+
+##rs7799652
+```{r}
+
+t_call <- iowa%>% filter(!is.na(rs7799652)) %>% count()
+t_call <- signif(t_call/tot, 3)
+l_call <- long %>% filter(!is.na(rs7799652)) %>% count()
+l_call <- signif(l_call/l_tot,3)
+s_call <- sch %>% filter(!is.na(rs7799652)) %>% count()
+s_call <- signif(s_call/s_tot,3)
+
+calls <- tibble('long' = c(l_call), 'school' =c(s_call),'comb'= c(t_call))
+
+calls %>% glimpse()
+```
+
+Matches Previous Findings
+
+##rs1005958
+```{r}
+
+t_call <- iowa %>% filter(!is.na(rs1005958)) %>% count()
+t_call <- signif(t_call/tot, 3)
+l_call <- long %>% filter(!is.na(rs1005958)) %>% count()
+l_call <- signif(l_call/l_tot,3)
+s_call <- sch %>% filter(!is.na(rs1005958)) %>% count()
+s_call <- signif(s_call/s_tot,3)
+
+calls <- tibble('long' = c(l_call), 'school' =c(s_call),'comb'= c(t_call))
+
+calls %>% glimpse()
+```
+
+Matches Previous Findings
 
 
 
@@ -1166,18 +1412,297 @@ Similar to what we saw in the Longitudinal sample, the C allele appears to be as
 
 ## Question:
 
- explanation about SNP effects interacte in combination!
+  Based on the biology of gene function it is possible that these FOXP2 variants show a combinatorial effect of language score. This is expected as the a small change in gene struture at one position may not be effect to alter function and thus the obsevred phenotype. Additonally not all snps are created equal and combination dependent where two specific SNPs. 
  
-## Plot:
-
-
-
-
 ## ANCOVA:
+With levels set now we can start to conduct a ANCOVA looking for snps that interact through brute force checking each combination of SNPS to see what is interacting. I will also only conduct one non significant analysis and then copy and paste each. 
+
+Note: Interaction model is the same regardless of which order (type II) So I will skip repeat interactions. 
+
+I am searching For interaction in order to validate an ANCOVA
+
+
+Now here are all the SNPS present: 
+rs7791396, rs12155328, rs10447760, rs10953754, rs2244419, rs1668335, rs2396720, rs1916988, rs11505922, rs7785701, rs2106900, rs7799652, rs1005958
+
+
+# rs7791396 v rs12155328: Not Significant
+```{r rs779vrs121}
+mod <- lm(LCOMP~rs7791396*rs12155328, data= iowa, contrasts = list(rs7791396 = contr.sum, rs12155328 = contr.sum))
+
+Anova(mod, type=2, singular.ok = T)
+
+```
+
+No interactions present
 
 
 
-# Summary:
+##rs7791396 V rs1005958: Significant
+
+```{r rs779_v_rs100}
+mod <- lm(LCOMP~rs7791396*rs1005958, data= iowa, contrasts = list(rs7791396 = contr.sum, rs1005958 = contr.sum))
+
+Anova(mod, type=2, singular.ok = T)
+
+```
+
+
+Significance found between rs7791396 and rs1005958!! Very surprsing indeed.
+Unable to conduct ANCOVA between rs7791396 and rs1005958. 
+ANCOVA assumes no interactions. Can do interaction effect analysis to see which Genotypes give the most change. 
+
+
+##rs12155328 V rs10953754: Not Signfiant enough
+```{r rs121_v_rs109}
+mod <- lm(LCOMP~rs12155328*rs10953754, data= iowa, contrasts = list(rs12155328 = contr.sum, rs10953754 = contr.sum))
+
+Anova(mod, type=2, singular.ok = T)
+
+```
+
+
+.1 level of significance my scientific instincts tell me to report this. 
+The interaction isnt signficant but It appears that rs12155328 begins to predict LCOMP when interacting with rs10953754 in a vaccum. 
+
+Will still be able to conduct ANCOVA
+
+
+
+
+Additonally happens marginal signficance  (> .1) happens at:
+
+  * rs12155328 v rs1668335
+  * rs12155328 v rs1916988
+  * rs12155328 v rs7785701
+  * rs12155328 v rs2106900
+  * rs12155328 v rs7799652
+  
+
+
+##rs10447760 V rs11505922: Signifiant 
+```{r rs104_v_rs115}
+mod <- lm(LCOMP~rs10447760*rs11505922, data= iowa, contrasts = list(rs10447760 = contr.sum, rs11505922 = contr.sum))
+
+Anova(mod, type=2, singular.ok = T)
+
+```
+
+Signficant Interaction found!!!
+Unable to conduct ANCOVA between rs10447760 and rs11505922 
+ANCOVA assumes no interactions. Can do spotlight analysis to see which Genotypes give the most change. 
+
+
+##rs10447760 V rs7785701: Weakly Significant 
+```{r rs104_v_rs778}
+mod <- lm(LCOMP~rs10447760*rs7785701, data= iowa, contrasts = list(rs10447760 = contr.sum, rs7785701 = contr.sum))
+
+Anova(mod, type=2, singular.ok = T)
+
+```
+
+Weakly Signficant Interaction found
+Unable to conduct ANCOVA between rs10447760 and rs7785701 
+ANCOVA assumes no interactions. Can do spotlight analysis to see which Genotypes give the most change. 
+
+
+##rs10447760 V rs2106900: Weakly Signfiant 
+```{r rs104_v_rs210}
+mod <- lm(LCOMP~rs10447760*rs2106900, data= iowa, contrasts = list(rs10447760 = contr.sum, rs2106900 = contr.sum))
+
+Anova(mod, type=2, singular.ok = T)
+
+```
+Weakly Signficant Interaction found
+Unable to conduct ANCOVA between rs10447760 and rs2106900 
+ANCOVA assumes no interactions. Can do spotlight analysis to see which Genotypes give the most change. 
+
+
+##rs2244419 V rs1668335: Signfiant 
+```{r rs224_v_rs166}
+mod <- lm(LCOMP~rs2244419*rs1668335, data= iowa, contrasts = list(rs2244419 = contr.sum, rs1668335 = contr.sum))
+
+Anova(mod, type=2, singular.ok = T)
+
+```
+Signficant Interaction found
+Unable to conduct ANCOVA between rs2244419 and rs1668335 
+ANCOVA assumes no interactions. Can do spotlight analysis to see which Genotypes give the most change.
+
+##rs2244419 V rs1916988: Signfiant 
+```{r rs224_v_rs191}
+mod <- lm(LCOMP~rs2244419*rs1916988, data= iowa, contrasts = list(rs2244419 = contr.sum, rs1916988 = contr.sum))
+
+Anova(mod, type=2, singular.ok = T)
+
+```
+Signficant Interaction found
+Unable to conduct ANCOVA between rs2244419 and rs1916988 
+ANCOVA assumes no interactions. Can do spotlight analysis to see which Genotypes give the most change.
+
+
+##rs1668335 V rs11505922: Weakly Signfiant 
+```{r rs166_v_rs115}
+mod <- lm(LCOMP~rs1668335*rs11505922, data= iowa, contrasts = list(rs1668335 = contr.sum, rs11505922 = contr.sum))
+
+Anova(mod, type=2, singular.ok = T)
+
+```
+Weakly Signficant Interaction found
+Unable to conduct ANCOVA between rs10447760 and rs2106900 
+ANCOVA assumes no interactions. Can do spotlight analysis to see which Genotypes give the most change.
+
+##rs1668335 V rs2106900: Weakly Signfiant 
+```{r rs166_v_rs210}
+mod <- lm(LCOMP~rs1668335*rs2106900, data= iowa, contrasts = list(rs1668335 = contr.sum, rs2106900 = contr.sum))
+
+Anova(mod, type=2, singular.ok = T)
+
+```
+Weakly Signficant Interaction found
+Unable to conduct ANCOVA between rs10447760 and rs2106900 
+ANCOVA assumes no interactions. Can do spotlight analysis to see which Genotypes give the most change.
+
+##rs1916988 V rs11505922: Signfiant 
+```{r rs191_v_rs115}
+mod <- lm(LCOMP~rs1916988*rs11505922, data= iowa, contrasts = list(rs1916988 = contr.sum, rs11505922 = contr.sum))
+
+Anova(mod, type=2, singular.ok = T)
+
+```
+Signficant Interaction found!!!
+Unable to conduct ANCOVA between rs10447760 and rs11505922 
+ANCOVA assumes no interactions. Can do spotlight analysis to see which Genotypes give the most change. 
+
+
+
+
+End of Interaction Analysis. 
+
+#Recap: 
+
+Significant Interactions Found: 
+
+  Will conduct spotlight analysis on most signficant interaction.
+  
+  * rs7791396 V rs1005958 p-value = 0.03221
+
+  * rs10447760 v rs11505922 p-value = 0.004627
+  
+  * rs2244419 V rs1668335 p-value = 0.01351
+  
+  * rs2244419 V rs1916988 p-value = 0.02436
+  
+  * rs1916988 V rs11505922 p-value = 0.03526
+  
+  
+  This is the only variant to reach < .05 level of significance and as such I will only conduct the spotlight analysis on this variant. 
+  
+  
+  Weak covariate: rs12155328
+  
+  This was the only variant to display this covaraince 
+  
+
+# Spotlight Analysis:
+
+Now conducting spotlight analysis on rs10447760 against rs11505922
+
+
+For categorical variables an interaction effects test is the same as spotlight analysis!! 
+
+```{r ancov104}
+#Subsetting data
+sig_mod <- lm(LCOMP~rs10447760*rs11505922, data= iowa, contrasts = list(rs10447760 = contr.sum, rs11505922 = contr.sum))
+
+#ANOVA output for verification
+#Anova(sig_mod, type=2, singular.ok = T)
+
+#Reverse each to see
+testInteractions(sig_mod,fixed='rs10447760',across='rs11505922', adjustment= 'bonferroni')
+
+testInteractions(sig_mod,fixed='rs11505922',across='rs10447760', adjustment= 'bonferroni')
+```
+
+
+
+Significant interaction between Genotype 'C/C' in rs11505922 and T/T in rs10447760
+
+
+
+
+```{r ancov779}
+#Subsetting data
+sig_mod <- lm(LCOMP~rs7791396*rs1005958, data= iowa, contrasts = list(rs7791396 = contr.sum, rs1005958 = contr.sum))
+
+#ANOVA output for verification
+#Anova(sig_mod, type=2, singular.ok = T)
+
+#Reverse each to see
+testInteractions(sig_mod,fixed='rs7791396',across='rs1005958', adjustment= 'bonferroni')
+
+testInteractions(sig_mod,fixed='rs1005958',across='rs7791396', adjustment= 'bonferroni')
+```
+
+Here it is rs7791396 correlates G/G with rs1005958 T/C
+
+
+```{r ancov224}
+#Subsetting data
+sig_mod <- lm(LCOMP~rs2244419*rs1668335, data= iowa, contrasts = list(rs2244419 = contr.sum, rs1668335 = contr.sum))
+
+#ANOVA output for verification
+#Anova(sig_mod, type=2, singular.ok = T)
+
+#Reverse each to see
+#testInteractions(sig_mod,fixed='rs2244419',across='rs1668335', adjustment= 'bonferroni')
+
+#testInteractions(sig_mod,fixed='rs1668335',across='rs2244419', adjustment= 'bonferroni')
+```
+
+This Analysis wont work because they use the same genotype indexs :(
+Error in linearHypothesis.lm(model, L, ...) : there are aliased coefficients in the model.
+
+
+```{r ancov224_166 }
+#Subsetting data
+sig_mod <- lm(LCOMP~rs2244419*rs1668335, data= iowa, contrasts = list(rs2244419 = contr.sum, rs1668335 = contr.sum))
+
+#ANOVA output for verification
+#Anova(sig_mod, type=2, singular.ok = T)
+
+#Reverse each to see
+#testInteractions(sig_mod,fixed='rs2244419',across='rs1668335', adjustment= 'bonferroni')
+
+#testInteractions(sig_mod,fixed='rs1668335',across='rs2244419', adjustment= 'bonferroni')
+```
+
+This Analysis wont work because they use the same genotype indexs :(
+Error in linearHypothesis.lm(model, L, ...) : there are aliased coefficients in the model.
+
+
+```{r ancov191}
+#Subsetting data
+sig_mod <- lm(LCOMP~rs1916988*rs11505922, data= iowa, contrasts = list(rs1916988 = contr.sum, rs11505922 = contr.sum))
+
+#ANOVA output for verification
+Anova(sig_mod, type=2, singular.ok = T)
+
+#Reverse each to see
+testInteractions(sig_mod,fixed='rs1916988',across='rs11505922', adjustment= 'bonferroni')
+
+testInteractions(sig_mod,fixed='rs11505922',across='rs1916988', adjustment= 'bonferroni')
+```
+
+No Significance found at this position
+
+
+## Anova Sumnmary:
+
+Based on this analysis there were some SNP combinations that showed some signfiance revealing small interactions between certain genotypes. This makes sense as only certain genotype combinations start to affect gene function. But please note, for this analysis there were 73 total comparisons so if these values were p-value adjusted none of these findings would be significant. 
+
+The interaction of these SNPS were also investigated by the study using a random forest machine learning algorithm revealing that there are no signficiant SNPs or interactions that determine LCOMP score. 
+
 
 
  
