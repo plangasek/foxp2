@@ -37,19 +37,19 @@ Published open access through PLOS One on April 11, 2016.
 [All Data can be found here](https://zenodo.org/record/44640#.XBLLqMtKiV4)
 
 ## Paper Summary:
-Mueller et. al., asked the question: Can individual differences in language ability normally seen in the general population be partially explained by any of the 13 common SNPs in the _FOXP2_ gene? Histocial context implicates the _FOXP2_ gene as having an effect on language development. Previous studies have evaluated single nucleotide polymorphism (SNP) differences in small family-based comparisons with siblings displaying variance in language abilities, but prior to Mueller et. al, no studies had evaluated language differences and _FOXP2_ SNP variances that can be genearlized to the population.
+Mueller et. al., asked the question: Can individual differences in language ability normally seen in the general population be partially explained by any of the 13 common SNPs in the _FOXP2_ gene? Histocial context implicates the _FOXP2_ gene as having an effect on language development. Previous studies have evaluated single nucleotide polymorphism (SNP) differences in small family-based comparisons with siblings displaying variance in language abilities, but prior to Mueller et. al, no studies had evaluated language differences and _FOXP2_ SNP variances that can be generalized to the population.
 
-As part of their analysis, the authors used data collected from, ultimately, 3 previous studies that evaluated language scores (at minimum) and collected DNA samples from the study participants:
+As part of their analysis, the authors used data ultimately collected from 3 previous studies that evaluated language scores (at minimum) and collected DNA samples from the study participants.
 
-The “longitudinal” study assessed the prevalence of language disorders in 7,218 kindergarten-age children, and the subsequent outcomes for those with language impairment and without.  This initial study intentionally oversampled for children with language impairment.  Thus, in order to select a sample that is more representative of the general population, the current study assigned a weight value to each subject equal to the reciprocal of the probability of selecting that subject.  A subset of 500 subjects was then sampled, with higher-weighted subjects more likely to be selected than lower-weighted subjects.  All subjects spoke English and had normal hearing and no reported neurodevelopmental disabilities.  Only Caucasian subjects were selected.
+The “longitudinal” study assessed the prevalence of language disorders in 7,218 kindergarten-age children, and the subsequent outcomes for those with language impairment and without.  This initial study intentionally oversampled for children with language impairment.  Thus, in order to select a sample that is more representative of the general population, Mueller et al. assigned a weight value to each subject equal to the reciprocal of the probability of selecting that subject.  A subset of 500 subjects was then sampled, with higher-weighted subjects more likely to be selected than lower-weighted subjects.  All subjects spoke English and had normal hearing and no reported neurodevelopmental disabilities.  Only Caucasian subjects were selected.
 
-Language ability was indicated by a composite score based on five subtests of the Test of Language Development-2:P.  The tests were chosen to evaluate the subjects’ abilities in the following hildren with more normal scores.  All subjects had normal hearing and no reported neareas: vocabulary, grammar, narration, comprehension, and expression.  The Block Design and Picture Completion tests of the Wechsler Preschool and Primary Scale of Intelligence were used to identify and remove any subject with a nonverbal IQ under 70 in order to prevent confounding by anyone with intellectual disability.
+Language ability was indicated by a composite score based on five subtests of the Test of Language Development-2:P.  The tests were chosen to evaluate the subjects’ abilities and included children with more normal scores.  All subjects had normal hearing and no reported issues in the areas of vocabulary, grammar, narration, comprehension, and expression.  The Block Design and Picture Completion tests of the Wechsler Preschool and Primary Scale of Intelligence were used to identify and remove any subject with a nonverbal IQ under 70 in order to prevent confounding by anyone with intellectual disability.
 
 The “school” study assessed language abilities in first- through fourth-grade children.  318 subjects were recruited from this study based on their performance on the verbal subscales of the Iowa Tests of Basic Skills.  Children with low language scores were selected, along with a random sample of curodevelopmental disabilities.  Only Caucasian subjects were selected.
 
 Language ability was indicated by a composite score based on a series of tests similar to that administered to the “longitudinal” cohort, but adjusted to better reflect the skill levels of the different age groups in the “school” cohort.  The Block Design and Picture Completion tests of the Wechsler Preschool and Primary Scale of Intelligence were used to identify and remove any subject with a nonverbal IQ under 70 in order to prevent confounding by anyone with intellectual disability.
 
-The ELVS (Early Language in Victoria) dataset was consulted to control for an association between poor language abilities and overall language ability due to concerns of the variance between the longitudinal and school studies. It was a longitudinal birth cohort study from Australia that, using a portion of the same assessments as the Iowa longitudinal and school samples (sentence structure, concepts & direction, recalling sentences, and word structure), studied language ability of a sample of the population. Each subject is on its own line, however, only one SNP (rs1916988) is considered for each subject. The dataset is the language score, not the standardized z-score from the Iowa-based studies.
+The ELVS (Early Language in Victoria) dataset was consulted to control for an association between poor language abilities and overall language ability due to concerns of the variance between the longitudinal and school studies. It was a longitudinal birth cohort study from Australia that, using a portion of the same assessments as the Iowa longitudinal and school samples (sentence structure, concepts & direction, recalling sentences, and word structure), studied language ability of a sample of the population. Each subject is on its own line, however, only one SNP (rs1916988) is considered for each subject. The dataset is the language score, not the standardized z-score as in the Iowa-based studies.
 
 Mueller et. al. found no significant indication that the common _FOXP2_ SNPs found in the general population are associated with population-level language ability differences.
 
@@ -58,7 +58,7 @@ Mueller et. al. found no significant indication that the common _FOXP2_ SNPs fou
 ## Discussion: data quality issues
 Though the data was freely and readily available, there was no explanation of what the data was or what it meant. An accompanyhing codebook would have helped navigate the ambiguity of raw scores vs. z-scores between the two datasets, as well as their notation for missing allele (0).
 
-Presenation of the data in a more visual format instead of tables of text would have also helped better appreciate what the raw data was and what was being evaluated.
+Presentation of the data in a more visual format instead of tables of text would have also helped better appreciate what the raw data was and what was being evaluated.
 
 The authors also didn't discuss how exactly they curated the data for analysis. As we moved forward with replication, our counts did not match theirs, and we never did find the discrepancy.
 
@@ -73,9 +73,9 @@ elvs <- elvs %>% mutate(rs1916988 = as_factor(rs1916988))
 iowa <- read_csv(here::here("data", "tidy_iowa.csv"))
 iowa <- iowa %>% mutate_at(vars(starts_with("rs")), funs( as_factor(.)))
 ```
-Since these the data comes in two seperate files they will be assessed seperately. 
+Since these the data comes in two seperate files, they will be assessed seperately. 
 
-Additionally since there is no easy way to keep factor levels stored in csv files the recode statements are below:
+Additionally, since there is no easy way to keep factor levels stored in csv files, the recode statements are below:
 ```{r recode}
 # C start
 CC <- 'C/C'
@@ -241,10 +241,6 @@ common_SNP %>%
 The reason the authors decided to look at the rs1916988 SNP in particular is because they got opposing results for this SNP when they looked at the Longitudinal and School samples separately.  The authors state that in the School sample, the T/T genotype was associated with significantly lower language scores than the T/C genotype.  In the Longitudinal sample, they got the opposite result, with the T/T genotype associated with higher language scores than either the T/C or C/C genotype, though this result was not significant.  From these plots, it is not apparent that these differences between genotypes would exist, as the distributions for either cohort seem to be quite similar for all genotypes.
 
 
-## Comments
-
-
-
 # Replication Report:
 
 ## Table1:
@@ -257,8 +253,8 @@ To replicate this section we used the tidyverse package and base R to conduct th
 
 #### Observations: 
 
-Here our analysis fully supports the authors findings, there is no significant effect seen at any one SNP using ANOVA analysis. The unknown additional variables are still within the data set so the N's at each genotype are still slightly off. With that being said our observed statistics still closely match with the study and no large deviations are seen. 
-The only slight deviation is rs12155328 which in the previous study approached significance but in this replication the statistic showed no signficance whatsoever.  
+Here our analysis fully supports the authors' findings, there is no significant effect seen at any one SNP using ANOVA analysis. The unknown additional variables are still within the data set so the N's at each genotype are still slightly off. With that being said our observed statistics still closely match with the study and no large deviations are seen. 
+The only slight deviation is rs12155328, which in the previous study approached significance but in this replication the statistic showed no signficance whatsoever.  
 
 
 Function Declarations:
@@ -434,7 +430,7 @@ test %>% ggplot(aes(x=rs10447760,y= LCOMP)) +
   stat_summary(fun.data = fun_sd, geom='text',hjust=-.25) +
   theme_classic()
 ```
-This plot shows that there is no signficant difference found at rs10447760
+This plot shows that there is no signficant difference found at rs10447760.
 
 All statistics Mean and SD match for each genotype.
 Here the n's for all genotypes are off. 
@@ -488,7 +484,7 @@ test %>% ggplot(aes(x=rs10953754,y= LCOMP)) +
   stat_summary(fun.data = fun_sd, geom='text',hjust=-.25) +
   theme_classic()
 ```
-This plot shows that there is no signficant difference found at rs10953754
+This plot shows that there is no signficant difference found at rs10953754.
 All statistics Mean and SD match for each genotype.
 Here the n's for the A/G genotype are off. 
 
@@ -542,7 +538,7 @@ test %>% ggplot(aes(x=rs2244419,y= LCOMP)) +
   stat_summary(fun.data = fun_sd, geom='text',hjust=-.25) +
   theme_classic()
 ```
-This plot shows that there is no signficant difference found at rs2244419
+This plot shows that there is no signficant difference found at rs2244419.
 All statistics Mean and SD match for each genotype.
 Here the n's for the A/G genotype are off. 
 
@@ -595,7 +591,7 @@ test %>% ggplot(aes(x=rs1668335,y= LCOMP)) +
   stat_summary(fun.data = fun_sd, geom='text',hjust=-.25) +
   theme_classic()
 ```
-This plot shows that there is no signficant difference found at rs1668335
+This plot shows that there is no signficant difference found at rs1668335.
 All statistics Mean and SD match for each genotype.
 Here the n's for the A/G  and G/G genotypes are off. 
 
@@ -648,7 +644,7 @@ test %>% ggplot(aes(x=rs2396720,y= LCOMP)) +
   stat_summary(fun.data = fun_sd, geom='text',hjust=-.25) +
   theme_classic()
 ```
-This plot shows that there is no signficant difference found at rs2396720
+This plot shows that there is no signficant difference found at rs2396720.
 All statistics Mean and SD match for each genotype except for C/C mean which is -.05 smaller than the reported mean of -.40. This is due to the addition of extra data points!
 Here the n's for the C/C genotypes are off. 
 
@@ -701,7 +697,7 @@ test %>% ggplot(aes(x=rs1916988,y= LCOMP)) +
   stat_summary(fun.data = fun_sd, geom='text',hjust=-.25) +
   theme_classic()
 ```
-This plot shows that there is no signficant difference found at rs1916988
+This plot shows that there is no signficant difference found at rs1916988.
 All statistics Mean and SD match for each genotype.
 Here the n's for the C/T  and T/T genotypes are off. 
 
@@ -754,7 +750,7 @@ test %>% ggplot(aes(x=rs11505922,y= LCOMP)) +
   stat_summary(fun.data = fun_sd, geom='text',hjust=-.25) +
   theme_classic()
 ```
-This plot shows that there is no signficant difference found at rs11505922
+This plot shows that there is no signficant difference found at rs11505922.
 All statistics Mean and SD match for each genotype.
 Here the n's for the C/T  and T/T genotypes are off. 
 
@@ -808,7 +804,7 @@ test %>% ggplot(aes(x=rs7785701,y= LCOMP)) +
   stat_summary(fun.data = fun_sd, geom='text',hjust=-.25) +
   theme_classic()
 ```
-This plot shows that there is no signficant difference found at rs7785701
+This plot shows that there is no signficant difference found at rs7785701.
 All statistics Mean and SD match for each genotype.
 Here the n's for all genotypes are off. 
 
@@ -861,7 +857,7 @@ test %>% ggplot(aes(x=rs2106900,y= LCOMP)) +
   stat_summary(fun.data = fun_sd, geom='text',hjust=-.25) +
   theme_classic()
 ```
-This plot shows that there is no signficant difference found at rs2106900
+This plot shows that there is no signficant difference found at rs2106900.
 All statistics Mean and SD match for each genotype.
 Here the n's for all genotypes are off.
 
@@ -914,7 +910,7 @@ test %>% ggplot(aes(x=rs7799652,y= LCOMP)) +
   stat_summary(fun.data = fun_sd, geom='text',hjust=-.25) +
   theme_classic()
 ```
-This plot shows that there is no signficant difference found at rs7799652
+This plot shows that there is no signficant difference found at rs7799652.
 All statistics Mean and SD match for each genotype except mean of G/G.
 Here the n's for all genotypes are off.
 
@@ -967,7 +963,7 @@ test %>% ggplot(aes(x=rs1005958,y= LCOMP)) +
   stat_summary(fun.data = fun_sd, geom='text',hjust=-.25) +
   theme_classic()
 ```
-This plot shows that there is no signficant difference found at rs1005958
+This plot shows that there is no signficant difference found at rs1005958.
 All statistics Mean and SD match for each genotype.
 Here the n's for C/T and T/T genotypes are off.
 
@@ -1007,7 +1003,6 @@ However, we noticed that there were exactly 21 observations in our data whose ID
 iowa_school <- iowa %>% filter(Sample == "School", !grepl("-", ID))
 iowa_school %>% group_by(rs1916988) %>% summarise(mean = mean(LCOMP), sd = sd(LCOMP), n = n())
 ```
-
 
 For the one-way ANOVAs, we first tried running them with the entire datasets.  However, this did not give us the R-squared values, F-statistics, and p-values reported in the paper.
 
@@ -1155,7 +1150,7 @@ elvs_table <- data.frame("R-squared" = 0.0082, "F-statistic" = 1.23, "p-value" =
 elvs_table
 ```
 
-Similar to what we saw in the Longitudinal sample, the C allele appears to be associated with lower language scores than the T allele.  However, this result is still not significant.  Therefore, the ELVS sample does not suggest any significant effect of variation at this SNP on language ability.  This is, indeed, what the authors had concluded.
+Similar to what we saw in the Longitudinal sample, the C allele appears to be associated with lower language scores than the T allele. However, this result is still not significant.  Therefore, the ELVS sample does not suggest any significant effect of variation at this SNP on language ability.  This is, indeed, what the authors had concluded.
 
 
 ## Table4:
@@ -1164,7 +1159,6 @@ Here the study table shows extreneous information such as SNP location and minor
 
 For the following analysis only the SNP call rate is computed to prove there is an acceptable call rate as quality control for accurate genotype calls.
 replicate call rates for iowa dataset 
-
 
 
 Subsetting the data can making variables to be called.
@@ -1197,7 +1191,7 @@ calls <- tibble('long' = c(l_call), 'school' =c(s_call),'comb'= c(t_call))
 calls %>% glimpse()
 ```
 
-Matches Previous Findings! :)
+Matches Previous Findings! 
 
 ##rs12155328
 ```{r}
@@ -1214,7 +1208,7 @@ calls <- tibble('long' = c(l_call), 'school' =c(s_call),'comb'= c(t_call))
 calls %>% glimpse()
 ```
 
-Matches Previous Findings
+Matches Previous Findings.
 
 ##rs10447760
 ```{r}
@@ -1231,7 +1225,7 @@ calls <- tibble('long' = c(l_call), 'school' =c(s_call),'comb'= c(t_call))
 calls %>% glimpse()
 ```
 
-Matches Previous Findings
+Matches Previous Findings.
 
 ##rs10953754
 ```{r}
@@ -1248,7 +1242,7 @@ calls <- tibble('long' = c(l_call), 'school' =c(s_call),'comb'= c(t_call))
 calls %>% glimpse()
 ```
 
-Matches Previous Findings
+Matches Previous Findings.
 
 
 ##rs2244419
@@ -1266,7 +1260,7 @@ calls <- tibble('long' = c(l_call), 'school' =c(s_call),'comb'= c(t_call))
 calls %>% glimpse()
 ```
 
-Matches Previous Findings
+Matches Previous Findings.
 
 
 ##rs1668335
@@ -1284,7 +1278,7 @@ calls <- tibble('long' = c(l_call), 'school' =c(s_call),'comb'= c(t_call))
 calls %>% glimpse()
 ```
 
-Matches Previous Findings
+Matches Previous Findings.
 
 ##rs2396720
 ```{r}
@@ -1301,7 +1295,7 @@ calls <- tibble('long' = c(l_call), 'school' =c(s_call),'comb'= c(t_call))
 calls %>% glimpse()
 ```
 
-Matches Previous Findings
+Matches Previous Findings.
 
 ##rs1916988
 ```{r}
@@ -1318,7 +1312,7 @@ calls <- tibble('long' = c(l_call), 'school' =c(s_call),'comb'= c(t_call))
 calls %>% glimpse()
 ```
 
-Matches Previous Findings
+Matches Previous Findings.
 
 ##rs11505922
 ```{r}
@@ -1335,7 +1329,7 @@ calls <- tibble('long' = c(l_call), 'school' =c(s_call),'comb'= c(t_call))
 calls %>% glimpse()
 ```
 
-Matches Previous Findings
+Matches Previous Findings.
 
 ##rs7785701
 ```{r}
@@ -1352,7 +1346,7 @@ calls <- tibble('long' = c(l_call), 'school' =c(s_call),'comb'= c(t_call))
 calls %>% glimpse()
 ```
 
-Longitudinal is off by .01
+Longitudinal is off by .01.
 
 
 ##rs2106900
@@ -1370,7 +1364,7 @@ calls <- tibble('long' = c(l_call), 'school' =c(s_call),'comb'= c(t_call))
 calls %>% glimpse()
 ```
 
-Matches Previous Findings
+Matches Previous Findings.
 
 ##rs7799652
 ```{r}
@@ -1387,7 +1381,7 @@ calls <- tibble('long' = c(l_call), 'school' =c(s_call),'comb'= c(t_call))
 calls %>% glimpse()
 ```
 
-Matches Previous Findings
+Matches Previous Findings.
 
 ##rs1005958
 ```{r}
@@ -1404,7 +1398,7 @@ calls <- tibble('long' = c(l_call), 'school' =c(s_call),'comb'= c(t_call))
 calls %>% glimpse()
 ```
 
-Matches Previous Findings
+Matches Previous Findings.
 
 
 
@@ -1412,17 +1406,17 @@ Matches Previous Findings
 
 ## Question:
 
-  Based on the biology of gene function it is possible that these FOXP2 variants show a combinatorial effect of language score. This is expected as the a small change in gene struture at one position may not be effect to alter function and thus the obsevred phenotype. Additonally not all snps are created equal and combination dependent where two specific SNPs. 
+  Based on the biology of gene function, it is possible that these FOXP2 variants show a combinatorial effect of language score. This is expected as the a small change in gene struture at one position may not be effect to alter function and thus the observed phenotype. Additionally, not all SNPs are created equal, and combination dependent require two (or more) specific SNPs. 
  
 ## ANCOVA:
-With levels set now we can start to conduct a ANCOVA looking for snps that interact through brute force checking each combination of SNPS to see what is interacting. I will also only conduct one non significant analysis and then copy and paste each. 
+With levels set now we can start to conduct a ANCOVA looking for snps that interact through brute force checking each combination of SNPs to see what is interacting. I will also only conduct one non significant analysis and then copy and paste each. 
 
 Note: Interaction model is the same regardless of which order (type II) So I will skip repeat interactions. 
 
-I am searching For interaction in order to validate an ANCOVA
+Of interest is an interaction in order to validate an ANCOVA.
 
 
-Now here are all the SNPS present: 
+All the SNPs present: 
 rs7791396, rs12155328, rs10447760, rs10953754, rs2244419, rs1668335, rs2396720, rs1916988, rs11505922, rs7785701, rs2106900, rs7799652, rs1005958
 
 
@@ -1434,7 +1428,7 @@ Anova(mod, type=2, singular.ok = T)
 
 ```
 
-No interactions present
+No interactions present.
 
 
 
@@ -1463,9 +1457,9 @@ Anova(mod, type=2, singular.ok = T)
 
 
 .1 level of significance my scientific instincts tell me to report this. 
-The interaction isnt signficant but It appears that rs12155328 begins to predict LCOMP when interacting with rs10953754 in a vaccum. 
+The interaction isnt signficant but it appears that rs12155328 begins to predict LCOMP when interacting with rs10953754 in a vacuum .
 
-Will still be able to conduct ANCOVA
+Will still be able to conduct ANCOVA.
 
 
 
@@ -1489,7 +1483,7 @@ Anova(mod, type=2, singular.ok = T)
 ```
 
 Signficant Interaction found!!!
-Unable to conduct ANCOVA between rs10447760 and rs11505922 
+Unable to conduct ANCOVA between rs10447760 and rs11505922.
 ANCOVA assumes no interactions. Can do spotlight analysis to see which Genotypes give the most change. 
 
 
@@ -1501,8 +1495,8 @@ Anova(mod, type=2, singular.ok = T)
 
 ```
 
-Weakly Signficant Interaction found
-Unable to conduct ANCOVA between rs10447760 and rs7785701 
+Weakly Signficant Interaction found.
+Unable to conduct ANCOVA between rs10447760 and rs7785701.
 ANCOVA assumes no interactions. Can do spotlight analysis to see which Genotypes give the most change. 
 
 
@@ -1513,8 +1507,8 @@ mod <- lm(LCOMP~rs10447760*rs2106900, data= iowa, contrasts = list(rs10447760 = 
 Anova(mod, type=2, singular.ok = T)
 
 ```
-Weakly Signficant Interaction found
-Unable to conduct ANCOVA between rs10447760 and rs2106900 
+Weakly Signficant Interaction found.
+Unable to conduct ANCOVA between rs10447760 and rs2106900.
 ANCOVA assumes no interactions. Can do spotlight analysis to see which Genotypes give the most change. 
 
 
@@ -1525,8 +1519,8 @@ mod <- lm(LCOMP~rs2244419*rs1668335, data= iowa, contrasts = list(rs2244419 = co
 Anova(mod, type=2, singular.ok = T)
 
 ```
-Signficant Interaction found
-Unable to conduct ANCOVA between rs2244419 and rs1668335 
+Signficant Interaction found.
+Unable to conduct ANCOVA between rs2244419 and rs1668335. 
 ANCOVA assumes no interactions. Can do spotlight analysis to see which Genotypes give the most change.
 
 ##rs2244419 V rs1916988: Signfiant 
@@ -1536,8 +1530,8 @@ mod <- lm(LCOMP~rs2244419*rs1916988, data= iowa, contrasts = list(rs2244419 = co
 Anova(mod, type=2, singular.ok = T)
 
 ```
-Signficant Interaction found
-Unable to conduct ANCOVA between rs2244419 and rs1916988 
+Signficant Interaction found.
+Unable to conduct ANCOVA between rs2244419 and rs1916988.
 ANCOVA assumes no interactions. Can do spotlight analysis to see which Genotypes give the most change.
 
 
@@ -1548,8 +1542,8 @@ mod <- lm(LCOMP~rs1668335*rs11505922, data= iowa, contrasts = list(rs1668335 = c
 Anova(mod, type=2, singular.ok = T)
 
 ```
-Weakly Signficant Interaction found
-Unable to conduct ANCOVA between rs10447760 and rs2106900 
+Weakly Signficant Interaction found.
+Unable to conduct ANCOVA between rs10447760 and rs2106900. 
 ANCOVA assumes no interactions. Can do spotlight analysis to see which Genotypes give the most change.
 
 ##rs1668335 V rs2106900: Weakly Signfiant 
@@ -1559,8 +1553,8 @@ mod <- lm(LCOMP~rs1668335*rs2106900, data= iowa, contrasts = list(rs1668335 = co
 Anova(mod, type=2, singular.ok = T)
 
 ```
-Weakly Signficant Interaction found
-Unable to conduct ANCOVA between rs10447760 and rs2106900 
+Weakly Signficant Interaction found.
+Unable to conduct ANCOVA between rs10447760 and rs2106900.
 ANCOVA assumes no interactions. Can do spotlight analysis to see which Genotypes give the most change.
 
 ##rs1916988 V rs11505922: Signfiant 
@@ -1571,7 +1565,7 @@ Anova(mod, type=2, singular.ok = T)
 
 ```
 Signficant Interaction found!!!
-Unable to conduct ANCOVA between rs10447760 and rs11505922 
+Unable to conduct ANCOVA between rs10447760 and rs11505922.
 ANCOVA assumes no interactions. Can do spotlight analysis to see which Genotypes give the most change. 
 
 
@@ -1596,20 +1590,20 @@ Significant Interactions Found:
   * rs1916988 V rs11505922 p-value = 0.03526
   
   
-  This is the only variant to reach < .05 level of significance and as such I will only conduct the spotlight analysis on this variant. 
+  This is the only variant to reach < .05 level of significance and as such the spotlight analysis will only be conducted on this variant. 
   
   
   Weak covariate: rs12155328
   
-  This was the only variant to display this covaraince 
+  This was the only variant to display this covaraince. 
   
 
 # Spotlight Analysis:
 
-Now conducting spotlight analysis on rs10447760 against rs11505922
+Now conducting spotlight analysis on rs10447760 against rs11505922.
 
 
-For categorical variables an interaction effects test is the same as spotlight analysis!! 
+For categorical variables an interaction effects test is the same as spotlight analysis.
 
 ```{r ancov104}
 #Subsetting data
@@ -1626,7 +1620,7 @@ testInteractions(sig_mod,fixed='rs11505922',across='rs10447760', adjustment= 'bo
 
 
 
-Significant interaction between Genotype 'C/C' in rs11505922 and T/T in rs10447760
+Significant interaction between Genotype 'C/C' in rs11505922 and T/T in rs10447760.
 
 
 
@@ -1644,7 +1638,7 @@ testInteractions(sig_mod,fixed='rs7791396',across='rs1005958', adjustment= 'bonf
 testInteractions(sig_mod,fixed='rs1005958',across='rs7791396', adjustment= 'bonferroni')
 ```
 
-Here it is rs7791396 correlates G/G with rs1005958 T/C
+Here it is rs7791396 correlates G/G with rs1005958 T/C.
 
 
 ```{r ancov224}
@@ -1660,7 +1654,7 @@ sig_mod <- lm(LCOMP~rs2244419*rs1668335, data= iowa, contrasts = list(rs2244419 
 #testInteractions(sig_mod,fixed='rs1668335',across='rs2244419', adjustment= 'bonferroni')
 ```
 
-This Analysis wont work because they use the same genotype indexs :(
+This Analysis wont work because they use the same genotype indices.
 Error in linearHypothesis.lm(model, L, ...) : there are aliased coefficients in the model.
 
 
@@ -1677,7 +1671,7 @@ sig_mod <- lm(LCOMP~rs2244419*rs1668335, data= iowa, contrasts = list(rs2244419 
 #testInteractions(sig_mod,fixed='rs1668335',across='rs2244419', adjustment= 'bonferroni')
 ```
 
-This Analysis wont work because they use the same genotype indexs :(
+This Analysis wont work because they use the same genotype indices.
 Error in linearHypothesis.lm(model, L, ...) : there are aliased coefficients in the model.
 
 
@@ -1694,17 +1688,12 @@ testInteractions(sig_mod,fixed='rs1916988',across='rs11505922', adjustment= 'bon
 testInteractions(sig_mod,fixed='rs11505922',across='rs1916988', adjustment= 'bonferroni')
 ```
 
-No Significance found at this position
+No Significance found at this position.
 
 
 ## Anova Sumnmary:
 
-Based on this analysis there were some SNP combinations that showed some signfiance revealing small interactions between certain genotypes. This makes sense as only certain genotype combinations start to affect gene function. But please note, for this analysis there were 73 total comparisons so if these values were p-value adjusted none of these findings would be significant. 
+Based on this analysis there were some SNP combinations that showed some signfiance revealing small interactions between certain genotypes. This makes sense as only certain genotype combinations start to affect gene function. But please note, for this analysis there were 73 total comparisons, so if these values were p-value adjusted none of these findings would be significant. 
 
-The interaction of these SNPS were also investigated by the study using a random forest machine learning algorithm revealing that there are no signficiant SNPs or interactions that determine LCOMP score. 
-
-
-
- 
-
+The interaction of these SNPs were also investigated by the study using a random forest machine learning algorithm revealing that there are no signficiant SNPs or interactions that directly affect LCOMP score. 
 
